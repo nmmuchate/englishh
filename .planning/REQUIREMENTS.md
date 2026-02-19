@@ -98,22 +98,46 @@ Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FOUND-01–06 | Phase 1 | Pending |
-| LAND-01–02 | Phase 2 | Pending |
-| ONBD-01–04 | Phase 2 | Pending |
-| DASH-01–04 | Phase 3 | Pending |
-| SESS-01–05 | Phase 4 | Pending |
-| FEED-01–04 | Phase 4 | Pending |
-| PAYW-01–03 | Phase 5 | Pending |
-| PROG-01–02 | Phase 5 | Pending |
-| VOCAB-01–02 | Phase 5 | Pending |
-| PROF-01–02 | Phase 5 | Pending |
+| FOUND-01 | Phase 1 | Pending |
+| FOUND-02 | Phase 1 | Pending |
+| FOUND-03 | Phase 1 | Pending |
+| FOUND-04 | Phase 1 | Pending |
+| FOUND-05 | Phase 1 | Pending |
+| FOUND-06 | Phase 1 | Pending |
+| LAND-01 | Phase 2 | Pending |
+| LAND-02 | Phase 2 | Pending |
+| ONBD-01 | Phase 2 | Pending |
+| ONBD-02 | Phase 2 | Pending |
+| ONBD-03 | Phase 2 | Pending |
+| ONBD-04 | Phase 2 | Pending |
+| DASH-01 | Phase 3 | Pending |
+| DASH-02 | Phase 3 | Pending |
+| DASH-03 | Phase 3 | Pending |
+| DASH-04 | Phase 3 | Pending |
+| SESS-01 | Phase 4 | Pending |
+| SESS-02 | Phase 4 | Pending |
+| SESS-03 | Phase 4 | Pending |
+| SESS-04 | Phase 4 | Pending |
+| SESS-05 | Phase 4 | Pending |
+| FEED-01 | Phase 4 | Pending |
+| FEED-02 | Phase 4 | Pending |
+| FEED-03 | Phase 4 | Pending |
+| FEED-04 | Phase 4 | Pending |
+| PAYW-01 | Phase 5 | Pending |
+| PAYW-02 | Phase 5 | Pending |
+| PAYW-03 | Phase 5 | Pending |
+| PROG-01 | Phase 5 | Pending |
+| PROG-02 | Phase 5 | Pending |
+| VOCAB-01 | Phase 5 | Pending |
+| VOCAB-02 | Phase 5 | Pending |
+| PROF-01 | Phase 5 | Pending |
+| PROF-02 | Phase 5 | Pending |
 
 **Coverage:**
-- v1 requirements: 30 total
-- Mapped to phases: 30
-- Unmapped: 0 ✓
+- v1 requirements: 34 total
+- Mapped to phases: 34
+- Unmapped: 0 (complete coverage)
 
 ---
 *Requirements defined: 2026-02-20*
-*Last updated: 2026-02-20 after initial definition*
+*Last updated: 2026-02-20 after roadmap creation*
