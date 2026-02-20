@@ -30,8 +30,7 @@ export default defineConfig((/* ctx */) => {
       // 'line-awesome',
       // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
 
-      'roboto-font', // optional, you are not bound to it
-      'material-icons', // optional, you are not bound to it
+      'material-symbols-outlined',
     ],
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#build
@@ -73,19 +72,20 @@ export default defineConfig((/* ctx */) => {
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#framework
     framework: {
-      config: {},
-
-      // iconSet: 'material-icons', // Quasar icon set
-      // lang: 'en-US', // Quasar language pack
-
-      // For special cases outside of where the auto-import strategy can have an impact
-      // (like functional components as one of the examples),
-      // you can manually specify Quasar components/directives to be available everywhere:
-      //
-      // components: [],
-      // directives: [],
-
-      // Quasar plugins
+      iconSet: 'material-symbols-outlined',
+      config: {
+        dark: 'auto',
+        brand: {
+          primary: '#4cae4f',
+          secondary: '#6c7f6d',
+          accent: '#FF6B35',
+          dark: '#151d15',
+          positive: '#4cae4f',
+          negative: '#ef4444',
+          info: '#6c7f6d',
+          warning: '#FF9800'
+        }
+      },
       plugins: []
     },
 

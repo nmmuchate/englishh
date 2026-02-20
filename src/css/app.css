@@ -1,1 +1,49 @@
-/* app global css */
+/* ==========================================================================
+   SpeakAI Design Tokens & Global Styles
+   ========================================================================== */
+
+/* --- CSS Custom Properties (Design Tokens) -------------------------------- */
+:root {
+  /* Brand colors */
+  --primary: #4cae4f;
+  --accent-orange: #FF6B35;
+
+  /* Background scales */
+  --bg-light: #f6f7f6;
+  --bg-dark: #151d15;
+
+  /* Text */
+  --text-deep-slate: #131613;
+
+  /* Border-radius scale — matches Stitch design system */
+  --radius-sm: 0.5rem;    /* inputs, small chips */
+  --radius-md: 1rem;      /* cards, prominent elements */
+  --radius-lg: 1.5rem;    /* modal sheets, panels */
+  --radius-full: 9999px;  /* pills, avatars, FAB */
+}
+
+/* --- Typography ----------------------------------------------------------- */
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+/* --- Dark / Light Theme Overrides ---------------------------------------- */
+.body--dark {
+  --bg-surface: var(--bg-dark);
+  --text-primary: #ffffff;
+}
+
+.body--light {
+  --bg-surface: #ffffff;
+  --text-primary: var(--text-deep-slate);
+}
+
+/* --- Mobile Container ----------------------------------------------------- */
+.app-container {
+  max-width: 430px;
+  width: 100%;
+  margin: 0 auto;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
