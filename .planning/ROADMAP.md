@@ -30,11 +30,13 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. All page content is constrained to a max-width 430px centered column on any screen size
   4. Navigating directly to any named route (landing, onboarding, dashboard, session, feedback) resolves to the correct page component without a 404
   5. No network requests are made — the app loads and runs fully offline with hardcoded mock data
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 01-01: Configure design tokens, Inter font, dark/light theme variables in app.css and quasar.config.js
-- [ ] 01-02: Set up mobile container layout, all named routes, navigation guards, and Pinia mock stores
+- [ ] 01-01-PLAN.md — Configure design tokens, Inter font, dark mode, FOUC fix (quasar.config.js + index.html + app.css)
+- [ ] 01-02-PLAN.md — Two-layout routing, MainLayout rewrite with bottom nav, FullscreenLayout, 8 page stubs
+- [ ] 01-03-PLAN.md — Three Pinia stores (auth/profile/session) with mock data, axios boot stripped
+- [ ] 01-04-PLAN.md — Human verification checkpoint for all 6 FOUND requirements
 
 ### Phase 2: Entry Flow
 **Goal**: A new user can open the app, see the branded sign-in screen, tap "Sign In with Google", and complete the 3-step onboarding wizard to arrive at the Dashboard
@@ -108,7 +110,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/2 | Not started | - |
+| 1. Foundation | 0/4 | Not started | - |
 | 2. Entry Flow | 0/2 | Not started | - |
 | 3. Dashboard | 0/1 | Not started | - |
 | 4. Session Loop | 0/2 | Not started | - |
