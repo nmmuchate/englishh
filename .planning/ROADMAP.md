@@ -35,8 +35,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 Plans:
 - [x] 01-01-PLAN.md — Configure design tokens, Inter font, dark mode, FOUC fix (quasar.config.js + index.html + app.css)
 - [x] 01-02-PLAN.md — Two-layout routing, MainLayout rewrite with bottom nav, FullscreenLayout, 8 page stubs
-- [ ] 01-03-PLAN.md — Three Pinia stores (auth/profile/session) with mock data, axios boot stripped
-- [ ] 01-04-PLAN.md — Human verification checkpoint for all 6 FOUND requirements
+- [x] 01-03-PLAN.md — Three Pinia stores (auth/profile/session) with mock data, axios boot stripped
+- [x] 01-04-PLAN.md — Human verification checkpoint for all 6 FOUND requirements
 
 ### Phase 2: Entry Flow
 **Goal**: A new user can open the app, see the branded sign-in screen, tap "Sign In with Google", and complete the 3-step onboarding wizard to arrive at the Dashboard
@@ -110,7 +110,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 2/4 | In progress | - |
+| 1. Foundation | 4/4 | Complete | 2026-02-20 |
 | 2. Entry Flow | 0/2 | Not started | - |
 | 3. Dashboard | 0/1 | Not started | - |
 | 4. Session Loop | 0/2 | Not started | - |
