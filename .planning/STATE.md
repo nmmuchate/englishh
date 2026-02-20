@@ -10,27 +10,27 @@ See: .planning/PROJECT.md (updated 2026-02-20)
 ## Current Position
 
 Phase: 1 of 5 (Foundation)
-Plan: 0 of 2 in current phase
-Status: Ready to plan
-Last activity: 2026-02-20 — Roadmap created, phases derived from requirements
+Plan: 2 of 2 in current phase
+Status: Phase 1 complete
+Last activity: 2026-02-20 — Plan 01-02 executed: two-layout routing, MainLayout bottom nav, FullscreenLayout, 8 page stubs
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [██░░░░░░░░] 20%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 0
+- Total plans completed: 2
 - Average duration: -
-- Total execution time: 0 hours
+- Total execution time: -
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| - | - | - | - |
+| Phase 1 Foundation | 2 | - | - |
 
 **Recent Trend:**
-- Last 5 plans: none yet
+- Last 5 plans: 01-01 (complete), 01-02 (complete)
 - Trend: -
 
 *Updated after each plan completion*
@@ -46,6 +46,9 @@ Recent decisions affecting current work:
 - [Init]: Quasar components (QBtn, QCard, QChatMessage, QStepper, QTabs, QDialog, QFab) used throughout — no raw HTML equivalents
 - [Init]: Tailwind classes in Stitch exports must be translated to Quasar utility classes + scoped CSS; no Tailwind dependency added
 - [Init]: Vocabulary Bank page (VOCAB-01, VOCAB-02) has no Stitch source — build from design system tokens
+- [01-02]: Two-layout pattern adopted — FullscreenLayout (/) for immersive screens, MainLayout (/app) for nav-bearing screens
+- [01-02]: Bottom nav has 3 tabs only (Home/Progress/Profile); Vocabulary Bank accessible via /app/vocabulary but has no nav tab
+- [01-02]: QRouteTab uses exact prop for leaf route matching; no v-model on QTabs to avoid route desync
 
 ### Pending Todos
 
@@ -53,11 +56,10 @@ None yet.
 
 ### Blockers/Concerns
 
-- [Phase 1]: axios boot file must be stripped/replaced before any page work begins — leaving it risks accidental real HTTP calls in dev
-- [Phase 1]: quasar.config.js currently loads roboto-font and material-icons from @quasar/extras — need to switch to Inter via Google Fonts and Material Symbols Outlined per design spec
+None — Phase 1 complete. Blockers addressed in 01-01.
 
 ## Session Continuity
 
 Last session: 2026-02-20
-Stopped at: Roadmap written, STATE.md initialized. Ready to plan Phase 1.
+Stopped at: Completed 01-02-PLAN.md — two-layout routing and page stubs. Phase 1 Foundation complete.
 Resume file: None

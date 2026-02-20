@@ -12,7 +12,7 @@ Five phases convert the Quasar/Vue 3 scaffold into a pixel-perfect, fully-naviga
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation** - Design system, routing, stores, and mock data infrastructure
+- [x] **Phase 1: Foundation** - Design system, routing, stores, and mock data infrastructure
 - [ ] **Phase 2: Entry Flow** - Landing page and 3-step onboarding wizard
 - [ ] **Phase 3: Dashboard** - Main hub with stats, chart, streak, and session start
 - [ ] **Phase 4: Session Loop** - Active session screen and post-session feedback screen
@@ -33,8 +33,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 4 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Configure design tokens, Inter font, dark mode, FOUC fix (quasar.config.js + index.html + app.css)
-- [ ] 01-02-PLAN.md — Two-layout routing, MainLayout rewrite with bottom nav, FullscreenLayout, 8 page stubs
+- [x] 01-01-PLAN.md — Configure design tokens, Inter font, dark mode, FOUC fix (quasar.config.js + index.html + app.css)
+- [x] 01-02-PLAN.md — Two-layout routing, MainLayout rewrite with bottom nav, FullscreenLayout, 8 page stubs
 - [ ] 01-03-PLAN.md — Three Pinia stores (auth/profile/session) with mock data, axios boot stripped
 - [ ] 01-04-PLAN.md — Human verification checkpoint for all 6 FOUND requirements
 
@@ -110,7 +110,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/4 | Not started | - |
+| 1. Foundation | 2/4 | In progress | - |
 | 2. Entry Flow | 0/2 | Not started | - |
 | 3. Dashboard | 0/1 | Not started | - |
 | 4. Session Loop | 0/2 | Not started | - |
