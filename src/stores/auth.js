@@ -19,12 +19,17 @@ export const useAuthStore = defineStore('auth', () => {
     hasCompletedOnboarding.value = false
   }
 
+  function completeOnboarding() {
+    hasCompletedOnboarding.value = true
+  }
+
   return {
     isAuthenticated,
     hasCompletedOnboarding,
     isNewUser,
     mockSignIn,
-    mockSignOut
+    mockSignOut,
+    completeOnboarding
   }
 })
 
