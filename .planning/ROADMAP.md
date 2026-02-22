@@ -51,7 +51,7 @@ Plans:
 **Plans**: TBD
 
 Plans:
-- [ ] 02-01: Build LandingPage.vue matching Stitch sign_in_to_speakai design with mock sign-in navigation
+- [x] 02-01: Build LandingPage.vue matching Stitch sign_in_to_speakai design with mock sign-in navigation
 - [ ] 02-02: Build OnboardingPage.vue with QStepper (Assessment, FirstSession, LevelResult steps) matching Stitch designs
 
 ### Phase 3: Dashboard
@@ -111,7 +111,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 4/4 | Complete | 2026-02-20 |
-| 2. Entry Flow | 0/2 | Not started | - |
+| 2. Entry Flow | 1/2 | In progress | - |
 | 3. Dashboard | 0/1 | Not started | - |
 | 4. Session Loop | 0/2 | Not started | - |
 | 5. Supporting Pages | 0/4 | Not started | - |

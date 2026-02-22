@@ -16,8 +16,8 @@
 
 ### Landing
 
-- [ ] **LAND-01**: User can view landing/sign-in page matching Stitch `sign_in_to_speakai` design (logo, headline, tagline)
-- [ ] **LAND-02**: User can tap Google Sign-In button which navigates to onboarding (mocked — no real OAuth)
+- [x] **LAND-01**: User can view landing/sign-in page matching Stitch `sign_in_to_speakai` design (logo, headline, tagline)
+- [x] **LAND-02**: User can tap Google Sign-In button which navigates to onboarding (mocked — no real OAuth)
 
 ### Onboarding
 
@@ -104,8 +104,8 @@ Updated during roadmap creation.
 | FOUND-04 | Phase 1 | Pending |
 | FOUND-05 | Phase 1 | Pending |
 | FOUND-06 | Phase 1 | Pending |
-| LAND-01 | Phase 2 | Pending |
-| LAND-02 | Phase 2 | Pending |
+| LAND-01 | Phase 2 | Complete |
+| LAND-02 | Phase 2 | Complete |
 | ONBD-01 | Phase 2 | Pending |
 | ONBD-02 | Phase 2 | Pending |
 | ONBD-03 | Phase 2 | Pending |

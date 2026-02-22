@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-02-20)
 ## Current Position
 
 Phase: 2 of 5 (Entry Flow)
-Plan: 0 of 2 in current phase
-Status: Ready to plan
-Last activity: 2026-02-20 — Phase 1 Foundation complete — design tokens, routing, stores, and mock data layer verified
+Plan: 1 of 2 in current phase
+Status: In progress
+Last activity: 2026-02-22 — 02-01 complete — LandingPage.vue built, completeOnboarding() added to auth store
 
-Progress: [██░░░░░░░░] 20%
+Progress: [███░░░░░░░] 25%
 
 ## Performance Metrics
 
@@ -28,9 +28,10 @@ Progress: [██░░░░░░░░] 20%
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | Phase 1 Foundation | 4 | - | - |
+| Phase 2 Entry Flow | 1 | - | - |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (complete), 01-02 (complete), 01-03 (complete), 01-04 (verified)
+- Last 5 plans: 01-01 (complete), 01-02 (complete), 01-03 (complete), 01-04 (verified), 02-01 (complete ~2min)
 - Trend: -
 
 *Updated after each plan completion*
@@ -49,6 +50,8 @@ Recent decisions affecting current work:
 - [01-02]: Two-layout pattern adopted — FullscreenLayout (/) for immersive screens, MainLayout (/app) for nav-bearing screens
 - [01-02]: Bottom nav has 3 tabs only (Home/Progress/Profile); Vocabulary Bank accessible via /app/vocabulary but has no nav tab
 - [01-02]: QRouteTab uses exact prop for leaf route matching; no v-model on QTabs to avoid route desync
+- [02-01]: Google icon rendered as inline SVG in a white-circle wrapper div inside QBtn slot — not via Quasar icon prop — for correct pill-button layout matching Stitch design
+- [02-01]: QBtn with rounded + unelevated + no-caps + color=primary is the design-system pill button pattern
 
 ### Pending Todos
 
@@ -60,6 +63,6 @@ None — Phase 1 complete. Blockers addressed in 01-01.
 
 ## Session Continuity
 
-Last session: 2026-02-20
-Stopped at: Phase 1 Foundation fully verified by human (all 6 FOUND requirements confirmed). Ready to plan Phase 2 Entry Flow.
+Last session: 2026-02-22
+Stopped at: Completed 02-01-PLAN.md — LandingPage.vue and auth store completeOnboarding() done. Ready for 02-02 OnboardingPage.
 Resume file: None
