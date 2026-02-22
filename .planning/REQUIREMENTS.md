@@ -21,10 +21,10 @@
 
 ### Onboarding
 
-- [ ] **ONBD-01**: User can view 3-step onboarding wizard implemented with QStepper matching Stitch welcome/assessment designs
-- [ ] **ONBD-02**: User can complete Assessment step (language level quiz with selectable options)
-- [ ] **ONBD-03**: User can complete First Session intro step (explains the app flow)
-- [ ] **ONBD-04**: User can view Level Result step showing assessed level and proceeds to Dashboard
+- [x] **ONBD-01**: User can view 3-step onboarding wizard implemented with QStepper matching Stitch welcome/assessment designs
+- [x] **ONBD-02**: User can complete Assessment step (language level quiz with selectable options)
+- [x] **ONBD-03**: User can complete First Session intro step (explains the app flow)
+- [x] **ONBD-04**: User can view Level Result step showing assessed level and proceeds to Dashboard
 
 ### Dashboard
 
@@ -106,10 +106,10 @@ Updated during roadmap creation.
 | FOUND-06 | Phase 1 | Pending |
 | LAND-01 | Phase 2 | Complete |
 | LAND-02 | Phase 2 | Complete |
-| ONBD-01 | Phase 2 | Pending |
-| ONBD-02 | Phase 2 | Pending |
-| ONBD-03 | Phase 2 | Pending |
-| ONBD-04 | Phase 2 | Pending |
+| ONBD-01 | Phase 2 | Complete |
+| ONBD-02 | Phase 2 | Complete |
+| ONBD-03 | Phase 2 | Complete |
+| ONBD-04 | Phase 2 | Complete |
 | DASH-01 | Phase 3 | Pending |
 | DASH-02 | Phase 3 | Pending |
 | DASH-03 | Phase 3 | Pending |

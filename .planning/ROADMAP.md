@@ -13,7 +13,7 @@ Five phases convert the Quasar/Vue 3 scaffold into a pixel-perfect, fully-naviga
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation** - Design system, routing, stores, and mock data infrastructure
-- [ ] **Phase 2: Entry Flow** - Landing page and 3-step onboarding wizard
+- [x] **Phase 2: Entry Flow** - Landing page and 3-step onboarding wizard
 - [ ] **Phase 3: Dashboard** - Main hub with stats, chart, streak, and session start
 - [ ] **Phase 4: Session Loop** - Active session screen and post-session feedback screen
 - [ ] **Phase 5: Supporting Pages** - Paywall modal, Your Progress, Vocabulary Bank, Profile/Settings
@@ -52,7 +52,7 @@ Plans:
 
 Plans:
 - [x] 02-01: Build LandingPage.vue matching Stitch sign_in_to_speakai design with mock sign-in navigation
-- [ ] 02-02: Build OnboardingPage.vue with QStepper (Assessment, FirstSession, LevelResult steps) matching Stitch designs
+- [x] 02-02: Build OnboardingPage.vue with QStepper (Assessment, FirstSession, LevelResult steps) matching Stitch designs
 
 ### Phase 3: Dashboard
 **Goal**: The Dashboard is the app's home — users land here after onboarding and see their stats, weekly chart, streak, and can launch a new session
@@ -111,7 +111,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 4/4 | Complete | 2026-02-20 |
-| 2. Entry Flow | 1/2 | In progress | - |
+| 2. Entry Flow | 2/2 | Complete | 2026-02-23 |
 | 3. Dashboard | 0/1 | Not started | - |
 | 4. Session Loop | 0/2 | Not started | - |
 | 5. Supporting Pages | 0/4 | Not started | - |
