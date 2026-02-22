@@ -63,10 +63,10 @@ Plans:
   2. User sees a weekly activity bar chart populated with mock data
   3. User sees a streak counter displayed prominently on the dashboard
   4. Tapping the QFab "Start Session" button navigates to the Session screen
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 03-01: Build DashboardPage.vue with stats cards, weekly bar chart, streak counter, and QFab navigation matching Stitch home_dashboard
+- [ ] 03-01-PLAN.md — Build DashboardPage.vue with stats cards, weekly bar chart, streak counter, and QFab navigation matching Stitch home_dashboard
 
 ### Phase 4: Session Loop
 **Goal**: The core product loop works end-to-end — user starts a session, sees a live conversation transcript with timer and mistake counter, ends the session, and receives a scored feedback report with tab-based detail
