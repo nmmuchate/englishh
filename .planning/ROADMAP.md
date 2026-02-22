@@ -79,11 +79,11 @@ Plans:
   4. User sees a Feedback screen with an animated score circle and overall score, matching the Stitch session_feedback design
   5. User can switch between Pronunciation, Grammar, and Vocabulary QTabs and see mock feedback items in each tab
   6. User can navigate back to Dashboard from the Feedback screen
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 04-01: Build SessionPage.vue with QChatMessage transcript, mic toggle, live timer, mistake counter, and end-session navigation
-- [ ] 04-02: Build FeedbackPage.vue with animated score circle, QTabs (Pronunciation/Grammar/Vocabulary), mock feedback items, and dashboard navigation
+- [ ] 04-01-PLAN.md — Build SessionPage.vue with chat transcript, mic toggle, live timer, mistake counter, and end-session navigation
+- [ ] 04-02-PLAN.md — Build FeedbackPage.vue with CSS conic-gradient score circle, QTabs (Overview/Mistakes/Vocabulary), mock feedback items, and dashboard navigation
 
 ### Phase 5: Supporting Pages
 **Goal**: The remaining screens complete the full app — paywall modal, progress history, vocabulary bank, and profile/settings — so every Stitch screen is represented and the app feels production-complete
