@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation** - Design system, routing, stores, and mock data infrastructure
 - [x] **Phase 2: Entry Flow** - Landing page and 3-step onboarding wizard
-- [ ] **Phase 3: Dashboard** - Main hub with stats, chart, streak, and session start
+- [x] **Phase 3: Dashboard** - Main hub with stats, chart, streak, and session start
 - [ ] **Phase 4: Session Loop** - Active session screen and post-session feedback screen
 - [ ] **Phase 5: Supporting Pages** - Paywall modal, Your Progress, Vocabulary Bank, Profile/Settings
 
@@ -66,7 +66,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 03-01-PLAN.md — Build DashboardPage.vue with stats cards, weekly bar chart, streak counter, and QFab navigation matching Stitch home_dashboard
+- [x] 03-01-PLAN.md — Build DashboardPage.vue with stats cards, weekly bar chart, streak counter, and QFab navigation matching Stitch home_dashboard
 
 ### Phase 4: Session Loop
 **Goal**: The core product loop works end-to-end — user starts a session, sees a live conversation transcript with timer and mistake counter, ends the session, and receives a scored feedback report with tab-based detail
@@ -112,6 +112,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. Foundation | 4/4 | Complete | 2026-02-20 |
 | 2. Entry Flow | 2/2 | Complete    | 2026-02-22 |
-| 3. Dashboard | 0/1 | Not started | - |
+| 3. Dashboard | 1/1 | Complete | 2026-02-23 |
 | 4. Session Loop | 0/2 | Not started | - |
 | 5. Supporting Pages | 0/4 | Not started | - |
