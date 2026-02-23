@@ -124,13 +124,13 @@ Plans:
   4. Authenticated user with `onboardingCompleted: false` is redirected to onboarding
   5. Firebase SDK boot file reads config from `.env.local` — no keys hardcoded in source
   6. Firestore security rules are deployed and tested (users can only read/write their own docs)
-  7. Cloud Functions project scaffolded in `functions/` directory with Node.js 18 dependencies installed
-**Plans**: TBD
+  7. Cloud Functions project scaffolded in `functions/` directory with Node.js 24 dependencies installed
+**Plans**: 3 plans
 
 Plans:
-- [ ] 06-01-PLAN.md — Firebase SDK boot (src/boot/firebase.js), .env setup, useAuthStore connected to Firebase Auth
-- [ ] 06-02-PLAN.md — Real Google Sign-In in LandingPage.vue, onFirstSignIn user document creation, route guards
-- [ ] 06-03-PLAN.md — Firestore security rules deployment, Cloud Functions project scaffold (functions/ dir, dependencies)
+- [ ] 06-01-PLAN.md — Install firebase SDK, create src/boot/firebase.js (initializeApp + emulators), update quasar.config.js boot, add emulators to firebase.json, create .env.example
+- [ ] 06-02-PLAN.md — Replace src/stores/auth.js with real Firebase Auth store, create src/services/userProfile.js, create src/boot/auth.js (onAuthStateChanged + route guard), update LandingPage.vue handleSignIn
+- [ ] 06-03-PLAN.md — Replace firestore.rules with TRD production rules + deploy, add @google/genai to functions/package.json, update functions/index.js with defineSecret declarations
 
 ### Phase 7: Firestore Data Layer
 **Goal**: All mock data is gone — every Pinia store reads from Firestore, all frontend pages display real user data, onboarding writes the initial user document, and vocabulary bank reads from and writes to the vocabulary subcollection
