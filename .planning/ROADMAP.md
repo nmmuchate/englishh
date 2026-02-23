@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Foundation** - Design system, routing, stores, and mock data infrastructure
 - [x] **Phase 2: Entry Flow** - Landing page and 3-step onboarding wizard
 - [x] **Phase 3: Dashboard** - Main hub with stats, chart, streak, and session start
-- [ ] **Phase 4: Session Loop** - Active session screen and post-session feedback screen
+- [x] **Phase 4: Session Loop** - Active session screen and post-session feedback screen
 - [ ] **Phase 5: Supporting Pages** - Paywall modal, Your Progress, Vocabulary Bank, Profile/Settings
 
 ## Phase Details
@@ -82,8 +82,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 04-01-PLAN.md — Build SessionPage.vue with chat transcript, mic toggle, live timer, mistake counter, and end-session navigation
-- [ ] 04-02-PLAN.md — Build FeedbackPage.vue with CSS conic-gradient score circle, QTabs (Overview/Mistakes/Vocabulary), mock feedback items, and dashboard navigation
+- [x] 04-01-PLAN.md — Build SessionPage.vue with chat transcript, mic toggle, live timer, mistake counter, and end-session navigation
+- [x] 04-02-PLAN.md — Build FeedbackPage.vue with CSS conic-gradient score circle, QTabs (Overview/Mistakes/Vocabulary), mock feedback items, and dashboard navigation
 
 ### Phase 5: Supporting Pages
 **Goal**: The remaining screens complete the full app — paywall modal, progress history, vocabulary bank, and profile/settings — so every Stitch screen is represented and the app feels production-complete
@@ -113,5 +113,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 1. Foundation | 4/4 | Complete | 2026-02-20 |
 | 2. Entry Flow | 2/2 | Complete    | 2026-02-22 |
 | 3. Dashboard | 1/1 | Complete | 2026-02-23 |
-| 4. Session Loop | 0/2 | Not started | - |
+| 4. Session Loop | 2/2 | Complete | 2026-02-23 |
 | 5. Supporting Pages | 0/4 | Not started | - |
