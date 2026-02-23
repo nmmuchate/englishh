@@ -95,13 +95,13 @@ Plans:
   3. User can view a Vocabulary Bank page listing saved words with definition, example sentence, and difficulty badge for each entry
   4. User can view a Profile/Settings page with avatar, display name, and level badge matching the Stitch account_settings design
   5. Settings toggles (notifications, dark mode override, sound) are visible and interactive in the UI with no persistence errors
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 05-01: Build PaywallDialog.vue (QDialog) with pricing tiers and dismiss behavior; wire trigger from dashboard or nav
-- [ ] 05-02: Build YourProgressPage.vue matching Stitch your_progress design with mock stats and chart
-- [ ] 05-03: Build VocabularyBankPage.vue with mock word list entries (definition, example, difficulty badge)
-- [ ] 05-04: Build ProfilePage.vue matching Stitch account_settings design with settings toggles
+- [ ] 05-01-PLAN.md — Build PaywallDialog.vue (QDialog) with pricing tiers and dismiss behavior; wire Go Pro chip trigger into DashboardPage.vue
+- [ ] 05-02-PLAN.md — Build ProgressPage.vue matching Stitch your_progress design with level badge, SVG fluency chart, and vocab mini-section
+- [ ] 05-03-PLAN.md — Build VocabularyPage.vue with 8 mock word entries (definition, example, difficulty badge, POS badge)
+- [ ] 05-04-PLAN.md — Build ProfilePage.vue matching Stitch account_settings design with initials avatar, menu groups, and QToggle rows
 
 ## Progress
 
