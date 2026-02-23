@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-02-20)
 
 **Core value:** Every screen matches the Stitch designs pixel-for-pixel so the UI feels production-ready on mobile before any backend is wired up.
-**Current focus:** Phase 5 — Supporting Pages
+**Current focus:** All phases complete — SpeakAI v1.0.0 milestone achieved
 
 ## Current Position
 
 Phase: 5 of 5 (Supporting Pages)
-Plan: 0 of 4 in current phase
-Status: Phase 4 complete — ready for Phase 5
-Last activity: 2026-02-23 — Phase 4 Session Loop complete — SessionPage.vue and FeedbackPage.vue both verified by human
+Plan: 4 of 4 in current phase
+Status: ALL PHASES COMPLETE — milestone v1.0 achieved
+Last activity: 2026-02-23 — Phase 5 Supporting Pages complete — all 4 plans human-verified
 
-Progress: [████████░░] 80%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -31,6 +31,7 @@ Progress: [████████░░] 80%
 | Phase 2 Entry Flow | 2 | ~7min | ~3.5min |
 | Phase 3 Dashboard | 1 | ~15min | ~15min |
 | Phase 4 Session Loop | 2 | ~25min | ~12.5min |
+| Phase 5 Supporting Pages | 4 | ~50min | ~12.5min |
 
 **Recent Trend:**
 - Last 5 plans: 02-01 (complete ~2min), 02-02 (complete ~5min), 03-01 (complete ~15min), 04-01 (complete ~15min), 04-02 (complete ~10min)
@@ -64,6 +65,11 @@ Recent decisions affecting current work:
 - [04-01]: Live timer implemented as setInterval every 1000ms in onMounted, cleared in onUnmounted — no external time library
 - [04-02]: CSS conic-gradient rings driven by reactive refs and setInterval tweening over 800ms with ease-out cubic — no SVG, cross-browser
 - [04-02]: QTabPanels background forced transparent (!important) to inherit page dark bg (Quasar applies white default)
+- [05-01]: PaywallDialog implemented as QDialog with persistent prop; Go Pro chip in DashboardPage triggers dialog via ref
+- [05-02]: ProgressPage SVG fluency chart uses viewBox with polyline points computed from mock score array
+- [05-03]: VocabularyPage badge variant pattern uses CSS class suffix --A1/--A2/--B1/--B2 driven by dynamic :class binding
+- [05-04]: ProfilePage avatar uses green initials circle (SC) matching DashboardPage pattern — no external image
+- [05-04]: QToggle local refs only (notificationsEnabled, darkModeOverride, soundEffects) — no Pinia persistence for transient UI prefs
 
 ### Pending Todos
 
@@ -76,5 +82,5 @@ None — Phase 1 complete. Blockers addressed in 01-01.
 ## Session Continuity
 
 Last session: 2026-02-23
-Stopped at: Completed 04-02-PLAN.md — FeedbackPage.vue complete and human-verified. Phase 4 complete. Ready for Phase 5.
+Stopped at: Completed 05-04-PLAN.md — ProfilePage.vue complete and human-verified. All 5 phases complete. SpeakAI v1.0.0 milestone achieved.
 Resume file: None

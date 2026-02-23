@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Entry Flow** - Landing page and 3-step onboarding wizard
 - [x] **Phase 3: Dashboard** - Main hub with stats, chart, streak, and session start
 - [x] **Phase 4: Session Loop** - Active session screen and post-session feedback screen
-- [ ] **Phase 5: Supporting Pages** - Paywall modal, Your Progress, Vocabulary Bank, Profile/Settings
+- [x] **Phase 5: Supporting Pages** - Paywall modal, Your Progress, Vocabulary Bank, Profile/Settings
 
 ## Phase Details
 
@@ -98,10 +98,10 @@ Plans:
 **Plans**: 4 plans
 
 Plans:
-- [ ] 05-01-PLAN.md — Build PaywallDialog.vue (QDialog) with pricing tiers and dismiss behavior; wire Go Pro chip trigger into DashboardPage.vue
-- [ ] 05-02-PLAN.md — Build ProgressPage.vue matching Stitch your_progress design with level badge, SVG fluency chart, and vocab mini-section
-- [ ] 05-03-PLAN.md — Build VocabularyPage.vue with 8 mock word entries (definition, example, difficulty badge, POS badge)
-- [ ] 05-04-PLAN.md — Build ProfilePage.vue matching Stitch account_settings design with initials avatar, menu groups, and QToggle rows
+- [x] 05-01-PLAN.md — Build PaywallDialog.vue (QDialog) with pricing tiers and dismiss behavior; wire Go Pro chip trigger into DashboardPage.vue
+- [x] 05-02-PLAN.md — Build ProgressPage.vue matching Stitch your_progress design with level badge, SVG fluency chart, and vocab mini-section
+- [x] 05-03-PLAN.md — Build VocabularyPage.vue with 8 mock word entries (definition, example, difficulty badge, POS badge)
+- [x] 05-04-PLAN.md — Build ProfilePage.vue matching Stitch account_settings design with initials avatar, menu groups, and QToggle rows
 
 ## Progress
 
@@ -114,4 +114,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 2. Entry Flow | 2/2 | Complete    | 2026-02-22 |
 | 3. Dashboard | 1/1 | Complete | 2026-02-23 |
 | 4. Session Loop | 2/2 | Complete | 2026-02-23 |
-| 5. Supporting Pages | 0/4 | Not started | - |
+| 5. Supporting Pages | 4/4 | Complete | 2026-02-23 |
