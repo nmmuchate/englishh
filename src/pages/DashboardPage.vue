@@ -18,6 +18,14 @@
           <q-icon name="sym_o_local_fire_department" size="16px" class="q-mr-xs" />
           <span class="text-caption text-weight-bold">{{ profile.streakDays }} days</span>
         </div>
+        <!-- Go Pro chip — triggers PaywallDialog (PAYW-01) -->
+        <div
+          class="go-pro-chip row items-center no-wrap q-px-sm q-py-xs q-ml-sm cursor-pointer"
+          @click="showPaywall = true"
+        >
+          <q-icon name="sym_o_star" size="12px" class="q-mr-xs" />
+          <span class="text-caption text-weight-bold">Go Pro</span>
+        </div>
       </div>
     </div>
 
@@ -99,16 +107,21 @@
       @click="goToSession"
     />
 
+    <!-- Paywall dialog (PAYW-01) -->
+    <PaywallDialog v-model="showPaywall" />
+
   </q-page>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useProfileStore } from 'src/stores/profile'
+import PaywallDialog from 'src/components/PaywallDialog.vue'
 
 const router = useRouter()
 const profile = useProfileStore()
+const showPaywall = ref(false)
 
 const initials = computed(() => {
   return profile.displayName
@@ -167,6 +180,15 @@ const weekData = [
   background: rgba(255, 107, 53, 0.15);
   border-radius: var(--radius-full, 9999px);
   color: #FF6B35;
+}
+
+/* Go Pro chip — accent-orange pill (PAYW-01) */
+.go-pro-chip {
+  background: rgba(255, 107, 53, 0.15);
+  border-radius: var(--radius-full, 9999px);
+  color: #FF6B35;
+  border: 1px solid rgba(255, 107, 53, 0.3);
+  flex-shrink: 0;
 }
 
 /* ---- Stats cards (DASH-01) ---- */
