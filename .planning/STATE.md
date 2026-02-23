@@ -2,40 +2,29 @@
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-02-20)
+See: .planning/PROJECT.md (updated 2026-02-23)
 
 **Core value:** Every screen matches the Stitch designs pixel-for-pixel so the UI feels production-ready on mobile before any backend is wired up.
-**Current focus:** All phases complete — SpeakAI v1.0.0 milestone achieved
+**Current focus:** Milestone v1.1 backend — Firebase Auth, Firestore, Cloud Functions, Web Speech API, MozPayments
 
 ## Current Position
 
-Phase: 5 of 5 (Supporting Pages)
-Plan: 4 of 4 in current phase
-Status: ALL PHASES COMPLETE — milestone v1.0 achieved
-Last activity: 2026-02-23 — Phase 5 Supporting Pages complete — all 4 plans human-verified
+Phase: Not started (Phase 6 is next)
+Plan: —
+Status: Defining requirements — Milestone v1.1 backend started
+Last activity: 2026-02-23 — Milestone v1.1 backend initialized
 
-Progress: [██████████] 100%
+Progress: [░░░░░░░░░░] 0%  (5 phases: 6, 7, 8, 9, 10)
 
 ## Performance Metrics
 
-**Velocity:**
-- Total plans completed: 4
+**v1.0 Velocity:**
+- Total plans completed: 13 (4 + 2 + 1 + 2 + 4)
+- Average duration: ~12min/plan
+
+**v1.1 Velocity:**
+- Total plans completed: 0
 - Average duration: -
-- Total execution time: -
-
-**By Phase:**
-
-| Phase | Plans | Total | Avg/Plan |
-|-------|-------|-------|----------|
-| Phase 1 Foundation | 4 | - | - |
-| Phase 2 Entry Flow | 2 | ~7min | ~3.5min |
-| Phase 3 Dashboard | 1 | ~15min | ~15min |
-| Phase 4 Session Loop | 2 | ~25min | ~12.5min |
-| Phase 5 Supporting Pages | 4 | ~50min | ~12.5min |
-
-**Recent Trend:**
-- Last 5 plans: 02-01 (complete ~2min), 02-02 (complete ~5min), 03-01 (complete ~15min), 04-01 (complete ~15min), 04-02 (complete ~10min)
-- Trend: -
 
 *Updated after each plan completion*
 
@@ -71,16 +60,27 @@ Recent decisions affecting current work:
 - [05-04]: ProfilePage avatar uses green initials circle (SC) matching DashboardPage pattern — no external image
 - [05-04]: QToggle local refs only (notificationsEnabled, darkModeOverride, soundEffects) — no Pinia persistence for transient UI prefs
 
+### v1.1 Decisions
+
+- [v1.1-Init]: TRD at /TRD.md is the authoritative spec for all backend implementation — no research phase needed
+- [v1.1-Init]: UI/design must NOT change — only add backend logic to existing components
+- [v1.1-Init]: Firebase MCP server to be used for Firestore operations and deployment
+- [v1.1-Init]: Cloud Functions in Node.js 18, Gemini 1.5 Flash model
+- [v1.1-Init]: MozPayments primary payment gateway; Stripe test mode for development
+- [v1.1-Init]: Web Speech API (SpeechRecognition) for voice — text fallback for non-Chrome browsers
+- [v1.1-Init]: All API keys in .env / .env.local — never hardcoded
+
 ### Pending Todos
 
 None yet.
 
 ### Blockers/Concerns
 
-None — Phase 1 complete. Blockers addressed in 01-01.
+- Firebase project must be created and Blaze plan enabled before Phase 6 execution
+- API keys required before execution: Gemini API key (aistudio.google.com), MozPayments API key
 
 ## Session Continuity
 
 Last session: 2026-02-23
-Stopped at: Completed 05-04-PLAN.md — ProfilePage.vue complete and human-verified. All 5 phases complete. SpeakAI v1.0.0 milestone achieved.
+Stopped at: Milestone v1.1 backend initialized. REQUIREMENTS.md, ROADMAP.md, PROJECT.md, STATE.md updated. Ready for Phase 6 planning.
 Resume file: None

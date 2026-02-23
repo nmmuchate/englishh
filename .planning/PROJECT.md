@@ -2,11 +2,24 @@
 
 ## What This Is
 
-A pixel-perfect Quasar/Vue 3 PWA frontend for an English Conversation Practice App, converted from Stitch HTML/CSS exports. The app is a fully static UI layer — no backend, no API calls — using mock/hardcoded data to demonstrate all screens and navigation flows on mobile.
+A Quasar/Vue 3 PWA for English conversation practice. v1.0 delivered a complete pixel-perfect static UI. v1.1 wires a Firebase backend — real auth, Firestore data, Gemini-powered AI conversations, Web Speech API voice input, MozPayments subscriptions, and Cloud Functions — transforming the static prototype into a production-ready app.
 
 ## Core Value
 
 Every screen matches the Stitch designs pixel-for-pixel so the UI feels production-ready on mobile before any backend is wired up.
+
+## Current Milestone: v1.1 backend
+
+**Goal:** Wire the existing static Quasar frontend to a real Firebase backend — replacing all mock data with Firestore, Google Sign-In with Firebase Auth, conversation bubbles with Gemini API, mic button with Web Speech API, and paywall with MozPayments.
+
+**Target features:**
+- Firebase Auth (real Google Sign-In, route guards, user docs)
+- Firestore data layer (all 5 collections, offline persistence, stores connected)
+- Web Speech API voice input + text fallback
+- Cloud Functions: startConversation, sendMessage, endSession (Gemini AI)
+- Cloud Functions: createSubscription, handlePaymentWebhook (MozPayments)
+- Cloud Functions: deleteOldTranscripts, updateWeeklyLeaderboard (scheduled)
+- Firestore security rules + .env configuration
 
 ## Requirements
 
@@ -36,14 +49,19 @@ Every screen matches the Stitch designs pixel-for-pixel so the UI feels producti
 - [ ] Mobile-first layout: max-width 430px, col-6 mobile / col-md-3 tablet+
 - [ ] Mock/hardcoded data for all screens (fake stats, transcript, scores, words)
 
-### Out of Scope
+### Out of Scope (v1.0 — now implemented in v1.1)
 
-- Backend / API integration — static UI only; no real calls
-- Firebase / Google Auth — mock sign-in flow only
-- Gemini / AI features — UI only; no real AI processing
-- Real microphone / audio recording — button UI only, no actual recording
-- Push notifications — out of v1 scope
-- Desktop layout beyond responsive breakpoints — mobile-first only
+- Backend / API integration → v1.1
+- Firebase / Google Auth → v1.1
+- Gemini / AI features → v1.1
+- Real microphone / audio recording → v1.1
+
+### Out of Scope (v1.1)
+
+- Push notifications — v2 feature
+- Desktop-optimized layout — mobile-first only
+- Real pronunciation phonetic scoring — Web Speech API limitation
+- E2E / unit tests — deferred post-backend stabilization
 
 ## Context
 
@@ -94,4 +112,4 @@ Each directory contains `code.html` (Tailwind-based design) and `screen.png` (vi
 | Vocabulary Bank as new page | Not in Stitch exports; create from design system | — Pending |
 
 ---
-*Last updated: 2026-02-20 after initialization*
+*Last updated: 2026-02-23 — v1.1 backend milestone started*
