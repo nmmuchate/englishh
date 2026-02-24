@@ -6,7 +6,7 @@
 import { defineBoot } from '#q-app/wrappers'
 import { initializeApp } from 'firebase/app'
 import { getAuth, connectAuthEmulator } from 'firebase/auth'
-import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore'
+import { initializeFirestore, persistentLocalCache, persistentSingleTabManager, connectFirestoreEmulator } from 'firebase/firestore'
 
 // IMPORTANT: Access env vars via static dot notation only.
 // Quasar/Vite replaces process.env.X at build time via static analysis.
@@ -22,7 +22,11 @@ const firebaseConfig = {
 
 const app  = initializeApp(firebaseConfig)
 const auth = getAuth(app)
-const db   = getFirestore(app)
+const db = initializeFirestore(app, {
+  localCache: persistentLocalCache({
+    tabManager: persistentSingleTabManager(undefined)
+  })
+})
 
 // Connect to local Firebase emulators in development.
 // Prevents accidental reads/writes to production Firestore during dev.
