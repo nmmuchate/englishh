@@ -16,7 +16,7 @@
         <!-- Streak badge -->
         <div class="streak-badge row items-center no-wrap q-px-sm q-py-xs">
           <q-icon name="sym_o_local_fire_department" size="16px" class="q-mr-xs" />
-          <span class="text-caption text-weight-bold">{{ profile.streakDays }} days</span>
+          <span class="text-caption text-weight-bold">{{ profile.dailyStreak }} days</span>
         </div>
         <!-- Go Pro chip — triggers PaywallDialog (PAYW-01) -->
         <div
@@ -37,21 +37,21 @@
         <div class="col-4">
           <div class="stat-card text-center q-pa-sm">
             <q-icon name="sym_o_history" size="20px" class="text-primary q-mb-xs" />
-            <div class="text-h6 text-weight-bold">{{ profile.totalSessions }}</div>
+            <div class="text-h6 text-weight-bold">{{ profile.totalSessionsCompleted }}</div>
             <div class="text-caption text-grey-5">Sessions</div>
           </div>
         </div>
         <div class="col-4">
           <div class="stat-card text-center q-pa-sm">
             <q-icon name="sym_o_local_fire_department" size="20px" class="stat-icon-streak q-mb-xs" />
-            <div class="text-h6 text-weight-bold">{{ profile.streakDays }}</div>
+            <div class="text-h6 text-weight-bold">{{ profile.dailyStreak }}</div>
             <div class="text-caption text-grey-5">Streak</div>
           </div>
         </div>
         <div class="col-4">
           <div class="stat-card text-center q-pa-sm">
             <q-icon name="sym_o_school" size="20px" class="stat-icon-vocab q-mb-xs" />
-            <div class="text-h6 text-weight-bold">{{ profile.vocabularyLearned }}</div>
+            <div class="text-h6 text-weight-bold">{{ profile.totalVocabularyWords }}</div>
             <div class="text-caption text-grey-5">Vocab</div>
           </div>
         </div>
