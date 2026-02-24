@@ -61,12 +61,22 @@
 import { useRouter } from 'vue-router'
 import { useAuthStore } from 'stores/auth'
 
-const router = useRouter()
+const router    = useRouter()
 const authStore = useAuthStore()
 
-function handleSignIn() {
-  authStore.mockSignIn()
-  router.push({ name: 'onboarding' })
+// handleSignIn: real Firebase Google Sign-In replacing mock.
+// signInWithPopup is called synchronously inside signInWithGoogle() to prevent
+// mobile browser popup blocking (no await before the popup call).
+async function handleSignIn() {
+  try {
+    await authStore.signInWithGoogle()
+    // Push to onboarding; the route guard in boot/auth.js redirects to dashboard
+    // if onboardingCompleted is already true (returning user).
+    router.push({ name: 'onboarding' })
+  } catch (error) {
+    // Popup closed by user or network error — stay on landing page.
+    console.warn('Sign-in cancelled or failed:', error.code)
+  }
 }
 </script>
 
