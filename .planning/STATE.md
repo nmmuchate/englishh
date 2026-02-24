@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-02-23)
 ## Current Position
 
 Phase: 07-firestore-data
-Plan: 07-01 complete
-Status: Active — ready for 07-02 (DashboardPage Firestore bindings)
-Last activity: 2026-02-24 — Plan 07-01 executed, all 3 tasks committed (a10bc3d, ce2dfcd, ba6a536)
+Plan: 07-02 complete
+Status: Active — ready for 07-03 (VocabularyPage Firestore bindings)
+Last activity: 2026-02-24 — Plan 07-02 executed, 2 tasks committed (d78c38e, 76b8b95)
 
-Progress: [████░░░░░░] 20%  (Phase 7: 1 of ~7 plans done)
+Progress: [█████░░░░░] 28%  (Phase 7: 2 of ~7 plans done)
 
 ## Performance Metrics
 
@@ -23,7 +23,7 @@ Progress: [████░░░░░░] 20%  (Phase 7: 1 of ~7 plans done)
 - Average duration: ~12min/plan
 
 **v1.1 Velocity:**
-- Total plans completed: 4 (06-01, 06-02, 06-03, 07-01)
+- Total plans completed: 5 (06-01, 06-02, 06-03, 07-01, 07-02)
 - Average duration: ~6min/plan
 
 *Updated after each plan completion*
@@ -61,6 +61,8 @@ Recent decisions affecting current work:
 - [05-04]: QToggle local refs only (notificationsEnabled, darkModeOverride, soundEffects) — no Pinia persistence for transient UI prefs
 - [Phase 07-01]: persistentSingleTabManager chosen over persistentMultipleTabManager — this is a mobile PWA, not a multi-tab desktop app
 - [Phase 07-01]: startSession() made async and awaited in SessionPage.vue onMounted to ensure sessionId is set before timer starts
+- [07-02]: updateDoc used (not setDoc) in OnboardingPage — users/{userId} doc already exists from createUserProfile on sign-in; setDoc without merge:true would wipe all fields
+- [07-02]: Top-level import approach for firebase/firestore in OnboardingPage — cleaner than dynamic import, boot/firebase.js is initialized before onboarding page mounts
 
 ### v1.1 Decisions
 
@@ -98,4 +100,4 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Completed 07-01-PLAN.md — Firestore data foundation complete
+Stopped at: Completed 07-02-PLAN.md — DashboardPage/ProgressPage/OnboardingPage wired to Firestore data
