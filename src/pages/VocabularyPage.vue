@@ -18,7 +18,7 @@
       <div class="stats-row row items-center q-gutter-sm q-mt-md q-mb-lg">
         <div class="row items-center no-wrap">
           <q-icon name="sym_o_auto_stories" size="18px" color="primary" class="q-mr-xs" />
-          <span class="text-body2 text-weight-bold text-primary">183 words learned</span>
+          <span class="text-body2 text-weight-bold text-primary">{{ profileStore.totalVocabularyWords }} words learned</span>
         </div>
         <div class="level-badge q-px-sm q-py-xs">
           <span class="text-caption text-weight-bold text-primary">B1 Level</span>
@@ -28,17 +28,18 @@
       <!-- Word list -->
       <div class="column q-gutter-md q-pb-lg">
         <div
-          v-for="word in vocabWords"
-          :key="word.word"
+          v-for="word in vocabStore.words"
+          :key="word.id"
           class="word-card q-pa-md"
         >
           <!-- Top row: word + difficulty badge -->
           <div class="row items-center justify-between no-wrap q-mb-xs">
             <div class="row items-center no-wrap q-gutter-sm">
               <span class="text-subtitle1 text-weight-bold word-name">{{ word.word }}</span>
-              <span class="text-caption text-grey-5 phonetic">{{ word.phonetic }}</span>
+              <span v-if="word.phonetic" class="text-caption text-grey-5 phonetic">{{ word.phonetic }}</span>
             </div>
             <div
+              v-if="word.difficulty"
               class="difficulty-badge q-px-sm q-py-xs text-caption text-weight-bold"
               :class="`difficulty-badge--${word.difficulty}`"
             >
@@ -47,7 +48,7 @@
           </div>
 
           <!-- Part of speech badge -->
-          <div class="q-mb-sm">
+          <div v-if="word.pos" class="q-mb-sm">
             <span
               class="pos-badge q-px-sm q-py-xs text-caption text-weight-bold"
               :class="`pos-badge--${word.pos}`"
@@ -60,7 +61,14 @@
           <div class="text-body2 text-grey-5 q-mb-sm definition">{{ word.definition }}</div>
 
           <!-- Example sentence -->
-          <div class="text-caption text-grey-6 example-sentence">"{{ word.example }}"</div>
+          <div class="text-caption text-grey-6 example-sentence">"{{ word.example ?? word.exampleSentence ?? '' }}"</div>
+        </div>
+
+        <!-- Empty state -->
+        <div v-if="vocabStore.words.length === 0 && !vocabStore.isLoading" class="text-center text-grey-5 q-py-xl">
+          <q-icon name="sym_o_auto_stories" size="48px" class="q-mb-sm" />
+          <div class="text-body2">No words saved yet.</div>
+          <div class="text-caption">Save words from your sessions to build your vocabulary bank.</div>
         </div>
       </div>
 
@@ -70,73 +78,16 @@
 </template>
 
 <script setup>
-// Mock vocabulary word list — 8 entries matching planning spec
-const vocabWords = [
-  {
-    word: 'Eloquent',
-    phonetic: '/ˈɛləkwənt/',
-    pos: 'adj',
-    definition: 'Fluent or persuasive in speaking or writing; clearly expressing ideas.',
-    example: 'She gave an eloquent speech that moved the entire audience.',
-    difficulty: 'B2',
-  },
-  {
-    word: 'Ambience',
-    phonetic: '/ˈæmbiəns/',
-    pos: 'noun',
-    definition: 'The character and atmosphere of a place.',
-    example: 'The restaurant had a warm, cosy ambience perfect for a date.',
-    difficulty: 'B1',
-  },
-  {
-    word: 'Resilient',
-    phonetic: '/rɪˈzɪliənt/',
-    pos: 'adj',
-    definition: 'Able to withstand or recover quickly from difficult conditions.',
-    example: 'Children are often more resilient than we give them credit for.',
-    difficulty: 'B1',
-  },
-  {
-    word: 'Pragmatic',
-    phonetic: '/præɡˈmætɪk/',
-    pos: 'adj',
-    definition: 'Dealing with things sensibly and realistically.',
-    example: 'We need a pragmatic approach to solve this problem.',
-    difficulty: 'B2',
-  },
-  {
-    word: 'Profound',
-    phonetic: '/prəˈfaʊnd/',
-    pos: 'adj',
-    definition: 'Very great or intense; having or showing great knowledge.',
-    example: 'Reading that book had a profound effect on my worldview.',
-    difficulty: 'B2',
-  },
-  {
-    word: 'Articulate',
-    phonetic: '/ɑːrˈtɪkjʊlɪt/',
-    pos: 'adj',
-    definition: 'Having or showing the ability to speak fluently and coherently.',
-    example: 'She was articulate and confident during the job interview.',
-    difficulty: 'B1',
-  },
-  {
-    word: 'Tenacious',
-    phonetic: '/tɪˈneɪʃəs/',
-    pos: 'adj',
-    definition: 'Tending to keep a firm hold; persistent; not easily discouraged.',
-    example: 'His tenacious spirit helped him overcome every obstacle.',
-    difficulty: 'B2',
-  },
-  {
-    word: 'Candid',
-    phonetic: '/ˈkændɪd/',
-    pos: 'adj',
-    definition: 'Truthful and straightforward; frank and open.',
-    example: 'I appreciate your candid feedback — it helps me improve.',
-    difficulty: 'A2',
-  },
-]
+import { onMounted } from 'vue'
+import { useVocabularyStore } from 'src/stores/vocabulary'
+import { useProfileStore } from 'stores/profile'
+
+const vocabStore = useVocabularyStore()
+const profileStore = useProfileStore()
+
+onMounted(() => {
+  vocabStore.loadWords()
+})
 </script>
 
 <style scoped>

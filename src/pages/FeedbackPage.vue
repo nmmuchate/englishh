@@ -206,6 +206,18 @@
               </div>
               <div class="text-body2 text-grey-5 q-mb-xs">{{ word.definition }}</div>
               <div class="text-caption text-grey-6 vocab-example">"{{ word.example }}"</div>
+              <div class="row justify-end q-mt-sm">
+                <q-btn
+                  flat
+                  dense
+                  no-caps
+                  icon="sym_o_bookmark"
+                  label="Add to Bank"
+                  color="primary"
+                  size="sm"
+                  @click="saveWordToBank(word)"
+                />
+              </div>
             </div>
 
           </div>
@@ -236,12 +248,22 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSessionStore } from 'src/stores/session'
+import { useVocabularyStore } from 'src/stores/vocabulary'
 
 const router = useRouter()
 const session = useSessionStore()
+const vocabStore = useVocabularyStore()
 
 // Active tab (FEED-02)
 const tab = ref('overview')
+
+async function saveWordToBank(word) {
+  await vocabStore.saveWord({
+    word:       word.term,
+    definition: word.definition,
+    example:    word.example
+  })
+}
 
 // Navigate back to dashboard (FEED-04)
 function goToDashboard() {
