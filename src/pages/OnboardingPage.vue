@@ -204,6 +204,8 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from 'stores/auth'
+import { doc, updateDoc, serverTimestamp } from 'firebase/firestore'
+import { db } from 'boot/firebase'
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -242,7 +244,15 @@ const goalOptions = [
   { value: 'fun', title: 'Just for fun', desc: 'Enjoy movies and books in English', icon: 'sym_o_sentiment_satisfied' }
 ]
 
-function handleComplete() {
+async function handleComplete() {
+  const userRef = doc(db, 'users', authStore.uid)
+  await updateDoc(userRef, {
+    onboardingCompleted: true,
+    currentLevel:        'B1',
+    levelProgress:       0,
+    freeSessionUsed:     false,
+    updatedAt:           serverTimestamp()
+  })
   authStore.completeOnboarding()
   router.push({ name: 'dashboard' })
 }

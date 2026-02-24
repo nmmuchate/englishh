@@ -27,22 +27,22 @@
         <!-- Circle with B1 + verified badge -->
         <div class="level-circle-wrap q-mb-md">
           <div class="level-circle row items-center justify-center">
-            <span class="text-h4 text-weight-bold text-white">B1</span>
+            <span class="text-h4 text-weight-bold text-white">{{ profile.currentLevel }}</span>
           </div>
           <div class="verified-badge row items-center justify-center">
             <q-icon name="sym_o_verified" size="20px" color="primary" />
           </div>
         </div>
-        <div class="text-h5 text-weight-bold q-mb-xs">Intermediate</div>
-        <div class="text-body2 text-grey-5 q-mb-md">Level B1 &bull; 65% to B2</div>
+        <div class="text-h5 text-weight-bold q-mb-xs">{{ profile.currentLevel }}</div>
+        <div class="text-body2 text-grey-5 q-mb-md">Level {{ profile.currentLevel }} &bull; {{ profile.levelProgress }}% to B2</div>
         <!-- Progress bar -->
         <div class="full-width">
           <div class="row items-center justify-between q-mb-sm">
             <span class="text-caption text-weight-semibold">Goal: Advanced B2</span>
-            <span class="text-caption text-weight-bold text-primary">65%</span>
+            <span class="text-caption text-weight-bold text-primary">{{ profile.levelProgress }}%</span>
           </div>
           <q-linear-progress
-            :value="0.65"
+            :value="profile.levelProgress / 100"
             color="primary"
             track-color="grey-3"
             rounded
@@ -65,7 +65,7 @@
         <!-- Score numbers -->
         <div class="q-mb-md">
           <div class="row items-baseline no-wrap q-gutter-xs">
-            <span class="text-h3 text-weight-bold">78</span>
+            <span class="text-h3 text-weight-bold">{{ profile.averageScore }}</span>
             <span class="text-h6 text-grey-5">/100</span>
           </div>
           <div class="text-caption text-grey-5">Peak performance on Friday</div>
@@ -161,8 +161,10 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
+import { useProfileStore } from 'stores/profile'
 
 const router = useRouter()
+const profile = useProfileStore()
 
 // Day labels — FRI is peak
 const chartDays = [
