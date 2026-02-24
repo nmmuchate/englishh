@@ -143,12 +143,12 @@ Plans:
   4. ProgressPage shows real `levelProgress`, `averageScore`, and `totalHoursPracticed` from Firestore
   5. Opening the app while offline still shows the cached dashboard data (Firestore offline persistence)
   6. Tapping "Add to Bank" on FeedbackPage saves the word to `vocabulary/{userId}/words/{wordId}` in Firestore
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 07-01-PLAN.md — useProfileStore connected to Firestore, useSessionStore Firestore sync, Firestore offline persistence enabled
-- [ ] 07-02-PLAN.md — DashboardPage + ProgressPage read real Firestore data; onboarding Firestore write on completion
-- [ ] 07-03-PLAN.md — VocabularyPage reads vocabulary subcollection; FeedbackPage "Add to Bank" writes to vocabulary subcollection
+- [ ] 07-01-PLAN.md — Enable offline persistence (initializeFirestore), rewrite useProfileStore with real fields, wire setProfile in boot/auth.js, add Firestore session write to useSessionStore
+- [ ] 07-02-PLAN.md — DashboardPage + ProgressPage bind real Firestore field names; OnboardingPage writes onboardingCompleted:true on completion
+- [ ] 07-03-PLAN.md — Create vocabulary service + store; VocabularyPage reads subcollection; FeedbackPage vocabulary tab gets "Add to Bank" save button
 
 ### Phase 8: AI Conversation Engine
 **Goal**: The conversation loop is live — Web Speech API captures real voice input, `startConversation` and `sendMessage` Cloud Functions drive Gemini-powered conversations with real-time mistake detection, and the session paywall gate enforces subscription checks
@@ -217,7 +217,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 4. Session Loop | 2/2 | Complete | 2026-02-23 |
 | 5. Supporting Pages | 4/4 | Complete | 2026-02-23 |
 | 6. Firebase Auth & Infrastructure | 3/3 | Complete   | 2026-02-24 |
-| 7. Firestore Data Layer | 0/3 | Pending | — |
+| 7. Firestore Data Layer | 0/3 | Planned | — |
 | 8. AI Conversation Engine | 0/3 | Pending | — |
 | 9. Session Scoring & Real Feedback | 0/2 | Pending | — |
 | 10. Payments, Subscriptions & Cron Jobs | 0/3 | Pending | — |
