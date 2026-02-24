@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-02-23)
 ## Current Position
 
 Phase: 07-firestore-data
-Plan: 07-02 complete
-Status: Active — ready for 07-03 (VocabularyPage Firestore bindings)
-Last activity: 2026-02-24 — Plan 07-02 executed, 2 tasks committed (d78c38e, 76b8b95)
+Plan: 07-03 complete
+Status: Active — ready for 07-04
+Last activity: 2026-02-24 — Plan 07-03 executed, 2 tasks committed (c97e888, a9213d9)
 
-Progress: [█████░░░░░] 28%  (Phase 7: 2 of ~7 plans done)
+Progress: [██████░░░░] 35%  (Phase 7: 3 of ~7 plans done)
 
 ## Performance Metrics
 
@@ -23,7 +23,7 @@ Progress: [█████░░░░░] 28%  (Phase 7: 2 of ~7 plans done)
 - Average duration: ~12min/plan
 
 **v1.1 Velocity:**
-- Total plans completed: 5 (06-01, 06-02, 06-03, 07-01, 07-02)
+- Total plans completed: 6 (06-01, 06-02, 06-03, 07-01, 07-02, 07-03)
 - Average duration: ~6min/plan
 
 *Updated after each plan completion*
@@ -63,6 +63,9 @@ Recent decisions affecting current work:
 - [Phase 07-01]: startSession() made async and awaited in SessionPage.vue onMounted to ensure sessionId is set before timer starts
 - [07-02]: updateDoc used (not setDoc) in OnboardingPage — users/{userId} doc already exists from createUserProfile on sign-in; setDoc without merge:true would wipe all fields
 - [07-02]: Top-level import approach for firebase/firestore in OnboardingPage — cleaner than dynamic import, boot/firebase.js is initialized before onboarding page mounts
+- [07-03]: saveWord() reloads full word list after write — simpler than optimistic push, acceptable for vocabulary bank (low frequency operation)
+- [07-03]: Optional fields (phonetic, pos, difficulty) guarded with v-if in VocabularyPage — Firestore schema does not store these; display slots preserved for future enriched data
+- [07-03]: FeedbackPage static vocabWords array retained — Phase 9 replaces it with real session scoring data; DATA-06 only requires save action to exist
 
 ### v1.1 Decisions
 
@@ -100,4 +103,4 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Completed 07-02-PLAN.md — DashboardPage/ProgressPage/OnboardingPage wired to Firestore data
+Stopped at: Completed 07-03-PLAN.md — vocabulary data layer, VocabularyPage and FeedbackPage Firestore bindings

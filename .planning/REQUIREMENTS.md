@@ -95,8 +95,8 @@
 - [x] **DATA-02**: DashboardPage displays real stats (`dailyStreak`, `totalSessionsCompleted`, `totalVocabularyWords`) from Firestore user document
 - [x] **DATA-03**: Onboarding completion writes initial user document to Firestore (`currentLevel`, `levelProgress: 0`, `onboardingCompleted: true`, `createdAt`, `freeSessionUsed: false`)
 - [x] **DATA-04**: ProgressPage reads real user progress (`levelProgress`, `averageScore`, `totalHoursPracticed`, `currentLevel`) from Firestore
-- [ ] **DATA-05**: VocabularyPage reads words from `vocabulary/{userId}/words` subcollection in Firestore — replaces hardcoded word array
-- [ ] **DATA-06**: User can save a word to vocabulary bank from FeedbackPage — writes to `vocabulary/{userId}/words/{wordId}` in Firestore
+- [x] **DATA-05**: VocabularyPage reads words from `vocabulary/{userId}/words` subcollection in Firestore — replaces hardcoded word array
+- [x] **DATA-06**: User can save a word to vocabulary bank from FeedbackPage — writes to `vocabulary/{userId}/words/{wordId}` in Firestore
 - [x] **DATA-07**: Firestore offline persistence is enabled via `enableIndexedDbPersistence()` — dashboard data is viewable offline from cache
 - [x] **DATA-08**: `useSessionStore` syncs active session metadata to Firestore `sessions/{sessionId}` document (topic, userId, userLevel, createdAt)
 
@@ -204,8 +204,8 @@ Updated during roadmap creation.
 | DATA-02 | Phase 7 | Complete |
 | DATA-03 | Phase 7 | Complete |
 | DATA-04 | Phase 7 | Complete |
-| DATA-05 | Phase 7 | Pending |
-| DATA-06 | Phase 7 | Pending |
+| DATA-05 | Phase 7 | Complete |
+| DATA-06 | Phase 7 | Complete |
 | DATA-07 | Phase 7 | Complete |
 | DATA-08 | Phase 7 | Complete |
 | CONV-01 | Phase 8 | Pending |
