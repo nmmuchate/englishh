@@ -60,10 +60,18 @@ export default defineConfig((/* ctx */) => {
       // extendViteConf (viteConf) {},
       // viteVuePluginOptions: {},
 
-      // vitePlugins: [
-      //   [ 'package-name', { ..pluginOptions.. }, { server: true, client: true } ]
-      // ]
+      vitePlugins: [],
+      extendViteConf(viteConf) {
+        // Firebase SDK v9+ is shipped as native ESM — exclude from Vite's esbuild
+        // pre-bundler. The optimizer cannot resolve @firebase/* internal sub-packages
+        // that use complex exports field patterns (webchannel-wrapper, etc.).
+        viteConf.optimizeDeps = {
+          ...viteConf.optimizeDeps,
+          exclude: ['firebase']
+        }
+      }
     },
+
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#devserver
     devServer: {
