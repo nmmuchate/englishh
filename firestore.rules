@@ -1,0 +1,70 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+
+    function hasActiveSubscription() {
+      return isAuthenticated() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.subscriptionStatus == 'active';
+    }
+
+    // ── Users ──────────────────────────────────────────────────────────────
+    // Users can read and write their own document only.
+    // Deletion is forbidden (data integrity — use soft-delete via status field).
+    match /users/{userId} {
+      allow read:   if isAuthenticated() && isOwner(userId);
+      allow create: if isAuthenticated() && isOwner(userId);
+      allow update: if isAuthenticated() && isOwner(userId);
+      allow delete: if false;
+    }
+
+    // ── Sessions ───────────────────────────────────────────────────────────
+    // Session 1 is free (freeSessionUsed flag); sessions 2+ require active subscription.
+    // Users can only read/update their own sessions.
+    match /sessions/{sessionId} {
+      allow read:   if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid
+                      && (request.resource.data.sessionNumber == 1 || hasActiveSubscription());
+      allow update: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow delete: if false;
+    }
+
+    // ── Vocabulary ─────────────────────────────────────────────────────────
+    // Users own their vocabulary subcollection entirely.
+    match /vocabulary/{userId}/words/{wordId} {
+      allow read, write: if isAuthenticated() && isOwner(userId);
+    }
+
+    // ── Leaderboard ────────────────────────────────────────────────────────
+    // Any authenticated user can read leaderboard.
+    // Writes are forbidden from clients (Cloud Functions write via Admin SDK).
+    match /leaderboard/{weekId}/users/{userId} {
+      allow read:  if isAuthenticated();
+      allow write: if false;
+    }
+
+    // ── Subscriptions ──────────────────────────────────────────────────────
+    // Read-only for the owning user.
+    // Writes are forbidden from clients (webhook Cloud Function writes via Admin SDK).
+    match /subscriptions/{userId} {
+      allow read:  if isAuthenticated() && isOwner(userId);
+      allow write: if false;
+    }
+
+    // ── System Config ──────────────────────────────────────────────────────
+    // Public read (feature flags, app version, etc.).
+    // Writes forbidden from clients.
+    match /system_config/{doc} {
+      allow read:  if true;
+      allow write: if false;
+    }
+
+  }
+}
