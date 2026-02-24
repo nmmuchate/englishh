@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-02-23)
 ## Current Position
 
 Phase: 06-firebase-auth
-Plan: 06-01 complete (checkpoint at Task 3 — human-verify)
-Status: Active — awaiting human verification of Firebase boot setup
-Last activity: 2026-02-24 — Plan 06-01 executed, Task 2 committed (8f6157d)
+Plan: 06-02 complete (checkpoint at Task 3 — human-verify)
+Status: Active — awaiting human verification of real Google Sign-In end-to-end flow
+Last activity: 2026-02-24 — Plan 06-02 executed, Tasks 1-2 committed (b921ac2, a6b773d)
 
-Progress: [█░░░░░░░░░] 5%  (Phase 6 started: 1 of ~7 plans done)
+Progress: [██░░░░░░░░] 10%  (Phase 6: 2 of ~7 plans done)
 
 ## Performance Metrics
 
@@ -23,8 +23,8 @@ Progress: [█░░░░░░░░░] 5%  (Phase 6 started: 1 of ~7 plans d
 - Average duration: ~12min/plan
 
 **v1.1 Velocity:**
-- Total plans completed: 1 (06-01)
-- Average duration: ~8min/plan
+- Total plans completed: 2 (06-01, 06-02)
+- Average duration: ~6min/plan
 
 *Updated after each plan completion*
 
@@ -73,6 +73,11 @@ Recent decisions affecting current work:
 - [06-01]: Firebase singleton pattern — initializeApp() once in boot file, { auth, db } exported for all consumers
 - [06-01]: Vite static env var access via process.env.FIREBASE_X dot notation — dynamic access not replaced at build time
 - [06-01]: Emulator guard via if (process.env.DEV) — prevents production Firestore access during dev
+- [06-02]: getCurrentUser() one-shot Promise wraps onAuthStateChanged to fix router guard race condition on hard refresh
+- [06-02]: isLoading starts true and flips false after first onAuthStateChanged emission — no premature redirect decisions
+- [06-02]: onboarding NOT in PUBLIC_ROUTES — unauthenticated users still redirect to landing; authenticated+incomplete go to onboarding
+- [06-02]: signInWithPopup called synchronously (no await before it) inside signInWithGoogle to prevent mobile popup blocking
+- [06-02]: Boot order firebase→auth enforced — auth boot imports { auth } from boot/firebase which must initialize first
 
 ### Pending Todos
 
@@ -86,5 +91,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: 06-01 Task 3 checkpoint (human-verify) — Firebase boot setup awaiting dev server verification
-Resume signal: User confirms "approved" after verifying quasar dev starts without Firebase errors
+Stopped at: 06-02 Task 3 checkpoint (human-verify) — Real Google Sign-In end-to-end awaiting user verification
+Resume signal: User confirms "approved" after completing all 6 verification tests (Google Sign-In popup, Firestore doc created, route guards, auth persistence)
