@@ -78,8 +78,8 @@
 ### Infrastructure
 
 - [x] **INFRA-01**: Firebase SDK is initialized via `src/boot/firebase.js` with env vars for `apiKey`, `authDomain`, `projectId`, `appId` loaded from `.env` / `.env.local`
-- [ ] **INFRA-02**: Firestore security rules from TRD are deployed (users / sessions / vocabulary / leaderboard / subscriptions / system_config collections)
-- [ ] **INFRA-03**: Cloud Functions project is scaffolded in `functions/` directory (Node.js 18, `firebase-admin`, `@google/generative-ai`) with Gemini and MozPayments API keys in Functions config
+- [x] **INFRA-02**: Firestore security rules from TRD are deployed (users / sessions / vocabulary / leaderboard / subscriptions / system_config collections)
+- [x] **INFRA-03**: Cloud Functions project is scaffolded in `functions/` directory (Node.js 18, `firebase-admin`, `@google/generative-ai`) with Gemini and MozPayments API keys in Functions config
 
 ### Authentication
 
@@ -193,8 +193,8 @@ Updated during roadmap creation.
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | INFRA-01 | Phase 6 | Complete |
-| INFRA-02 | Phase 6 | Pending |
-| INFRA-03 | Phase 6 | Pending |
+| INFRA-02 | Phase 6 | Complete |
+| INFRA-03 | Phase 6 | Complete |
 | AUTH-01 | Phase 6 | Pending |
 | AUTH-02 | Phase 6 | Pending |
 | AUTH-03 | Phase 6 | Complete |

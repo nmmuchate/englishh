@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-02-23)
 ## Current Position
 
 Phase: 06-firebase-auth
-Plan: 06-02 complete (checkpoint at Task 3 — human-verify)
-Status: Active — awaiting human verification of real Google Sign-In end-to-end flow
-Last activity: 2026-02-24 — Plan 06-02 executed, Tasks 1-2 committed (b921ac2, a6b773d)
+Plan: 06-03 complete (checkpoint at Task 3 — human-verify: deploy firestore:rules)
+Status: Active — awaiting user deployment of Firestore production rules
+Last activity: 2026-02-24 — Plan 06-03 executed, Tasks 1-2 committed (f0f3423, 6bf6166)
 
-Progress: [██░░░░░░░░] 10%  (Phase 6: 2 of ~7 plans done)
+Progress: [███░░░░░░░] 15%  (Phase 6: 3 of ~7 plans done)
 
 ## Performance Metrics
 
@@ -23,8 +23,8 @@ Progress: [██░░░░░░░░] 10%  (Phase 6: 2 of ~7 plans done)
 - Average duration: ~12min/plan
 
 **v1.1 Velocity:**
-- Total plans completed: 2 (06-01, 06-02)
-- Average duration: ~6min/plan
+- Total plans completed: 3 (06-01, 06-02, 06-03)
+- Average duration: ~7min/plan
 
 *Updated after each plan completion*
 
@@ -78,6 +78,11 @@ Recent decisions affecting current work:
 - [06-02]: onboarding NOT in PUBLIC_ROUTES — unauthenticated users still redirect to landing; authenticated+incomplete go to onboarding
 - [06-02]: signInWithPopup called synchronously (no await before it) inside signInWithGoogle to prevent mobile popup blocking
 - [06-02]: Boot order firebase→auth enforced — auth boot imports { auth } from boot/firebase which must initialize first
+- [06-03]: @google/genai replaces deprecated @google/generative-ai — GA version as of Nov 2025
+- [06-03]: node:24 preserved in functions/package.json — Node 18 decommissioned for Cloud Functions Oct 2025
+- [06-03]: functions/index.js uses CommonJS (require) not ESM import — Cloud Functions v2 with Node 24 defaults to CJS
+- [06-03]: hasActiveSubscription() reads users doc via get() call — single rule function handles subscription gating
+- [06-03]: Leaderboard and subscriptions write-locked to false (client side) — only Admin SDK can write
 
 ### Pending Todos
 
@@ -91,5 +96,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: 06-02 Task 3 checkpoint (human-verify) — Real Google Sign-In end-to-end awaiting user verification
-Resume signal: User confirms "approved" after completing all 6 verification tests (Google Sign-In popup, Firestore doc created, route guards, auth persistence)
+Stopped at: 06-03 Task 3 checkpoint (human-verify) — Firestore production rules awaiting deploy: `firebase deploy --only firestore:rules`
+Resume signal: User confirms "approved" after deploying rules and completing verification tests (firebase deploy --only firestore:rules, Firebase Console rules check, npm list @google/genai, node syntax check on functions/index.js)
