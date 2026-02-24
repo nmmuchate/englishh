@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-02-23)
 
 ## Current Position
 
-Phase: 06-firebase-auth
-Plan: 06-03 complete (checkpoint at Task 3 — human-verify: deploy firestore:rules)
-Status: Active — awaiting user deployment of Firestore production rules
-Last activity: 2026-02-24 — Plan 06-03 executed, Tasks 1-2 committed (f0f3423, 6bf6166)
+Phase: 07-firestore-data
+Plan: 07-01 complete
+Status: Active — ready for 07-02 (DashboardPage Firestore bindings)
+Last activity: 2026-02-24 — Plan 07-01 executed, all 3 tasks committed (a10bc3d, ce2dfcd, ba6a536)
 
-Progress: [███░░░░░░░] 15%  (Phase 6: 3 of ~7 plans done)
+Progress: [████░░░░░░] 20%  (Phase 7: 1 of ~7 plans done)
 
 ## Performance Metrics
 
@@ -23,8 +23,8 @@ Progress: [███░░░░░░░] 15%  (Phase 6: 3 of ~7 plans done)
 - Average duration: ~12min/plan
 
 **v1.1 Velocity:**
-- Total plans completed: 3 (06-01, 06-02, 06-03)
-- Average duration: ~7min/plan
+- Total plans completed: 4 (06-01, 06-02, 06-03, 07-01)
+- Average duration: ~6min/plan
 
 *Updated after each plan completion*
 
@@ -59,6 +59,8 @@ Recent decisions affecting current work:
 - [05-03]: VocabularyPage badge variant pattern uses CSS class suffix --A1/--A2/--B1/--B2 driven by dynamic :class binding
 - [05-04]: ProfilePage avatar uses green initials circle (SC) matching DashboardPage pattern — no external image
 - [05-04]: QToggle local refs only (notificationsEnabled, darkModeOverride, soundEffects) — no Pinia persistence for transient UI prefs
+- [Phase 07-01]: persistentSingleTabManager chosen over persistentMultipleTabManager — this is a mobile PWA, not a multi-tab desktop app
+- [Phase 07-01]: startSession() made async and awaited in SessionPage.vue onMounted to ensure sessionId is set before timer starts
 
 ### v1.1 Decisions
 
@@ -96,5 +98,4 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: 06-03 Task 3 checkpoint (human-verify) — Firestore production rules awaiting deploy: `firebase deploy --only firestore:rules`
-Resume signal: User confirms "approved" after deploying rules and completing verification tests (firebase deploy --only firestore:rules, Firebase Console rules check, npm list @google/genai, node syntax check on functions/index.js)
+Stopped at: Completed 07-01-PLAN.md — Firestore data foundation complete
