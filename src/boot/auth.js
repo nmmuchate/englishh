@@ -10,6 +10,7 @@ import { defineBoot } from '#q-app/wrappers'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from 'boot/firebase'
 import { useAuthStore } from 'stores/auth'
+import { useProfileStore } from 'stores/profile'
 import { fetchUserProfile } from 'src/services/userProfile'
 
 // Routes that do NOT require authentication.
@@ -36,6 +37,7 @@ export default defineBoot(({ router }) => {
   // It keeps useAuthStore in sync with the real Firebase Auth state.
   onAuthStateChanged(auth, async (user) => {
     const authStore = useAuthStore()
+    const profileStore = useProfileStore()
     authStore.setUser(user)
 
     // After sign-in, fetch the Firestore profile to load onboardingCompleted.
@@ -44,7 +46,10 @@ export default defineBoot(({ router }) => {
       const profile = await fetchUserProfile(user.uid)
       if (profile) {
         authStore.setOnboardingCompleted(profile.onboardingCompleted ?? false)
+        profileStore.setProfile(profile)
       }
+    } else {
+      profileStore.reset()
     }
   })
 

@@ -268,8 +268,8 @@ const formattedTime = computed(() => {
   return `${m}:${s}`
 })
 
-onMounted(() => {
-  session.startSession()
+onMounted(async () => {
+  await session.startSession()
   // Seed mock mistake count (SESS-04)
   session.mistakeCount = 2
   timerInterval = setInterval(() => {
