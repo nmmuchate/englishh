@@ -77,7 +77,7 @@
 
 ### Infrastructure
 
-- [ ] **INFRA-01**: Firebase SDK is initialized via `src/boot/firebase.js` with env vars for `apiKey`, `authDomain`, `projectId`, `appId` loaded from `.env` / `.env.local`
+- [x] **INFRA-01**: Firebase SDK is initialized via `src/boot/firebase.js` with env vars for `apiKey`, `authDomain`, `projectId`, `appId` loaded from `.env` / `.env.local`
 - [ ] **INFRA-02**: Firestore security rules from TRD are deployed (users / sessions / vocabulary / leaderboard / subscriptions / system_config collections)
 - [ ] **INFRA-03**: Cloud Functions project is scaffolded in `functions/` directory (Node.js 18, `firebase-admin`, `@google/generative-ai`) with Gemini and MozPayments API keys in Functions config
 
@@ -85,7 +85,7 @@
 
 - [ ] **AUTH-01**: User can sign in with a real Google account via Firebase Auth — replaces mock sign-in navigation in LandingPage.vue
 - [ ] **AUTH-02**: Firestore `users/{userId}` document is created on first sign-in with default fields from TRD schema (email, displayName, photoURL, currentLevel, onboardingCompleted: false, subscriptionStatus: "none", etc.)
-- [ ] **AUTH-03**: Auth state persists across page refreshes — Firebase Auth SDK handles token refresh automatically
+- [x] **AUTH-03**: Auth state persists across page refreshes — Firebase Auth SDK handles token refresh automatically
 - [ ] **AUTH-04**: Route guard redirects unauthenticated users to `/` (landing); redirects authenticated users with `onboardingCompleted == false` to `/onboarding`
 - [ ] **AUTH-05**: `useAuthStore` reflects real Firebase Auth state (`uid`, `email`, `displayName`, `photoURL`, `isAuthenticated`) and replaces mock auth values
 
@@ -192,12 +192,12 @@ Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| INFRA-01 | Phase 6 | Pending |
+| INFRA-01 | Phase 6 | Complete |
 | INFRA-02 | Phase 6 | Pending |
 | INFRA-03 | Phase 6 | Pending |
 | AUTH-01 | Phase 6 | Pending |
 | AUTH-02 | Phase 6 | Pending |
-| AUTH-03 | Phase 6 | Pending |
+| AUTH-03 | Phase 6 | Complete |
 | AUTH-04 | Phase 6 | Pending |
 | AUTH-05 | Phase 6 | Pending |
 | DATA-01 | Phase 7 | Pending |

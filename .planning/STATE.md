@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-02-23)
 
 ## Current Position
 
-Phase: Not started (Phase 6 is next)
-Plan: —
-Status: Defining requirements — Milestone v1.1 backend started
-Last activity: 2026-02-23 — Milestone v1.1 backend initialized
+Phase: 06-firebase-auth
+Plan: 06-01 complete (checkpoint at Task 3 — human-verify)
+Status: Active — awaiting human verification of Firebase boot setup
+Last activity: 2026-02-24 — Plan 06-01 executed, Task 2 committed (8f6157d)
 
-Progress: [░░░░░░░░░░] 0%  (5 phases: 6, 7, 8, 9, 10)
+Progress: [█░░░░░░░░░] 5%  (Phase 6 started: 1 of ~7 plans done)
 
 ## Performance Metrics
 
@@ -23,8 +23,8 @@ Progress: [░░░░░░░░░░] 0%  (5 phases: 6, 7, 8, 9, 10)
 - Average duration: ~12min/plan
 
 **v1.1 Velocity:**
-- Total plans completed: 0
-- Average duration: -
+- Total plans completed: 1 (06-01)
+- Average duration: ~8min/plan
 
 *Updated after each plan completion*
 
@@ -69,6 +69,10 @@ Recent decisions affecting current work:
 - [v1.1-Init]: MozPayments primary payment gateway; Stripe test mode for development
 - [v1.1-Init]: Web Speech API (SpeechRecognition) for voice — text fallback for non-Chrome browsers
 - [v1.1-Init]: All API keys in .env / .env.local — never hardcoded
+- [06-01]: firebase@12.9.0 used (plan expected 11.x — v12 compatible, no API changes needed)
+- [06-01]: Firebase singleton pattern — initializeApp() once in boot file, { auth, db } exported for all consumers
+- [06-01]: Vite static env var access via process.env.FIREBASE_X dot notation — dynamic access not replaced at build time
+- [06-01]: Emulator guard via if (process.env.DEV) — prevents production Firestore access during dev
 
 ### Pending Todos
 
@@ -81,6 +85,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-02-23
-Stopped at: Milestone v1.1 backend initialized. REQUIREMENTS.md, ROADMAP.md, PROJECT.md, STATE.md updated. Ready for Phase 6 planning.
-Resume file: None
+Last session: 2026-02-24
+Stopped at: 06-01 Task 3 checkpoint (human-verify) — Firebase boot setup awaiting dev server verification
+Resume signal: User confirms "approved" after verifying quasar dev starts without Firebase errors
