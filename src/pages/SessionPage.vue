@@ -16,7 +16,7 @@
         <!-- Center: subtitle + title -->
         <div class="col text-center">
           <div class="text-caption text-weight-bold text-grey-5 session-subtitle">ACTIVE SESSION</div>
-          <div class="text-subtitle1 text-weight-bold">Ordering at a Cafe</div>
+          <div class="text-subtitle1 text-weight-bold">{{ session.topic || 'Starting...' }}</div>
         </div>
         <!-- Info icon — decorative -->
         <q-btn
@@ -50,33 +50,40 @@
         </div>
       </div>
 
-      <!-- Chat transcript (SESS-01) -->
+      <!-- Live chat transcript (SESS-01) -->
       <div class="q-px-md chat-transcript">
 
-        <!-- AI message 1 -->
-        <div class="chat-row chat-row--ai q-mb-lg">
-          <div class="ai-avatar">
+        <div
+          v-for="(msg, index) in session.transcript"
+          :key="index"
+          class="q-mb-lg"
+          :class="msg.speaker === 'ai' ? 'chat-row chat-row--ai' : 'chat-row chat-row--user'"
+        >
+          <!-- AI avatar (only for ai messages) -->
+          <div v-if="msg.speaker === 'ai'" class="ai-avatar">
             <q-icon name="sym_o_smart_toy" color="primary" size="18px" />
           </div>
-          <div class="chat-bubble-wrap">
-            <div class="text-caption text-weight-bold text-grey-5 q-mb-xs chat-sender">BARISTA (AI)</div>
-            <div class="chat-bubble chat-bubble--ai">
-              <span class="text-body2">Welcome to the café! What can I get for you today?</span>
+          <!-- Bubble wrapper -->
+          <div :class="msg.speaker === 'ai' ? 'chat-bubble-wrap' : 'chat-bubble-wrap chat-bubble-wrap--user'">
+            <div class="text-caption text-weight-bold text-grey-5 q-mb-xs chat-sender" :class="{ 'text-right': msg.speaker === 'user' }">
+              {{ msg.speaker === 'ai' ? 'ALEX (AI)' : 'YOU' }}
             </div>
+            <div :class="msg.speaker === 'ai' ? 'chat-bubble chat-bubble--ai' : 'chat-bubble chat-bubble--user'">
+              <span class="text-body2">{{ msg.text }}</span>
+            </div>
+          </div>
+          <!-- User avatar (only for user messages) -->
+          <div v-if="msg.speaker === 'user'" class="user-avatar">
+            <q-icon name="sym_o_person" color="white" size="18px" />
           </div>
         </div>
 
-        <!-- User message 1 (with mistake tooltip) -->
-        <div class="chat-row chat-row--user q-mb-lg">
+        <!-- Interim text while speaking -->
+        <div v-if="interimText" class="chat-row chat-row--user q-mb-lg">
           <div class="chat-bubble-wrap chat-bubble-wrap--user">
             <div class="text-caption text-weight-bold text-grey-5 q-mb-xs chat-sender text-right">YOU</div>
-            <div class="chat-bubble chat-bubble--user">
-              <span class="text-body2">Hello! I would like <span class="mistake-underline">a espresso</span> and a croissant, please.</span>
-            </div>
-            <!-- Feedback tooltip -->
-            <div class="mistake-tip row items-center no-wrap q-mt-sm q-px-sm q-py-xs">
-              <q-icon name="sym_o_lightbulb" size="14px" class="q-mr-xs tip-icon" />
-              <span class="text-caption">Use "an" before vowel sounds: <strong>an espresso</strong></span>
+            <div class="chat-bubble chat-bubble--user" style="opacity: 0.6;">
+              <span class="text-body2">{{ interimText }}...</span>
             </div>
           </div>
           <div class="user-avatar">
@@ -84,41 +91,15 @@
           </div>
         </div>
 
-        <!-- AI message 2 -->
-        <div class="chat-row chat-row--ai q-mb-lg">
+        <!-- Sending indicator -->
+        <div v-if="session.isSending" class="chat-row chat-row--ai q-mb-lg">
           <div class="ai-avatar">
             <q-icon name="sym_o_smart_toy" color="primary" size="18px" />
           </div>
           <div class="chat-bubble-wrap">
-            <div class="text-caption text-weight-bold text-grey-5 q-mb-xs chat-sender">BARISTA (AI)</div>
+            <div class="text-caption text-weight-bold text-grey-5 q-mb-xs chat-sender">ALEX (AI)</div>
             <div class="chat-bubble chat-bubble--ai">
-              <span class="text-body2">Excellent choice. Would you like that croissant warmed up?</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- User message 2 -->
-        <div class="chat-row chat-row--user q-mb-lg">
-          <div class="chat-bubble-wrap chat-bubble-wrap--user">
-            <div class="text-caption text-weight-bold text-grey-5 q-mb-xs chat-sender text-right">YOU</div>
-            <div class="chat-bubble chat-bubble--user">
-              <span class="text-body2">Yes, please! And can I also get a large cappuccino?</span>
-            </div>
-          </div>
-          <div class="user-avatar">
-            <q-icon name="sym_o_person" color="white" size="18px" />
-          </div>
-        </div>
-
-        <!-- AI message 3 -->
-        <div class="chat-row chat-row--ai q-mb-lg">
-          <div class="ai-avatar">
-            <q-icon name="sym_o_smart_toy" color="primary" size="18px" />
-          </div>
-          <div class="chat-bubble-wrap">
-            <div class="text-caption text-weight-bold text-grey-5 q-mb-xs chat-sender">BARISTA (AI)</div>
-            <div class="chat-bubble chat-bubble--ai">
-              <span class="text-body2">Of course! That will be $12.50. Will you be paying by card or cash?</span>
+              <span class="text-body2 text-grey-5">thinking...</span>
             </div>
           </div>
         </div>
@@ -140,14 +121,37 @@
         <div class="waveform-bar" style="height: 12px;"></div>
       </div>
 
+      <!-- Text input fallback (CONV-02) -->
+      <div v-if="showTextInput" class="q-px-md q-pb-sm row items-center gap-sm">
+        <q-input
+          v-model="textInput"
+          dense
+          outlined
+          rounded
+          placeholder="Type your message..."
+          class="col text-input-field"
+          :disable="session.isSending"
+          @keyup.enter="sendUserMessage(textInput)"
+        />
+        <q-btn
+          round
+          unelevated
+          color="primary"
+          icon="sym_o_send"
+          :disable="!textInput.trim() || session.isSending"
+          @click="sendUserMessage(textInput)"
+        />
+      </div>
+
       <!-- Button row -->
       <div class="row items-center justify-between q-px-lg q-mb-xs">
-        <!-- Keyboard icon button -->
+        <!-- Keyboard/Mic toggle icon button (CONV-02) -->
         <q-btn
           flat
           round
           class="footer-side-btn"
-          icon="sym_o_keyboard"
+          :icon="showTextInput ? 'sym_o_mic' : 'sym_o_keyboard'"
+          @click="showTextInput = !showTextInput"
         />
 
         <!-- Mic FAB (SESS-02) — toggles active/inactive visual state -->
@@ -225,21 +229,62 @@
       </q-card>
     </q-dialog>
 
+    <!-- Paywall dialog (CONV-05) -->
+    <PaywallDialog v-model="showPaywallDialog" />
+
   </q-page>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSessionStore } from 'src/stores/session'
+import { useProfileStore } from 'src/stores/profile'
+import PaywallDialog from 'src/components/PaywallDialog.vue'
 
 const router = useRouter()
 const session = useSessionStore()
+const profile = useProfileStore()
+
+// Speech API detection (CONV-01, CONV-02)
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+const speechAvailable = !!SpeechRecognition
+let recognition = null
+
+// Text input fallback state (CONV-02)
+const showTextInput = ref(!speechAvailable)  // show immediately if no speech API
+const textInput = ref('')
+const interimText = ref('')   // shows live transcript while speaking
+
+// Track whether we need to show paywall
+const showPaywallDialog = ref(false)
 
 // Mic toggle state (SESS-02)
 const isMicActive = ref(false)
+
 function toggleMic() {
-  isMicActive.value = !isMicActive.value
+  if (!speechAvailable) {
+    showTextInput.value = !showTextInput.value
+    return
+  }
+  if (isMicActive.value) {
+    recognition.stop()
+    isMicActive.value = false
+  } else {
+    recognition.start()
+    isMicActive.value = true
+  }
+}
+
+async function sendUserMessage(text) {
+  if (!text || !text.trim() || session.isSending) return
+  textInput.value = ''
+  await session.sendMessage(text)
+  // Scroll to bottom after AI response
+  nextTick(() => {
+    const el = document.querySelector('.session-scroll')
+    if (el) el.scrollTop = el.scrollHeight
+  })
 }
 
 // End session dialog (SESS-05)
@@ -269,9 +314,31 @@ const formattedTime = computed(() => {
 })
 
 onMounted(async () => {
-  await session.startSession()
-  // Seed mock mistake count (SESS-04)
-  session.mistakeCount = 2
+  // Set up Web Speech API if available (CONV-01)
+  if (speechAvailable) {
+    recognition = new SpeechRecognition()
+    recognition.lang = 'en-US'
+    recognition.continuous = false
+    recognition.interimResults = true
+
+    recognition.onresult = (event) => {
+      const lastResult = event.results[event.results.length - 1]
+      interimText.value = lastResult[0].transcript
+      if (lastResult.isFinal) {
+        isMicActive.value = false
+        interimText.value = ''
+        sendUserMessage(lastResult[0].transcript)
+      }
+    }
+    recognition.onend = () => { isMicActive.value = false }
+    recognition.onerror = (e) => { isMicActive.value = false; console.error('Speech error:', e.error) }
+  }
+
+  const result = await session.startSession()
+  if (result?.paywallRequired) {
+    showPaywallDialog.value = true
+    return
+  }
   timerInterval = setInterval(() => {
     session.durationSeconds++
   }, 1000)
