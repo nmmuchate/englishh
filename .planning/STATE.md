@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-02-23)
 ## Current Position
 
 Phase: 08-ai-conversation-engine
-Plan: none complete
-Status: Active — ready for 08-01 (first plan of Phase 8)
-Last activity: 2026-02-25 — Phase 7 confirmed complete (all DATA-01 through DATA-08 satisfied by plans 07-01, 07-02, 07-03)
+Plan: 08-01 complete
+Status: Active — 08-01 done, ready for 08-02
+Last activity: 2026-02-25 — 08-01 complete: startConversation + sendMessage Cloud Functions implemented, profile store paywall fields added, Functions emulator wired
 
-Progress: [███████░░░] 40%  (Phase 7 complete, starting Phase 8)
+Progress: [████████░░] 45%  (08-01 complete, 2 plans remain in Phase 8)
 
 ## Performance Metrics
 
@@ -23,7 +23,7 @@ Progress: [███████░░░] 40%  (Phase 7 complete, starting Phas
 - Average duration: ~12min/plan
 
 **v1.1 Velocity:**
-- Total plans completed: 6 (06-01, 06-02, 06-03, 07-01, 07-02, 07-03)
+- Total plans completed: 7 (06-01, 06-02, 06-03, 07-01, 07-02, 07-03, 08-01)
 - Average duration: ~6min/plan
 
 *Updated after each plan completion*
@@ -90,6 +90,11 @@ Recent decisions affecting current work:
 - [06-03]: functions/index.js uses CommonJS (require) not ESM import — Cloud Functions v2 with Node 24 defaults to CJS
 - [06-03]: hasActiveSubscription() reads users doc via get() call — single rule function handles subscription gating
 - [06-03]: Leaderboard and subscriptions write-locked to false (client side) — only Admin SDK can write
+- [08-01]: GoogleGenAI instantiated inside handler body — GEMINI_API_KEY.value() only resolves during function invocation, not at module init
+- [08-01]: Functions region africa-south1 matches Firestore database location — reduces cross-region latency
+- [08-01]: Admin SDK FieldValue.arrayUnion used for transcript append (not web SDK) — functions run server-side with Admin credentials
+- [08-01]: Subscription gate reads users/{uid}.subscriptionStatus via Admin SDK get() — session 2+ requires 'active' status
+- [08-01]: JSON parse fallback in sendMessage prevents crash if Gemini response format is unexpected
 
 ### Pending Todos
 
@@ -103,4 +108,4 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-25
-Stopped at: Phase 7 complete — all 8 DATA requirements satisfied. Ready to plan Phase 8 (AI Conversation Engine): startConversation + sendMessage Cloud Functions, Web Speech API, paywall gate.
+Stopped at: Completed 08-01-PLAN.md — startConversation + sendMessage Cloud Functions implemented, profile store paywall fields + Functions emulator boot wiring done. Ready for 08-02.

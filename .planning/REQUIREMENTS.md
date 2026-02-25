@@ -104,8 +104,8 @@
 
 - [ ] **CONV-01**: Web Speech API (`SpeechRecognition`) is integrated in SessionPage — mic button starts real voice recognition (`lang: 'en-US'`, `continuous: false`, `interimResults: true`)
 - [ ] **CONV-02**: Text input fallback (`QInput` + send button) is shown in SessionPage when `SpeechRecognition` is unavailable (non-Chrome/Edge browsers)
-- [ ] **CONV-03**: `startConversation` Cloud Function is called when session begins — creates session document in Firestore, returns AI-generated topic and opening message via Gemini
-- [ ] **CONV-04**: `sendMessage` Cloud Function is called for each user message — sends message + conversation history to Gemini (last 10 messages), returns AI response and detected mistakes; session transcript updated in Firestore
+- [x] **CONV-03**: `startConversation` Cloud Function is called when session begins — creates session document in Firestore, returns AI-generated topic and opening message via Gemini
+- [x] **CONV-04**: `sendMessage` Cloud Function is called for each user message — sends message + conversation history to Gemini (last 10 messages), returns AI response and detected mistakes; session transcript updated in Firestore
 - [ ] **CONV-05**: Paywall gate in SessionPage prevents session start if `freeSessionUsed == true` and `subscriptionStatus != "active"` — opens PaywallDialog instead
 
 ### Session Scoring & Feedback
@@ -117,8 +117,8 @@
 
 ### Cloud Functions
 
-- [ ] **FUNC-01**: `startConversation` HTTPS callable — validates subscription gate (sessionNumber > 1 requires active subscription), calls Gemini topic-assignment prompt, creates `sessions/{sessionId}` doc, returns `{ sessionId, topic, initialMessage }`
-- [ ] **FUNC-02**: `sendMessage` HTTPS callable — validates session active, calls Gemini conversation prompt with history (last 10 messages), parses JSON response for `{ response, mistakes, newVocabulary }`, appends to Firestore transcript, returns parsed response
+- [x] **FUNC-01**: `startConversation` HTTPS callable — validates subscription gate (sessionNumber > 1 requires active subscription), calls Gemini topic-assignment prompt, creates `sessions/{sessionId}` doc, returns `{ sessionId, topic, initialMessage }`
+- [x] **FUNC-02**: `sendMessage` HTTPS callable — validates session active, calls Gemini conversation prompt with history (last 10 messages), parses JSON response for `{ response, mistakes, newVocabulary }`, appends to Firestore transcript, returns parsed response
 - [ ] **FUNC-03**: `endSession` HTTPS callable — calls Gemini to score full transcript (fluency/grammar/vocabulary/overall), updates session `scores` and `completedAt` in Firestore, updates user stats document, updates leaderboard entry for current week, returns `{ scores, feedback }`
 - [ ] **FUNC-04**: `createSubscription` HTTPS callable — creates `subscriptions/{userId}` doc with `status: "pending"`, calls MozPayments API to create checkout session, returns `{ checkoutUrl, subscriptionId }`
 - [ ] **FUNC-05**: `handlePaymentWebhook` HTTPS function — verifies HMAC-SHA256 webhook signature (MozPayments secret), on `payment.success` updates subscription doc to `status: "active"` with `expiresAt: now + 30 days`, updates `users/{userId}.subscriptionStatus: "active"`, appends payment to `paymentHistory`
@@ -210,11 +210,11 @@ Updated during roadmap creation.
 | DATA-08 | Phase 7 | Complete |
 | CONV-01 | Phase 8 | Pending |
 | CONV-02 | Phase 8 | Pending |
-| CONV-03 | Phase 8 | Pending |
-| CONV-04 | Phase 8 | Pending |
+| CONV-03 | Phase 8 | Complete |
+| CONV-04 | Phase 8 | Complete |
 | CONV-05 | Phase 8 | Pending |
-| FUNC-01 | Phase 8 | Pending |
-| FUNC-02 | Phase 8 | Pending |
+| FUNC-01 | Phase 8 | Complete |
+| FUNC-02 | Phase 8 | Complete |
 | SCORE-01 | Phase 9 | Pending |
 | SCORE-02 | Phase 9 | Pending |
 | SCORE-03 | Phase 9 | Pending |
