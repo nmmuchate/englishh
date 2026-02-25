@@ -11,6 +11,9 @@ export const useProfileStore = defineStore('profile', () => {
   const totalVocabularyWords   = ref(0)
   const averageScore           = ref(0)
   const totalHoursPracticed    = ref(0)
+  // Paywall fields
+  const freeSessionUsed        = ref(false)
+  const subscriptionStatus     = ref('none')     // 'none' | 'active' | 'cancelled'
 
   // Actions
   function setProfile(data) {
@@ -22,6 +25,8 @@ export const useProfileStore = defineStore('profile', () => {
     totalVocabularyWords.value   = data.totalVocabularyWords  ?? 0
     averageScore.value           = data.averageScore          ?? 0
     totalHoursPracticed.value    = data.totalHoursPracticed   ?? 0
+    freeSessionUsed.value        = data.freeSessionUsed       ?? false
+    subscriptionStatus.value     = data.subscriptionStatus    ?? 'none'
   }
 
   function reset() {
@@ -33,6 +38,8 @@ export const useProfileStore = defineStore('profile', () => {
     totalVocabularyWords.value   = 0
     averageScore.value           = 0
     totalHoursPracticed.value    = 0
+    freeSessionUsed.value        = false
+    subscriptionStatus.value     = 'none'
   }
 
   return {
@@ -44,6 +51,8 @@ export const useProfileStore = defineStore('profile', () => {
     totalVocabularyWords,
     averageScore,
     totalHoursPracticed,
+    freeSessionUsed,
+    subscriptionStatus,
     setProfile,
     reset
   }

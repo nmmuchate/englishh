@@ -7,6 +7,7 @@ import { defineBoot } from '#q-app/wrappers'
 import { initializeApp } from 'firebase/app'
 import { getAuth, connectAuthEmulator } from 'firebase/auth'
 import { initializeFirestore, persistentLocalCache, persistentSingleTabManager, connectFirestoreEmulator } from 'firebase/firestore'
+import { getFunctions, connectFunctionsEmulator } from 'firebase/functions'
 
 // IMPORTANT: Access env vars via static dot notation only.
 // Quasar/Vite replaces process.env.X at build time via static analysis.
@@ -27,16 +28,18 @@ const db = initializeFirestore(app, {
     tabManager: persistentSingleTabManager(undefined)
   })
 })
+const functions = getFunctions(app, 'africa-south1')
 
 // Connect to local Firebase emulators in development.
 // Prevents accidental reads/writes to production Firestore during dev.
-// Auth emulator: localhost:9099 | Firestore emulator: localhost:8080
+// Auth emulator: localhost:9099 | Firestore emulator: localhost:8080 | Functions emulator: 127.0.0.1:5001
 if (process.env.DEV) {
   connectAuthEmulator(auth, 'http://localhost:9099', { disableWarnings: true })
   connectFirestoreEmulator(db, 'localhost', 8080)
+  connectFunctionsEmulator(functions, '127.0.0.1', 5001)
 }
 
-export { app, auth, db }
+export { app, auth, db, functions }
 
 // Boot function is intentionally empty — Firebase is initialized by the
 // module-level code above. Exports are what matter.
