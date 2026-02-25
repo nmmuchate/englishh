@@ -128,9 +128,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 06-01-PLAN.md — Install firebase SDK, create src/boot/firebase.js (initializeApp + emulators), update quasar.config.js boot, add emulators to firebase.json, create .env.example
-- [ ] 06-02-PLAN.md — Replace src/stores/auth.js with real Firebase Auth store, create src/services/userProfile.js, create src/boot/auth.js (onAuthStateChanged + route guard), update LandingPage.vue handleSignIn
-- [ ] 06-03-PLAN.md — Replace firestore.rules with TRD production rules + deploy, add @google/genai to functions/package.json, update functions/index.js with defineSecret declarations
+- [x] 06-01-PLAN.md — Install firebase SDK, create src/boot/firebase.js (initializeApp + emulators), update quasar.config.js boot, add emulators to firebase.json, create .env.example
+- [x] 06-02-PLAN.md — Replace src/stores/auth.js with real Firebase Auth store, create src/services/userProfile.js, create src/boot/auth.js (onAuthStateChanged + route guard), update LandingPage.vue handleSignIn
+- [x] 06-03-PLAN.md — Replace firestore.rules with TRD production rules + deploy, add @google/genai to functions/package.json, update functions/index.js with defineSecret declarations
 
 ### Phase 7: Firestore Data Layer
 **Goal**: All mock data is gone — every Pinia store reads from Firestore, all frontend pages display real user data, onboarding writes the initial user document, and vocabulary bank reads from and writes to the vocabulary subcollection
@@ -146,9 +146,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 07-01-PLAN.md — Enable offline persistence (initializeFirestore), rewrite useProfileStore with real fields, wire setProfile in boot/auth.js, add Firestore session write to useSessionStore
-- [ ] 07-02-PLAN.md — DashboardPage + ProgressPage bind real Firestore field names; OnboardingPage writes onboardingCompleted:true on completion
-- [ ] 07-03-PLAN.md — Create vocabulary service + store; VocabularyPage reads subcollection; FeedbackPage vocabulary tab gets "Add to Bank" save button
+- [x] 07-01-PLAN.md — Enable offline persistence (initializeFirestore), rewrite useProfileStore with real fields, wire setProfile in boot/auth.js, add Firestore session write to useSessionStore
+- [x] 07-02-PLAN.md — DashboardPage + ProgressPage bind real Firestore field names; OnboardingPage writes onboardingCompleted:true on completion
+- [x] 07-03-PLAN.md — Create vocabulary service + store; VocabularyPage reads subcollection; FeedbackPage vocabulary tab gets "Add to Bank" save button
 
 ### Phase 8: AI Conversation Engine
 **Goal**: The conversation loop is live — Web Speech API captures real voice input, `startConversation` and `sendMessage` Cloud Functions drive Gemini-powered conversations with real-time mistake detection, and the session paywall gate enforces subscription checks
@@ -162,7 +162,7 @@ Plans:
   5. User without active subscription who has already used their free session sees PaywallDialog when tapping Start Session
   6. `startConversation` function is deployed and callable from the app (no 404 / CORS errors)
   7. `sendMessage` function correctly parses Gemini JSON response and returns `{ aiResponse, mistakes, newVocabulary }`
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
 - [ ] 08-01-PLAN.md — Cloud Function: startConversation (Gemini topic assignment, session doc creation, return initialMessage)
