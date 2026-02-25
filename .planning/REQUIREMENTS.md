@@ -102,11 +102,11 @@
 
 ### Voice & AI Conversation
 
-- [ ] **CONV-01**: Web Speech API (`SpeechRecognition`) is integrated in SessionPage — mic button starts real voice recognition (`lang: 'en-US'`, `continuous: false`, `interimResults: true`)
-- [ ] **CONV-02**: Text input fallback (`QInput` + send button) is shown in SessionPage when `SpeechRecognition` is unavailable (non-Chrome/Edge browsers)
+- [x] **CONV-01**: Web Speech API (`SpeechRecognition`) is integrated in SessionPage — mic button starts real voice recognition (`lang: 'en-US'`, `continuous: false`, `interimResults: true`)
+- [x] **CONV-02**: Text input fallback (`QInput` + send button) is shown in SessionPage when `SpeechRecognition` is unavailable (non-Chrome/Edge browsers)
 - [x] **CONV-03**: `startConversation` Cloud Function is called when session begins — creates session document in Firestore, returns AI-generated topic and opening message via Gemini
 - [x] **CONV-04**: `sendMessage` Cloud Function is called for each user message — sends message + conversation history to Gemini (last 10 messages), returns AI response and detected mistakes; session transcript updated in Firestore
-- [ ] **CONV-05**: Paywall gate in SessionPage prevents session start if `freeSessionUsed == true` and `subscriptionStatus != "active"` — opens PaywallDialog instead
+- [x] **CONV-05**: Paywall gate in SessionPage prevents session start if `freeSessionUsed == true` and `subscriptionStatus != "active"` — opens PaywallDialog instead
 
 ### Session Scoring & Feedback
 
@@ -208,11 +208,11 @@ Updated during roadmap creation.
 | DATA-06 | Phase 7 | Complete |
 | DATA-07 | Phase 7 | Complete |
 | DATA-08 | Phase 7 | Complete |
-| CONV-01 | Phase 8 | Pending |
-| CONV-02 | Phase 8 | Pending |
+| CONV-01 | Phase 8 | Complete |
+| CONV-02 | Phase 8 | Complete |
 | CONV-03 | Phase 8 | Complete |
 | CONV-04 | Phase 8 | Complete |
-| CONV-05 | Phase 8 | Pending |
+| CONV-05 | Phase 8 | Complete |
 | FUNC-01 | Phase 8 | Complete |
 | FUNC-02 | Phase 8 | Complete |
 | SCORE-01 | Phase 9 | Pending |

@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-02-23)
 ## Current Position
 
 Phase: 08-ai-conversation-engine
-Plan: 08-01 complete
-Status: Active — 08-01 done, ready for 08-02
-Last activity: 2026-02-25 — 08-01 complete: startConversation + sendMessage Cloud Functions implemented, profile store paywall fields added, Functions emulator wired
+Plan: 08-02 complete
+Status: Active — 08-02 done, ready for 08-03
+Last activity: 2026-02-25 — 08-02 complete: SessionPage wired to Cloud Functions, Web Speech API integrated, text fallback, paywall gate, live transcript v-for render
 
-Progress: [████████░░] 45%  (08-01 complete, 2 plans remain in Phase 8)
+Progress: [█████████░] 55%  (08-02 complete, 1 plan remains in Phase 8)
 
 ## Performance Metrics
 
@@ -66,6 +66,7 @@ Recent decisions affecting current work:
 - [07-03]: saveWord() reloads full word list after write — simpler than optimistic push, acceptable for vocabulary bank (low frequency operation)
 - [07-03]: Optional fields (phonetic, pos, difficulty) guarded with v-if in VocabularyPage — Firestore schema does not store these; display slots preserved for future enriched data
 - [07-03]: FeedbackPage static vocabWords array retained — Phase 9 replaces it with real session scoring data; DATA-06 only requires save action to exist
+- [Phase 08-02]: httpsCallable created at module level; paywall gate returns signal from store; SpeechRecognition in onMounted; showTextInput defaults to !speechAvailable
 
 ### v1.1 Decisions
 
@@ -95,6 +96,10 @@ Recent decisions affecting current work:
 - [08-01]: Admin SDK FieldValue.arrayUnion used for transcript append (not web SDK) — functions run server-side with Admin credentials
 - [08-01]: Subscription gate reads users/{uid}.subscriptionStatus via Admin SDK get() — session 2+ requires 'active' status
 - [08-01]: JSON parse fallback in sendMessage prevents crash if Gemini response format is unexpected
+- [08-02]: httpsCallable references created at module level (outside store) — functions boot export available at import time, unlike GEMINI_API_KEY which requires invocation context
+- [08-02]: Paywall gate in session store startSession() returns { paywallRequired } signal — component opens PaywallDialog on true
+- [08-02]: SpeechRecognition instantiated in onMounted — avoids SSR issues and ensures window is ready
+- [08-02]: showTextInput defaults to !speechAvailable — text input shown immediately on non-Chrome browsers
 
 ### Pending Todos
 
@@ -108,4 +113,4 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-25
-Stopped at: Completed 08-01-PLAN.md — startConversation + sendMessage Cloud Functions implemented, profile store paywall fields + Functions emulator boot wiring done. Ready for 08-02.
+Stopped at: Completed 08-02-PLAN.md — SessionPage wired to Cloud Functions with Web Speech API, text fallback, paywall gate, live transcript v-for render. Ready for 08-03.
