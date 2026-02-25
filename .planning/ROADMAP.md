@@ -165,9 +165,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 08-01-PLAN.md — Cloud Function: startConversation (Gemini topic assignment, session doc creation, return initialMessage)
-- [ ] 08-02-PLAN.md — Cloud Function: sendMessage (Gemini conversation prompt, JSON parsing, Firestore transcript update, mistake detection)
-- [ ] 08-03-PLAN.md — SessionPage: Web Speech API integration (mic button, interim results, auto-send on silence), text fallback, connect to startConversation + sendMessage, paywall gate
+- [ ] 08-01-PLAN.md — Profile store paywall fields (freeSessionUsed/subscriptionStatus), Functions boot init, startConversation + sendMessage Cloud Functions
+- [ ] 08-02-PLAN.md — useSessionStore wired to Cloud Functions, SessionPage Web Speech API + text fallback + paywall gate + live transcript
+- [ ] 08-03-PLAN.md — Human verification: end-to-end conversation loop (voice + text + paywall gate)
 
 ### Phase 9: Session Scoring & Real Feedback
 **Goal**: Sessions produce real scored feedback — `endSession` Cloud Function analyzes the transcript via Gemini and writes scores to Firestore, FeedbackPage reads and displays real scores/mistakes/vocabulary from the session document, and users can save words to their vocabulary bank
