@@ -8,8 +8,9 @@
 
 const { setGlobalOptions }  = require('firebase-functions')
 const { defineSecret }      = require('firebase-functions/params')
-const { onRequest }         = require('firebase-functions/https')
+const { onRequest, onCall, HttpsError } = require('firebase-functions/https')
 const logger                = require('firebase-functions/logger')
+const { GoogleGenAI }       = require('@google/genai')
 
 // All functions run in africa-south1 to minimize latency to the Firestore database.
 // maxInstances: 10 prevents runaway scaling costs.
@@ -47,9 +48,162 @@ exports.healthCheck = onRequest((request, response) => {
   })
 })
 
-// ── Phase 8: AI Conversation functions (added in Phase 8) ──────────────────
-// exports.startConversation = onCall({ secrets: [GEMINI_API_KEY] }, async (request) => { ... })
-// exports.sendMessage       = onCall({ secrets: [GEMINI_API_KEY] }, async (request) => { ... })
+// ── Phase 8: AI Conversation functions ────────────────────────────────────
+exports.startConversation = onCall({ secrets: [GEMINI_API_KEY] }, async (request) => {
+  // Auth gate
+  if (!request.auth) {
+    throw new HttpsError('unauthenticated', 'Authentication required')
+  }
+  const uid = request.auth.uid
+  const { userLevel, sessionNumber } = request.data
+
+  // Subscription gate: session 2+ requires active subscription
+  if (sessionNumber > 1) {
+    const userSnap = await admin.firestore().doc(`users/${uid}`).get()
+    if (!userSnap.exists || userSnap.data().subscriptionStatus !== 'active') {
+      throw new HttpsError('permission-denied', 'Active subscription required for session 2+')
+    }
+  }
+
+  // Gemini topic assignment
+  // Instantiate inside handler — GEMINI_API_KEY.value() only works during invocation
+  const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY.value() })
+
+  const topicPrompt = `Generate an engaging conversation topic for a ${userLevel} English learner.
+
+LEVEL GUIDELINES:
+- A1-A2 (Beginner): Daily routines, family, hobbies, food, weather
+- B1-B2 (Intermediate): Work, travel experiences, opinions on current events, hypothetical scenarios
+- C1-C2 (Advanced): Abstract concepts, debates, professional discussions, cultural analysis
+
+SESSION NUMBER: ${sessionNumber}
+
+OUTPUT (JSON only):
+{"topic": "Clear specific topic statement", "openingQuestion": "Friendly first question to start conversation"}`
+
+  const topicResult = await ai.models.generateContent({
+    model: 'gemini-1.5-flash',
+    contents: topicPrompt,
+    config: { responseMimeType: 'application/json' }
+  })
+  const { topic, openingQuestion } = JSON.parse(topicResult.text)
+
+  // Create session document in Firestore
+  const sessionRef = await admin.firestore().collection('sessions').add({
+    userId:        uid,
+    sessionNumber: sessionNumber,
+    topic:         topic,
+    userLevel:     userLevel,
+    transcript:    [],
+    mistakes:      [],
+    newVocabulary: [],
+    aiModel:       'gemini-1.5-flash',
+    createdAt:     admin.firestore.FieldValue.serverTimestamp()
+  })
+
+  return {
+    sessionId:      sessionRef.id,
+    topic:          topic,
+    initialMessage: openingQuestion
+  }
+})
+
+exports.sendMessage = onCall({ secrets: [GEMINI_API_KEY] }, async (request) => {
+  if (!request.auth) {
+    throw new HttpsError('unauthenticated', 'Authentication required')
+  }
+
+  const { sessionId, userMessage, conversationHistory, userLevel, topic } = request.data
+
+  // Validate session exists
+  const sessionSnap = await admin.firestore().doc(`sessions/${sessionId}`).get()
+  if (!sessionSnap.exists) {
+    throw new HttpsError('not-found', 'Session not found')
+  }
+
+  const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY.value() })
+
+  // Build conversation prompt from TRD template
+  const history = (conversationHistory || []).slice(-10)
+  const systemPrompt = `You are an encouraging English conversation teacher named Alex. You are having a 5-10 minute spoken conversation with a ${userLevel} English learner.
+
+TOPIC: ${topic || 'General English conversation'}
+
+RULES:
+1. Ask engaging follow-up questions about the topic
+2. Respond naturally to their answers like a friend would
+3. Adapt vocabulary to ${userLevel} level
+4. If they make a grammar mistake, continue naturally - do NOT correct mid-conversation
+5. Track mistakes silently and include them in response metadata
+6. Introduce 1-2 new useful words during conversation when natural
+7. Keep responses short (2-3 sentences) to encourage more speaking
+8. Be warm, patient, and positive
+
+OUTPUT FORMAT (JSON only, no markdown):
+{
+  "response": "Your conversational reply here",
+  "mistakes": [
+    {
+      "type": "grammar",
+      "original": "what user said incorrectly",
+      "correction": "correct version",
+      "explanation": "brief explanation"
+    }
+  ],
+  "newVocabulary": [
+    {
+      "word": "word",
+      "definition": "definition",
+      "example": "example sentence"
+    }
+  ]
+}
+
+CONVERSATION HISTORY:
+${JSON.stringify(history)}
+
+USER'S LATEST MESSAGE: "${userMessage}"
+
+Your response (JSON only):`
+
+  const result = await ai.models.generateContent({
+    model: 'gemini-1.5-flash',
+    contents: systemPrompt,
+    config: {
+      responseMimeType: 'application/json',
+      temperature: 0.7,
+      maxOutputTokens: 1024
+    }
+  })
+
+  let parsed
+  try {
+    parsed = JSON.parse(result.text)
+  } catch {
+    // Fallback if parsing fails (should not happen with responseMimeType: json)
+    parsed = {
+      response: "That's interesting! Tell me more about that.",
+      mistakes: [],
+      newVocabulary: []
+    }
+  }
+
+  // Append both messages to Firestore transcript atomically
+  const FieldValue = admin.firestore.FieldValue
+  const now = Date.now()
+  await admin.firestore().doc(`sessions/${sessionId}`).update({
+    transcript: FieldValue.arrayUnion(
+      { speaker: 'user', text: userMessage, timestamp: now },
+      { speaker: 'ai',   text: parsed.response, timestamp: now + 1 }
+    )
+  })
+
+  return {
+    aiResponse:    parsed.response,
+    mistakes:      parsed.mistakes      || [],
+    newVocabulary: parsed.newVocabulary || []
+  }
+})
 
 // ── Phase 9: Session scoring (added in Phase 9) ────────────────────────────
 // exports.endSession = onCall({ secrets: [GEMINI_API_KEY] }, async (request) => { ... })
