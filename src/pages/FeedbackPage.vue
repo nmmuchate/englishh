@@ -146,40 +146,31 @@
 
         </q-tab-panel>
 
-        <!-- MISTAKES tab (FEED-03) -->
+        <!-- MISTAKES tab (FEED-03) — real data from Firestore -->
         <q-tab-panel name="mistakes" class="q-pa-none">
           <div class="column q-gutter-md">
 
-            <div class="score-card q-pa-md">
-              <div class="row items-start no-wrap q-gutter-sm">
-                <q-icon name="sym_o_lightbulb" size="20px" class="q-mt-xs" style="color: #ef4444; flex-shrink: 0;" />
-                <div>
-                  <div class="text-subtitle2 text-weight-bold q-mb-xs">Article Usage</div>
-                  <div class="text-body2 text-grey-5 q-mb-sm">"a espresso" → should be "an espresso"</div>
-                  <div class="text-caption text-primary">
-                    Use "an" before words starting with a vowel sound (a, e, i, o, u).
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="score-card q-pa-md">
-              <div class="row items-start no-wrap q-gutter-sm">
-                <q-icon name="sym_o_lightbulb" size="20px" class="q-mt-xs" style="color: #ef4444; flex-shrink: 0;" />
-                <div>
-                  <div class="text-subtitle2 text-weight-bold q-mb-xs">Verb Tense</div>
-                  <div class="text-body2 text-grey-5 q-mb-sm">"I want order" → should be "I want to order"</div>
-                  <div class="text-caption text-primary">
-                    Use an infinitive ("to + verb") after want, need, and similar verbs.
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="score-card q-pa-md">
+            <!-- Empty state when no mistakes recorded -->
+            <div v-if="mistakes.length === 0" class="score-card q-pa-md">
               <div class="row items-center no-wrap q-gutter-sm">
                 <q-icon name="sym_o_check_circle" size="20px" color="positive" style="flex-shrink: 0;" />
-                <div class="text-body2 text-grey-5">Only 2 mistakes in this session — great progress!</div>
+                <div class="text-body2 text-grey-5">No mistakes detected in this session — great work!</div>
+              </div>
+            </div>
+
+            <!-- Real mistake cards from Firestore sessions/{sessionId}.mistakes -->
+            <div
+              v-for="(mistake, index) in mistakes"
+              :key="index"
+              class="score-card q-pa-md"
+            >
+              <div class="row items-start no-wrap q-gutter-sm">
+                <q-icon name="sym_o_lightbulb" size="20px" class="q-mt-xs" style="color: #ef4444; flex-shrink: 0;" />
+                <div>
+                  <div class="text-subtitle2 text-weight-bold q-mb-xs">{{ mistake.type ?? 'Grammar' }}</div>
+                  <div class="text-body2 text-grey-5 q-mb-sm">"{{ mistake.original }}" → should be "{{ mistake.correction }}"</div>
+                  <div class="text-caption text-primary">{{ mistake.explanation }}</div>
+                </div>
               </div>
             </div>
 
@@ -249,6 +240,8 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSessionStore } from 'src/stores/session'
 import { useVocabularyStore } from 'src/stores/vocabulary'
+import { doc, getDoc } from 'firebase/firestore'
+import { db } from 'boot/firebase'
 
 const router = useRouter()
 const session = useSessionStore()
@@ -275,6 +268,11 @@ const pronPct = ref(0)
 const gramPct = ref(0)
 const vocabPct = ref(0)
 
+// Real session data from Firestore
+const mistakes   = ref([])   // array of { type, original, correction, explanation }
+const vocabWords = ref([])   // array of { term, definition, example, level }
+const isLoading  = ref(true) // prevents empty flash before data loads
+
 function animateValue(refTarget, target, duration = 800) {
   const start = Date.now()
   const interval = setInterval(() => {
@@ -286,12 +284,57 @@ function animateValue(refTarget, target, duration = 800) {
   }, 16)
 }
 
-onMounted(() => {
-  setTimeout(() => {
-    animateValue(pronPct, 85)
-    animateValue(gramPct, 70)
-    animateValue(vocabPct, 90)
-  }, 300)
+onMounted(async () => {
+  // Guard: if session.sessionId is null (direct navigation / hard reload), show fallback
+  if (!session.sessionId) {
+    isLoading.value = false
+    const fallback = session.overallScore ?? 0
+    setTimeout(() => {
+      animateValue(pronPct,  fallback)
+      animateValue(gramPct,  fallback)
+      animateValue(vocabPct, fallback)
+    }, 300)
+    return
+  }
+
+  try {
+    const snap = await getDoc(doc(db, 'sessions', session.sessionId))
+    if (snap.exists()) {
+      const data = snap.data()
+      const s    = data.scores ?? {}
+
+      // Animate score rings to real Gemini scores.
+      // pronPct maps to fluency (TRD: no separate pronunciation score in MVP; fluency is closest analog)
+      setTimeout(() => {
+        animateValue(pronPct,  s.fluency    ?? 0)
+        animateValue(gramPct,  s.grammar    ?? 0)
+        animateValue(vocabPct, s.vocabulary ?? 0)
+      }, 300)
+
+      // Real mistakes — accumulated by sendMessage via FieldValue.arrayUnion
+      mistakes.value = data.mistakes ?? []
+
+      // Real vocabulary — deduplicate by word field (sendMessage may emit same word multiple turns)
+      const rawVocab = data.newVocabulary ?? []
+      const seen     = new Set()
+      vocabWords.value = rawVocab
+        .filter(v => {
+          if (seen.has(v.word)) return false
+          seen.add(v.word)
+          return true
+        })
+        .map(v => ({
+          term:       v.word,
+          definition: v.definition,
+          example:    v.example ?? v.exampleSentence ?? '',
+          level:      'B1'   // newVocabulary schema has no level field; static B1 badge is correct
+        }))
+    }
+  } catch (err) {
+    console.error('FeedbackPage: Firestore read failed', err)
+  } finally {
+    isLoading.value = false
+  }
 })
 
 // Growth trend bar data (Overview tab)
@@ -303,28 +346,6 @@ const trendBars = [
   { label: 'Fri', pct: 65, isToday: false },
   { label: 'Sat', pct: 85, isToday: false },
   { label: 'Today', pct: 95, isToday: true },
-]
-
-// Mock vocabulary words (FEED-03)
-const vocabWords = [
-  {
-    term: 'Croissant',
-    definition: 'A flaky, buttery French pastry shaped like a crescent.',
-    example: 'I would like a croissant with my coffee, please.',
-    level: 'B1',
-  },
-  {
-    term: 'Espresso',
-    definition: 'A concentrated coffee brewed by forcing hot water through finely ground beans.',
-    example: 'Can I get an espresso, please?',
-    level: 'A2',
-  },
-  {
-    term: 'Cappuccino',
-    definition: 'An espresso-based drink with steamed milk foam on top.',
-    example: 'A large cappuccino to go, please.',
-    level: 'A2',
-  },
 ]
 </script>
 
