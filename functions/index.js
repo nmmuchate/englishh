@@ -205,8 +205,131 @@ Your response (JSON only):`
   }
 })
 
-// ── Phase 9: Session scoring (added in Phase 9) ────────────────────────────
-// exports.endSession = onCall({ secrets: [GEMINI_API_KEY] }, async (request) => { ... })
+// ── Phase 9: Session scoring ────────────────────────────────────────────────
+exports.endSession = onCall({ secrets: [GEMINI_API_KEY] }, async (request) => {
+  if (!request.auth) {
+    throw new HttpsError('unauthenticated', 'Authentication required')
+  }
+
+  const uid = request.auth.uid
+  const { sessionId, finalTranscript, durationSeconds } = request.data
+
+  if (!sessionId) {
+    throw new HttpsError('invalid-argument', 'sessionId is required')
+  }
+
+  // Validate session belongs to this user
+  const sessionRef = admin.firestore().doc(`sessions/${sessionId}`)
+  const sessionSnap = await sessionRef.get()
+  if (!sessionSnap.exists) {
+    throw new HttpsError('not-found', 'Session not found')
+  }
+  if (sessionSnap.data().userId !== uid) {
+    throw new HttpsError('permission-denied', 'Session does not belong to user')
+  }
+
+  const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY.value() })
+
+  const scoringPrompt = `You are an English language assessment expert. Analyze this conversation transcript and provide objective scores.
+
+TRANSCRIPT:
+${JSON.stringify(finalTranscript)}
+
+Score each dimension 0-100 based on:
+- fluency: Flow, pace, natural expression, lack of hesitation
+- grammar: Correctness of grammar, verb tenses, articles, prepositions
+- vocabulary: Range of words used, appropriate complexity for topic
+- overall: Weighted average (fluency 30%, grammar 40%, vocabulary 30%)
+
+OUTPUT (JSON only, no markdown):
+{
+  "scores": {
+    "fluency": number,
+    "grammar": number,
+    "vocabulary": number,
+    "overall": number
+  },
+  "feedback": {
+    "pronunciationIssues": [],
+    "grammarMistakes": [],
+    "vocabularySuggestions": []
+  }
+}`
+
+  let parsed
+  try {
+    const result = await ai.models.generateContent({
+      model: 'gemini-1.5-flash',
+      contents: scoringPrompt,
+      config: { responseMimeType: 'application/json' }
+    })
+    parsed = JSON.parse(result.text)
+  } catch (err) {
+    logger.warn('endSession: Gemini parse failed, using fallback scores', err)
+    parsed = {
+      scores: { fluency: 70, grammar: 70, vocabulary: 70, overall: 70 },
+      feedback: { pronunciationIssues: [], grammarMistakes: [], vocabularySuggestions: [] }
+    }
+  }
+
+  const scores = parsed.scores
+  const now = admin.firestore.Timestamp.now()
+  const durationMinutes = Math.round((durationSeconds ?? 0) / 60)
+
+  // Update session document with scores + completedAt + durationSeconds
+  await sessionRef.update({
+    scores:          scores,
+    completedAt:     now,
+    durationSeconds: durationSeconds ?? 0
+  })
+
+  // Update user stats with rolling average (last 10 sessions window)
+  const userSnap = await admin.firestore().doc(`users/${uid}`).get()
+  const userData = userSnap.data() ?? {}
+  const prevTotal = userData.totalSessionsCompleted ?? 0
+  const newTotal  = prevTotal + 1
+  const newAvg    = Math.round(
+    ((userData.averageScore ?? 0) * Math.min(prevTotal, 9) + scores.overall)
+    / Math.min(newTotal, 10)
+  )
+  const lastDate      = userData.lastSessionDate?.toDate?.()
+  const today         = new Date()
+  const isConsecutive = lastDate && (today - lastDate) < 48 * 60 * 60 * 1000
+  const newStreak     = isConsecutive ? (userData.dailyStreak ?? 0) + 1 : 1
+
+  await admin.firestore().doc(`users/${uid}`).update({
+    totalSessionsCompleted: admin.firestore.FieldValue.increment(1),
+    totalHoursPracticed:    admin.firestore.FieldValue.increment(durationMinutes),
+    averageScore:           newAvg,
+    dailyStreak:            newStreak,
+    lastSessionDate:        now,
+    freeSessionUsed:        true,
+    updatedAt:              now
+  })
+
+  // Update leaderboard entry for current week
+  const weekId = getWeekId()
+  await admin.firestore()
+    .doc(`leaderboard/${weekId}/users/${uid}`)
+    .set({
+      displayName:        userData.displayName ?? '',
+      photoURL:           userData.photoURL ?? '',
+      weeklySessionTime:  admin.firestore.FieldValue.increment(durationMinutes),
+      weeklySessionCount: admin.firestore.FieldValue.increment(1),
+      currentStreak:      newStreak,
+      lastUpdated:        now
+    }, { merge: true })
+
+  logger.info('endSession complete', { uid, sessionId, scores })
+  return { scores, feedback: parsed.feedback }
+})
+
+function getWeekId() {
+  const now   = new Date()
+  const start = new Date(now.getFullYear(), 0, 1)
+  const week  = Math.ceil(((now - start) / 86400000 + start.getDay() + 1) / 7)
+  return `${now.getFullYear()}-${week.toString().padStart(2, '0')}`
+}
 
 // ── Phase 10: Payments and cron jobs (added in Phase 10) ──────────────────
 // exports.createSubscription    = onCall({ secrets: [MOZPAYMENTS_API_KEY] }, async (req) => { ... })
