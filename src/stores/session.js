@@ -7,6 +7,7 @@ import { useProfileStore } from 'stores/profile'
 // Callable references — created once at module level (no secret dependency)
 const startConversationFn = httpsCallable(functions, 'startConversation')
 const sendMessageFn = httpsCallable(functions, 'sendMessage')
+const endSessionFn = httpsCallable(functions, 'endSession')
 
 export const useSessionStore = defineStore('session', () => {
   // State — existing
@@ -19,6 +20,7 @@ export const useSessionStore = defineStore('session', () => {
   const topic = ref('')
   const transcript = ref([])    // array of { speaker: 'user'|'ai', text: string }
   const isSending = ref(false)  // prevents double-sends during Gemini call
+  const scores = ref(null)   // { fluency, grammar, vocabulary, overall } — set by endSession
 
   async function startSession() {
     isActive.value = true
@@ -80,14 +82,27 @@ export const useSessionStore = defineStore('session', () => {
     }
   }
 
-  function endSession(score) {
+  async function endSession() {
     isActive.value = false
-    overallScore.value = score ?? 0
+    try {
+      const result = await endSessionFn({
+        sessionId:       sessionId.value,
+        finalTranscript: transcript.value,
+        durationSeconds: durationSeconds.value
+      })
+      // result.data = { scores: { fluency, grammar, vocabulary, overall }, feedback }
+      scores.value       = result.data.scores
+      overallScore.value = result.data.scores?.overall ?? 0
+    } catch (err) {
+      console.error('endSession error:', err)
+      overallScore.value = 0
+      scores.value       = null
+    }
   }
 
   return {
     isActive, durationSeconds, mistakeCount, overallScore, sessionId,
-    topic, transcript, isSending,
+    topic, transcript, isSending, scores,
     startSession, sendMessage, endSession
   }
 })
