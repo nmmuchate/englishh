@@ -110,7 +110,7 @@
 
 ### Session Scoring & Feedback
 
-- [ ] **SCORE-01**: `endSession` Cloud Function is called when user ends session — sends full transcript to Gemini for scoring (fluency / grammar / vocabulary / overall), updates user stats (`totalHoursPracticed`, `averageScore`, `dailyStreak`, `totalSessionsCompleted`) in Firestore
+- [x] **SCORE-01**: `endSession` Cloud Function is called when user ends session — sends full transcript to Gemini for scoring (fluency / grammar / vocabulary / overall), updates user stats (`totalHoursPracticed`, `averageScore`, `dailyStreak`, `totalSessionsCompleted`) in Firestore
 - [ ] **SCORE-02**: FeedbackPage reads real scores (`fluency`, `grammar`, `vocabulary`, `overall`) from Firestore `sessions/{sessionId}` — replaces hardcoded score values
 - [ ] **SCORE-03**: FeedbackPage Mistakes tab displays real grammar and pronunciation mistakes array from Firestore session document
 - [ ] **SCORE-04**: FeedbackPage Vocabulary tab displays real `newVocabulary` array from Firestore session document; user can tap "Add to Bank" to save each word (triggers DATA-06)
@@ -119,7 +119,7 @@
 
 - [x] **FUNC-01**: `startConversation` HTTPS callable — validates subscription gate (sessionNumber > 1 requires active subscription), calls Gemini topic-assignment prompt, creates `sessions/{sessionId}` doc, returns `{ sessionId, topic, initialMessage }`
 - [x] **FUNC-02**: `sendMessage` HTTPS callable — validates session active, calls Gemini conversation prompt with history (last 10 messages), parses JSON response for `{ response, mistakes, newVocabulary }`, appends to Firestore transcript, returns parsed response
-- [ ] **FUNC-03**: `endSession` HTTPS callable — calls Gemini to score full transcript (fluency/grammar/vocabulary/overall), updates session `scores` and `completedAt` in Firestore, updates user stats document, updates leaderboard entry for current week, returns `{ scores, feedback }`
+- [x] **FUNC-03**: `endSession` HTTPS callable — calls Gemini to score full transcript (fluency/grammar/vocabulary/overall), updates session `scores` and `completedAt` in Firestore, updates user stats document, updates leaderboard entry for current week, returns `{ scores, feedback }`
 - [ ] **FUNC-04**: `createSubscription` HTTPS callable — creates `subscriptions/{userId}` doc with `status: "pending"`, calls MozPayments API to create checkout session, returns `{ checkoutUrl, subscriptionId }`
 - [ ] **FUNC-05**: `handlePaymentWebhook` HTTPS function — verifies HMAC-SHA256 webhook signature (MozPayments secret), on `payment.success` updates subscription doc to `status: "active"` with `expiresAt: now + 30 days`, updates `users/{userId}.subscriptionStatus: "active"`, appends payment to `paymentHistory`
 - [ ] **FUNC-06**: `deleteOldTranscripts` scheduled function (daily 02:00 UTC) — batch-queries sessions where `createdAt < now - 30 days`, removes `transcript` field (batch delete 500 at a time), preserves scores/mistakes
@@ -215,11 +215,11 @@ Updated during roadmap creation.
 | CONV-05 | Phase 8 | Complete |
 | FUNC-01 | Phase 8 | Complete |
 | FUNC-02 | Phase 8 | Complete |
-| SCORE-01 | Phase 9 | Pending |
+| SCORE-01 | Phase 9 | Complete |
 | SCORE-02 | Phase 9 | Pending |
 | SCORE-03 | Phase 9 | Pending |
 | SCORE-04 | Phase 9 | Pending |
-| FUNC-03 | Phase 9 | Pending |
+| FUNC-03 | Phase 9 | Complete |
 | SUB-01 | Phase 10 | Pending |
 | SUB-02 | Phase 10 | Pending |
 | SUB-03 | Phase 10 | Pending |

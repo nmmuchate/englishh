@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-02-23)
 
 ## Current Position
 
-Phase: 08-ai-conversation-engine
-Plan: 08-03 complete — Phase 8 complete
-Status: Active — Phase 8 fully verified, ready for Phase 9 (session scoring)
-Last activity: 2026-02-26 — 08-03 complete: All 5 end-to-end verification tests passed (AI topic, voice input, text fallback, paywall gate, error resilience)
+Phase: 09-session-scoring
+Plan: 09-01 complete
+Status: Active — Phase 9 in progress, ready for 09-02 (FeedbackPage wired to Firestore scores)
+Last activity: 2026-02-26 — 09-01 complete: endSession Cloud Function implemented, session store async, SessionPage loading guard added
 
-Progress: [██████████] 60%  (Phase 8 complete — 3/3 plans done)
+Progress: [██████████] 63%  (Phase 9 — 1/2 plans done)
 
 ## Performance Metrics
 
@@ -110,7 +110,15 @@ None yet.
 - Firebase project must be created and Blaze plan enabled before Phase 6 execution
 - API keys required before execution: Gemini API key (aistudio.google.com), MozPayments API key
 
+### v1.1 Phase 9 Decisions
+
+- [09-01]: endSession uses fallback scores (70/70/70/70) if Gemini JSON parse fails — prevents broken FeedbackPage
+- [09-01]: handleBack skips Cloud Function — back button = session abandon, not scored completion
+- [09-01]: isEndingSession loading guard never resets to false — component navigates away before reset would matter
+- [09-01]: Leaderboard updated via Admin SDK set(..., {merge:true}) — bypasses Firestore security rules that block client writes
+- [09-01]: Rolling 10-session window average formula: ((prevAvg * min(prevTotal, 9)) + newScore) / min(newTotal, 10)
+
 ## Session Continuity
 
 Last session: 2026-02-26
-Stopped at: Completed 08-03-PLAN.md — All 5 end-to-end verification tests passed. Phase 8 AI Conversation Engine fully verified. Ready for Phase 9 session scoring.
+Stopped at: Completed 09-01-PLAN.md — endSession Cloud Function, async session store, and SessionPage loading guard implemented. Ready for 09-02 (FeedbackPage wired to Firestore scores).
