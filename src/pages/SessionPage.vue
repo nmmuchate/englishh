@@ -214,6 +214,8 @@
             color="primary"
             label="Yes, end session"
             class="full-width"
+            :loading="isEndingSession"
+            :disable="isEndingSession"
             @click="doEndSession"
           />
           <q-btn
@@ -289,19 +291,23 @@ async function sendUserMessage(text) {
 
 // End session dialog (SESS-05)
 const showEndDialog = ref(false)
+const isEndingSession = ref(false)
 function confirmEndSession() {
   showEndDialog.value = true
 }
-function doEndSession() {
+async function doEndSession() {
+  if (isEndingSession.value) return   // prevent double-call
+  isEndingSession.value = true
   clearInterval(timerInterval)
-  session.endSession(82)
+  await session.endSession()          // calls endSessionFn — writes scores to Firestore
   router.push({ name: 'feedback' })
+  // Note: isEndingSession never resets to false because we navigate away
 }
 
-// Back button — in active session just go back to dashboard
+// Back button — in active session just go back to dashboard (no scoring)
 function handleBack() {
   clearInterval(timerInterval)
-  session.endSession(null)
+  session.isActive = false  // mark inactive without calling endSession Cloud Function
   router.push({ name: 'dashboard' })
 }
 
