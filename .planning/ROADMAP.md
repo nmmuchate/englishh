@@ -180,7 +180,7 @@ Plans:
   4. FeedbackPage Vocabulary tab lists real `newVocabulary` words from the session document
   5. Tapping "Add to Bank" on a vocabulary word in FeedbackPage saves it to `vocabulary/{userId}/words` (DATA-06 flow wired up)
   6. User stats are updated after session: `totalHoursPracticed`, `averageScore`, `totalSessionsCompleted`, `dailyStreak` reflect the completed session
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
 - [ ] 09-01-PLAN.md — Cloud Function: endSession (Gemini transcript scoring, user stats update, leaderboard entry update, return scores + feedback)
