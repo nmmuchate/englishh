@@ -11,15 +11,16 @@
         <!-- Greeting -->
         <div class="col">
           <div class="text-caption text-grey-5">Good morning</div>
-          <div class="text-subtitle2 text-weight-bold">{{ profile.displayName }}</div>
+          <!-- <div class="text-subtitle2 text-weight-bold">{{ profile.displayName }}</div> -->
         </div>
         <!-- Streak badge -->
         <div class="streak-badge row items-center no-wrap q-px-sm q-py-xs">
           <q-icon name="sym_o_local_fire_department" size="16px" class="q-mr-xs" />
           <span class="text-caption text-weight-bold">{{ profile.dailyStreak }} days</span>
         </div>
-        <!-- Go Pro chip — triggers PaywallDialog (PAYW-01) -->
+        <!-- Go Pro chip — triggers PaywallDialog (PAYW-01) — hidden for active subscribers (SUB-01) -->
         <div
+          v-if="profile.subscriptionStatus !== 'active'"
           class="go-pro-chip row items-center no-wrap q-px-sm q-py-xs q-ml-sm cursor-pointer"
           @click="showPaywall = true"
         >
