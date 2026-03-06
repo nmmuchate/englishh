@@ -11,6 +11,8 @@ const { defineSecret }      = require('firebase-functions/params')
 const { onRequest, onCall, HttpsError } = require('firebase-functions/https')
 const logger                = require('firebase-functions/logger')
 const { GoogleGenAI }       = require('@google/genai')
+const https                 = require('https')
+const crypto                = require('crypto')
 
 // All functions run in africa-south1 to minimize latency to the Firestore database.
 // maxInstances: 10 prevents runaway scaling costs.
@@ -331,8 +333,171 @@ function getWeekId() {
   return `${now.getFullYear()}-${week.toString().padStart(2, '0')}`
 }
 
-// ── Phase 10: Payments and cron jobs (added in Phase 10) ──────────────────
-// exports.createSubscription    = onCall({ secrets: [MOZPAYMENTS_API_KEY] }, async (req) => { ... })
-// exports.handlePaymentWebhook  = onRequest({ secrets: [MOZPAYMENTS_API_KEY] }, (req, res) => { ... })
-// exports.deleteOldTranscripts  = onSchedule('every 24 hours', async () => { ... })
-// exports.updateWeeklyLeaderboard = onSchedule('every monday 00:00', async () => { ... })
+// ── Phase 10: Payments and cron jobs ──────────────────────────────────────
+
+// ── MozPayments helper ────────────────────────────────────────────────────
+// NOTE: hostname and path are ASSUMED from TRD spec — no public MozPayments docs found.
+// Replace api.mozpayments.co.mz and /v1/checkout when real endpoint is confirmed.
+function mozPaymentsCreateCheckout ({ apiKey, userId, phoneNumber, paymentMethod }) {
+  return new Promise((resolve, reject) => {
+    const payload = JSON.stringify({
+      userId,
+      phoneNumber,
+      paymentMethod,
+      plan:       'monthly_unlimited',
+      currency:   'MZN',
+      amount:     400,
+      webhookUrl: `https://africa-south1-${process.env.GCLOUD_PROJECT}.cloudfunctions.net/handlePaymentWebhook`
+    })
+    const options = {
+      hostname: 'api.mozpayments.co.mz',
+      path:     '/v1/checkout',
+      method:   'POST',
+      headers: {
+        'Content-Type':   'application/json',
+        'Authorization':  `Bearer ${apiKey}`,
+        'Content-Length': Buffer.byteLength(payload)
+      }
+    }
+    const req = https.request(options, (res) => {
+      let data = ''
+      res.on('data', chunk => { data += chunk })
+      res.on('end', () => {
+        try { resolve(JSON.parse(data)) }
+        catch (e) { reject(new Error(`MozPayments parse error: ${e.message} — body: ${data}`)) }
+      })
+    })
+    req.on('error', reject)
+    req.write(payload)
+    req.end()
+  })
+}
+
+// ── createSubscription (onCall) ───────────────────────────────────────────
+exports.createSubscription = onCall({ secrets: [MOZPAYMENTS_API_KEY] }, async (request) => {
+  if (!request.auth) {
+    throw new HttpsError('unauthenticated', 'Authentication required')
+  }
+
+  const uid = request.auth.uid
+  const { phoneNumber = '', paymentMethod = 'mpesa' } = request.data
+
+  try {
+    const response = await mozPaymentsCreateCheckout({
+      apiKey:        MOZPAYMENTS_API_KEY.value(),
+      userId:        uid,
+      phoneNumber,
+      paymentMethod
+    })
+
+    // Write pending subscription doc — store externalSubscriptionId so webhook can reverse-lookup userId
+    await admin.firestore().doc(`subscriptions/${uid}`).set({
+      status:                 'pending',
+      plan:                   'monthly_unlimited',
+      paymentProvider:        'mozpayments',
+      externalSubscriptionId: response.subscriptionId,
+      priceId:                '',
+      startedAt:              null,
+      expiresAt:              null,
+      renewsAt:               null,
+      cancelledAt:            null,
+      paymentHistory:         [],
+      createdAt:              admin.firestore.FieldValue.serverTimestamp()
+    })
+
+    logger.info('createSubscription: pending subscription created', { uid, subscriptionId: response.subscriptionId })
+
+    return {
+      checkoutUrl:    response.checkoutUrl,
+      subscriptionId: response.subscriptionId,
+      expiresIn:      response.expiresIn ?? 900
+    }
+  } catch (err) {
+    logger.error('createSubscription: failed', { uid, error: err.message })
+    throw new HttpsError('internal', err.message)
+  }
+})
+
+// ── verifyMozPaymentsSignature helper ─────────────────────────────────────
+// rawBody is a Buffer in deployed Cloud Functions (Firebase PR #420 confirmed).
+// Fallback to Buffer.from(JSON.stringify(req.body)) allows emulator testing
+// but is NOT production-safe (JSON serialization may differ from raw bytes).
+function verifyMozPaymentsSignature (req, secret) {
+  const signature = req.headers['x-mozpayments-signature'] || ''
+  const rawBody   = req.rawBody || Buffer.from(JSON.stringify(req.body))
+  const computed  = crypto.createHmac('sha256', secret).update(rawBody).digest('hex')
+  const sigBuf    = Buffer.from(signature, 'utf8')
+  const calcBuf   = Buffer.from(computed, 'utf8')
+  if (sigBuf.length !== calcBuf.length) return false
+  return crypto.timingSafeEqual(sigBuf, calcBuf)
+}
+
+// ── handlePaymentWebhook (onRequest) ─────────────────────────────────────
+exports.handlePaymentWebhook = onRequest({ secrets: [MOZPAYMENTS_API_KEY] }, async (req, res) => {
+  if (req.method !== 'POST') {
+    res.status(405).send('Method Not Allowed')
+    return
+  }
+
+  if (!verifyMozPaymentsSignature(req, MOZPAYMENTS_API_KEY.value())) {
+    logger.warn('handlePaymentWebhook: invalid signature')
+    res.status(401).send('Invalid signature')
+    return
+  }
+
+  const { event, subscriptionId, amount, phoneNumber, receiptId } = req.body
+  logger.info('handlePaymentWebhook', { event, subscriptionId })
+
+  try {
+    if (event === 'payment.success') {
+      // Reverse-lookup userId from externalSubscriptionId stored during createSubscription
+      const subQuery = await admin.firestore()
+        .collection('subscriptions')
+        .where('externalSubscriptionId', '==', subscriptionId)
+        .limit(1)
+        .get()
+
+      if (subQuery.empty) {
+        logger.error('handlePaymentWebhook: subscription not found', { subscriptionId })
+        // Return 200 to prevent MozPayments retry loop for unknown subscriptions
+        res.status(200).json({ received: true })
+        return
+      }
+
+      const subDoc = subQuery.docs[0]
+      const userId = subDoc.id  // subscriptions collection is keyed by userId per TRD schema
+
+      const now       = admin.firestore.Timestamp.now()
+      const expiresAt = admin.firestore.Timestamp.fromDate(
+        new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+      )
+
+      await Promise.all([
+        subDoc.ref.update({
+          status:    'active',
+          expiresAt: expiresAt,
+          paymentHistory: admin.firestore.FieldValue.arrayUnion({
+            amount:        amount,
+            currency:      'MZN',
+            paymentMethod: 'mpesa',
+            status:        'success',
+            paidAt:        now,
+            receiptId:     receiptId || ''
+          })
+        }),
+        admin.firestore().doc(`users/${userId}`).update({
+          subscriptionStatus:    'active',
+          subscriptionExpiresAt: expiresAt,
+          updatedAt:             now
+        })
+      ])
+
+      logger.info('handlePaymentWebhook: subscription activated', { userId, subscriptionId })
+    }
+
+    res.status(200).json({ received: true })
+  } catch (err) {
+    logger.error('handlePaymentWebhook: error', { error: err.message })
+    res.status(500).send('Internal error')
+  }
+})
