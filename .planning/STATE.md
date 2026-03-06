@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-02-23)
 
 ## Current Position
 
-Phase: 09-session-scoring → COMPLETE. Ready for Phase 10: payments-cron
-Plan: 09-02 complete
-Status: Phase 09 done — moving to Phase 10 (Payments, Subscriptions & Cron Jobs)
-Last activity: 2026-03-06 — 09-02 complete: FeedbackPage wired to Firestore, real Gemini scores/mistakes/vocab verified
+Phase: 10-payments-cron → IN PROGRESS (1/3 plans done)
+Plan: 10-01 complete
+Status: Phase 10 plan 1 done — createSubscription + handlePaymentWebhook Cloud Functions added
+Last activity: 2026-03-06 — 10-01 complete: MozPayments Cloud Functions (createSubscription + handlePaymentWebhook) implemented
 
-Progress: [██████████] 90%  (Phase 9 complete — 2/2 plans done)
+Progress: [██████████] 92%  (Phase 10: 1/3 plans done)
 
 ## Performance Metrics
 
@@ -23,8 +23,9 @@ Progress: [██████████] 90%  (Phase 9 complete — 2/2 plans 
 - Average duration: ~12min/plan
 
 **v1.1 Velocity:**
-- Total plans completed: 7 (06-01, 06-02, 06-03, 07-01, 07-02, 07-03, 08-01)
+- Total plans completed: 10 (06-01, 06-02, 06-03, 07-01, 07-02, 07-03, 08-01, 09-01, 09-02, 10-01)
 - Average duration: ~6min/plan
+- 10-01: 2min (2 tasks, 1 file)
 
 *Updated after each plan completion*
 
@@ -121,7 +122,15 @@ None yet.
 - [09-02]: Vocabulary deduplicated by word field in FeedbackPage — sendMessage can emit same word across multiple turns
 - [09-02]: Null guard on session.sessionId falls back to overallScore ?? 0 — prevents crash on direct navigation
 
+### v1.1 Phase 10 Decisions
+
+- [10-01]: handlePaymentWebhook uses onRequest (not onCall) — MozPayments server cannot send Firebase auth tokens required by onCall
+- [10-01]: externalSubscriptionId stored in subscriptions/{userId} doc during createSubscription — webhook queries this field to reverse-lookup userId from MozPayments subscriptionId
+- [10-01]: Unknown subscriptionId in webhook returns 200 (not 4xx) to prevent MozPayments retry loops
+- [10-01]: rawBody fallback (req.rawBody || Buffer.from(JSON.stringify(req.body))) allows emulator testing but is NOT production-safe for HMAC — documented in code comment
+- [10-01]: MozPayments API hostname api.mozpayments.co.mz and path /v1/checkout assumed from TRD spec — flagged in code for validation when real credentials are available
+
 ## Session Continuity
 
 Last session: 2026-03-06
-Stopped at: Phase 09 complete. 09-02-SUMMARY.md written, human verification passed. Ready for Phase 10 (payments-cron).
+Stopped at: Completed 10-01-PLAN.md — createSubscription + handlePaymentWebhook Cloud Functions
