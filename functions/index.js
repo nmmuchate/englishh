@@ -9,6 +9,7 @@
 const { setGlobalOptions }  = require('firebase-functions')
 const { defineSecret }      = require('firebase-functions/params')
 const { onRequest, onCall, HttpsError } = require('firebase-functions/https')
+const { onSchedule }                    = require('firebase-functions/v2/scheduler')
 const logger                = require('firebase-functions/logger')
 const { GoogleGenAI }       = require('@google/genai')
 const https                 = require('https')
@@ -433,7 +434,7 @@ function verifyMozPaymentsSignature (req, secret) {
 }
 
 // ── handlePaymentWebhook (onRequest) ─────────────────────────────────────
-exports.handlePaymentWebhook = onRequest({ secrets: [MOZPAYMENTS_API_KEY] }, async (req, res) => {
+exports.handlePaymentWebhook = onRequest({ region: 'africa-south1', secrets: [MOZPAYMENTS_API_KEY] }, async (req, res) => {
   if (req.method !== 'POST') {
     res.status(405).send('Method Not Allowed')
     return
@@ -501,3 +502,127 @@ exports.handlePaymentWebhook = onRequest({ secrets: [MOZPAYMENTS_API_KEY] }, asy
     res.status(500).send('Internal error')
   }
 })
+
+// ── Phase 10: Cron jobs ───────────────────────────────────────────────────
+
+// ── deleteOldTranscripts (daily 02:00 UTC) ────────────────────────────────
+// Removes the transcript field from sessions older than 30 days.
+// Sessions retain scores, mistakes, newVocabulary, and all metadata.
+// Processes in batches of 500 to respect the Firestore write-per-batch limit.
+exports.deleteOldTranscripts = onSchedule(
+  { schedule: '0 2 * * *', timeZone: 'UTC', region: 'africa-south1' },
+  async (event) => {
+    try {
+      logger.info('deleteOldTranscripts: starting daily cleanup')
+
+      const cutoff = admin.firestore.Timestamp.fromDate(
+        new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+      )
+
+      const snap = await admin.firestore()
+        .collection('sessions')
+        .where('createdAt', '<', cutoff)
+        .get()
+
+      if (snap.empty) {
+        logger.info('deleteOldTranscripts: no sessions to clean')
+        return
+      }
+
+      const batchSize = 500
+      const docs = snap.docs
+
+      for (let i = 0; i < docs.length; i += batchSize) {
+        const chunk = docs.slice(i, i + batchSize)
+        const batch = admin.firestore().batch()
+        for (const doc of chunk) {
+          batch.update(doc.ref, { transcript: admin.firestore.FieldValue.delete() })
+        }
+        await batch.commit()
+      }
+
+      logger.info(`deleteOldTranscripts: cleaned ${snap.size} sessions`)
+    } catch (err) {
+      logger.error('deleteOldTranscripts: error', { error: err.message })
+      throw err
+    }
+  }
+)
+
+// ── updateWeeklyLeaderboard (every Monday 00:00 UTC) ─────────────────────
+// Archives the current week's top 100 leaderboard to leaderboard_archive/{weekId}
+// with final ranks computed, then creates a placeholder doc for next week.
+exports.updateWeeklyLeaderboard = onSchedule(
+  { schedule: '0 0 * * 1', timeZone: 'UTC', region: 'africa-south1' },
+  async (event) => {
+    try {
+      logger.info('updateWeeklyLeaderboard: starting weekly reset')
+
+      const currentWeekId = getWeekId()
+
+      const snap = await admin.firestore()
+        .collection(`leaderboard/${currentWeekId}/users`)
+        .orderBy('weeklySessionTime', 'desc')
+        .limit(100)
+        .get()
+
+      if (snap.empty) {
+        logger.info('updateWeeklyLeaderboard: no users to archive for', { currentWeekId })
+        return
+      }
+
+      // Archive top 100 with final ranks
+      const batchSize = 500
+      const docs = snap.docs
+      const archiveRef = admin.firestore().collection(`leaderboard_archive/${currentWeekId}/users`)
+
+      for (let i = 0; i < docs.length; i += batchSize) {
+        const chunk = docs.slice(i, i + batchSize)
+        const batch = admin.firestore().batch()
+        for (let j = 0; j < chunk.length; j++) {
+          const userDoc = chunk[j]
+          const rank = i + j + 1
+          batch.set(archiveRef.doc(userDoc.id), {
+            ...userDoc.data(),
+            rank
+          })
+        }
+        await batch.commit()
+      }
+
+      // Write archive week summary document
+      await admin.firestore()
+        .doc(`leaderboard_archive/${currentWeekId}`)
+        .set(
+          {
+            weekId:            currentWeekId,
+            archivedAt:        admin.firestore.Timestamp.now(),
+            totalParticipants: snap.size
+          },
+          { merge: true }
+        )
+
+      // Create placeholder for next week
+      // Compute nextWeekId by duplicating getWeekId logic with a future date
+      const futureDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+      const futureStart = new Date(futureDate.getFullYear(), 0, 1)
+      const futureWeek = Math.ceil(
+        ((futureDate - futureStart) / 86400000 + futureStart.getDay() + 1) / 7
+      )
+      const nextWeekId = `${futureDate.getFullYear()}-${futureWeek.toString().padStart(2, '0')}`
+
+      await admin.firestore()
+        .doc(`leaderboard/${nextWeekId}`)
+        .set({
+          weekId:            nextWeekId,
+          createdAt:         admin.firestore.Timestamp.now(),
+          totalParticipants: 0
+        })
+
+      logger.info(`updateWeeklyLeaderboard: archived ${snap.size} users for ${currentWeekId}`)
+    } catch (err) {
+      logger.error('updateWeeklyLeaderboard: error', { error: err.message })
+      throw err
+    }
+  }
+)
