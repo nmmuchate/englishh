@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-02-23)
 
 ## Current Position
 
-Phase: 09-session-scoring
-Plan: 09-01 complete
-Status: Active — Phase 9 in progress, ready for 09-02 (FeedbackPage wired to Firestore scores)
-Last activity: 2026-02-26 — 09-01 complete: endSession Cloud Function implemented, session store async, SessionPage loading guard added
+Phase: 09-session-scoring → COMPLETE. Ready for Phase 10: payments-cron
+Plan: 09-02 complete
+Status: Phase 09 done — moving to Phase 10 (Payments, Subscriptions & Cron Jobs)
+Last activity: 2026-03-06 — 09-02 complete: FeedbackPage wired to Firestore, real Gemini scores/mistakes/vocab verified
 
-Progress: [██████████] 63%  (Phase 9 — 1/2 plans done)
+Progress: [██████████] 90%  (Phase 9 complete — 2/2 plans done)
 
 ## Performance Metrics
 
@@ -117,8 +117,11 @@ None yet.
 - [09-01]: isEndingSession loading guard never resets to false — component navigates away before reset would matter
 - [09-01]: Leaderboard updated via Admin SDK set(..., {merge:true}) — bypasses Firestore security rules that block client writes
 - [09-01]: Rolling 10-session window average formula: ((prevAvg * min(prevTotal, 9)) + newScore) / min(newTotal, 10)
+- [09-02]: pronPct maps to s.fluency — no separate pronunciation score in MVP; fluency is closest analog
+- [09-02]: Vocabulary deduplicated by word field in FeedbackPage — sendMessage can emit same word across multiple turns
+- [09-02]: Null guard on session.sessionId falls back to overallScore ?? 0 — prevents crash on direct navigation
 
 ## Session Continuity
 
-Last session: 2026-02-26
-Stopped at: Completed 09-01-PLAN.md — endSession Cloud Function, async session store, and SessionPage loading guard implemented. Ready for 09-02 (FeedbackPage wired to Firestore scores).
+Last session: 2026-03-06
+Stopped at: Phase 09 complete. 09-02-SUMMARY.md written, human verification passed. Ready for Phase 10 (payments-cron).
