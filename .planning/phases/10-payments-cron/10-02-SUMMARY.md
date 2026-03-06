@@ -71,7 +71,7 @@ Each task was committed atomically:
 1. **Task 1: Wire PaywallDialog to createSubscription** - `5c830fc` (feat)
 2. **Task 2: Guard Go Pro chip with subscriptionStatus v-if** - `abba979` (feat)
 
-**Plan metadata:** `[pending]` (docs: complete plan)
+**Plan metadata:** `f888423` (docs: complete plan)
 
 ## Files Created/Modified
 - `src/components/PaywallDialog.vue` - Added httpsCallable imports, createSubscriptionFn at module level, isSubscribing ref, handleSubscribe() function, updated Subscribe Now QBtn with @click/loading/disable
