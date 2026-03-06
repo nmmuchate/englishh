@@ -127,8 +127,8 @@
 
 ### Payments & Subscriptions
 
-- [ ] **SUB-01**: PaywallDialog reads real `subscriptionStatus` from `useProfileStore` — dialog trigger in DashboardPage shows only when `subscriptionStatus != "active"`
-- [ ] **SUB-02**: User can initiate subscription from PaywallDialog — "Subscribe Now" calls `createSubscription` Cloud Function and redirects to the returned `checkoutUrl` (MozPayments hosted page)
+- [x] **SUB-01**: PaywallDialog reads real `subscriptionStatus` from `useProfileStore` — dialog trigger in DashboardPage shows only when `subscriptionStatus != "active"`
+- [x] **SUB-02**: User can initiate subscription from PaywallDialog — "Subscribe Now" calls `createSubscription` Cloud Function and redirects to the returned `checkoutUrl` (MozPayments hosted page)
 - [x] **SUB-03**: Webhook confirmation activates subscription — after `handlePaymentWebhook` runs, Firestore `users/{userId}.subscriptionStatus` is `"active"` and user can start unlimited sessions
 
 ## Out of Scope (v1.1)
@@ -220,8 +220,8 @@ Updated during roadmap creation.
 | SCORE-03 | Phase 9 | Pending |
 | SCORE-04 | Phase 9 | Pending |
 | FUNC-03 | Phase 9 | Complete |
-| SUB-01 | Phase 10 | Pending |
-| SUB-02 | Phase 10 | Pending |
+| SUB-01 | Phase 10 | Complete |
+| SUB-02 | Phase 10 | Complete |
 | SUB-03 | Phase 10 | Complete |
 | FUNC-04 | Phase 10 | Complete |
 | FUNC-05 | Phase 10 | Complete |

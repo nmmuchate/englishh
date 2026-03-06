@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-02-23)
 
 ## Current Position
 
-Phase: 10-payments-cron → IN PROGRESS (1/3 plans done)
-Plan: 10-01 complete
-Status: Phase 10 plan 1 done — createSubscription + handlePaymentWebhook Cloud Functions added
-Last activity: 2026-03-06 — 10-01 complete: MozPayments Cloud Functions (createSubscription + handlePaymentWebhook) implemented
+Phase: 10-payments-cron → IN PROGRESS (2/3 plans done)
+Plan: 10-02 complete
+Status: Phase 10 plan 2 done — PaywallDialog wired to createSubscription; Go Pro chip guarded by subscriptionStatus v-if
+Last activity: 2026-03-06 — 10-02 complete: PaywallDialog createSubscription wiring + DashboardPage Go Pro chip v-if guard
 
-Progress: [██████████] 92%  (Phase 10: 1/3 plans done)
+Progress: [██████████] 94%  (Phase 10: 2/3 plans done)
 
 ## Performance Metrics
 
@@ -23,9 +23,10 @@ Progress: [██████████] 92%  (Phase 10: 1/3 plans done)
 - Average duration: ~12min/plan
 
 **v1.1 Velocity:**
-- Total plans completed: 10 (06-01, 06-02, 06-03, 07-01, 07-02, 07-03, 08-01, 09-01, 09-02, 10-01)
+- Total plans completed: 11 (06-01, 06-02, 06-03, 07-01, 07-02, 07-03, 08-01, 09-01, 09-02, 10-01, 10-02)
 - Average duration: ~6min/plan
 - 10-01: 2min (2 tasks, 1 file)
+- 10-02: 5min (2 tasks, 2 files)
 
 *Updated after each plan completion*
 
@@ -129,8 +130,11 @@ None yet.
 - [10-01]: Unknown subscriptionId in webhook returns 200 (not 4xx) to prevent MozPayments retry loops
 - [10-01]: rawBody fallback (req.rawBody || Buffer.from(JSON.stringify(req.body))) allows emulator testing but is NOT production-safe for HMAC — documented in code comment
 - [10-01]: MozPayments API hostname api.mozpayments.co.mz and path /v1/checkout assumed from TRD spec — flagged in code for validation when real credentials are available
+- [10-02]: selectedPlan 'monthly' maps to mpesa, 'annual' maps to emola — matches MozPayments payment method enum
+- [10-02]: On createSubscription error, dialog stays open for user retry — no auto-close on failure
+- [10-02]: Go Pro chip v-if checks !== 'active' — chip visible for 'none' and 'pending' states
 
 ## Session Continuity
 
 Last session: 2026-03-06
-Stopped at: Completed 10-01-PLAN.md — createSubscription + handlePaymentWebhook Cloud Functions
+Stopped at: Completed 10-02-PLAN.md — PaywallDialog createSubscription wiring + Go Pro chip v-if guard
