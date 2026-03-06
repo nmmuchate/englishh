@@ -105,7 +105,9 @@
             color="primary"
             label="Subscribe Now"
             class="full-width subscribe-btn"
-            @click="$emit('update:modelValue', false)"
+            :loading="isSubscribing"
+            :disable="isSubscribing"
+            @click="handleSubscribe"
           />
           <div class="row justify-center q-gutter-md q-mt-md">
             <span class="text-caption text-grey-6 cursor-pointer link-text">RESTORE PURCHASE</span>
@@ -125,6 +127,8 @@
 
 <script setup>
 import { ref } from 'vue'
+import { httpsCallable } from 'firebase/functions'
+import { functions } from 'boot/firebase'
 
 defineProps({
   modelValue: {
@@ -135,13 +139,34 @@ defineProps({
 
 defineEmits(['update:modelValue'])
 
+// Callable reference — created at module level (same pattern as session.js)
+const createSubscriptionFn = httpsCallable(functions, 'createSubscription')
+
 const selectedPlan = ref('annual')
+const isSubscribing = ref(false)
 
 const features = [
   'Unlimited AI sessions',
   'Advanced Grammar Analysis',
   'Priority Support',
 ]
+
+async function handleSubscribe() {
+  if (isSubscribing.value) return
+  isSubscribing.value = true
+  try {
+    const result = await createSubscriptionFn({
+      paymentMethod: selectedPlan.value === 'monthly' ? 'mpesa' : 'emola'
+    })
+    // Redirect to MozPayments hosted checkout page
+    window.location.href = result.data.checkoutUrl
+  } catch (err) {
+    console.error('createSubscription failed:', err)
+    // On error: keep dialog open, do NOT close it — user can retry
+  } finally {
+    isSubscribing.value = false
+  }
+}
 </script>
 
 <style scoped>
