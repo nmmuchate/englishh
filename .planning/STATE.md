@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-02-23)
 
 ## Current Position
 
-Phase: 10-payments-cron → IN PROGRESS (2/3 plans done)
-Plan: 10-02 complete
-Status: Phase 10 plan 2 done — PaywallDialog wired to createSubscription; Go Pro chip guarded by subscriptionStatus v-if
-Last activity: 2026-03-06 — 10-02 complete: PaywallDialog createSubscription wiring + DashboardPage Go Pro chip v-if guard
+Phase: 10-payments-cron → COMPLETE (3/3 plans done)
+Plan: 10-03 complete
+Status: Phase 10 complete — deleteOldTranscripts + updateWeeklyLeaderboard cron functions + createdAt Firestore index
+Last activity: 2026-03-06 — 10-03 complete: daily transcript cleanup cron + weekly leaderboard archival cron + Firestore index
 
-Progress: [██████████] 94%  (Phase 10: 2/3 plans done)
+Progress: [██████████] 100%  (Phase 10: 3/3 plans done)
 
 ## Performance Metrics
 
@@ -23,10 +23,11 @@ Progress: [██████████] 94%  (Phase 10: 2/3 plans done)
 - Average duration: ~12min/plan
 
 **v1.1 Velocity:**
-- Total plans completed: 11 (06-01, 06-02, 06-03, 07-01, 07-02, 07-03, 08-01, 09-01, 09-02, 10-01, 10-02)
+- Total plans completed: 12 (06-01, 06-02, 06-03, 07-01, 07-02, 07-03, 08-01, 09-01, 09-02, 10-01, 10-02, 10-03)
 - Average duration: ~6min/plan
 - 10-01: 2min (2 tasks, 1 file)
 - 10-02: 5min (2 tasks, 2 files)
+- 10-03: 5min (2 tasks, 2 files)
 
 *Updated after each plan completion*
 
@@ -69,6 +70,9 @@ Recent decisions affecting current work:
 - [07-03]: Optional fields (phonetic, pos, difficulty) guarded with v-if in VocabularyPage — Firestore schema does not store these; display slots preserved for future enriched data
 - [07-03]: FeedbackPage static vocabWords array retained — Phase 9 replaces it with real session scoring data; DATA-06 only requires save action to exist
 - [Phase 08-02]: httpsCallable created at module level; paywall gate returns signal from store; SpeechRecognition in onMounted; showTextInput defaults to !speechAvailable
+- [Phase 10-payments-cron]: onSchedule region passed directly in options object (not setGlobalOptions) — known CJS bug
+- [Phase 10-payments-cron]: deleteOldTranscripts uses FieldValue.delete() in 500-doc batches — preserves all session fields except transcript
+- [Phase 10-payments-cron]: updateWeeklyLeaderboard computes nextWeekId inline with +7 days rather than calling getWeekId() — avoids date ambiguity at Monday midnight
 
 ### v1.1 Decisions
 
@@ -133,8 +137,12 @@ None yet.
 - [10-02]: selectedPlan 'monthly' maps to mpesa, 'annual' maps to emola — matches MozPayments payment method enum
 - [10-02]: On createSubscription error, dialog stays open for user retry — no auto-close on failure
 - [10-02]: Go Pro chip v-if checks !== 'active' — chip visible for 'none' and 'pending' states
+- [10-03]: onSchedule region passed directly in options object (not setGlobalOptions) — known CJS bug where setGlobalOptions does not apply to onSchedule
+- [10-03]: deleteOldTranscripts uses FieldValue.delete() in 500-doc batches — preserves all session fields except transcript
+- [10-03]: updateWeeklyLeaderboard computes nextWeekId inline with +7 days rather than calling getWeekId() — avoids date ambiguity at Monday midnight
+- [10-03]: onSchedule try/catch re-throws error — Cloud Scheduler retries on throw, desired for transient Firestore failures
 
 ## Session Continuity
 
 Last session: 2026-03-06
-Stopped at: Completed 10-02-PLAN.md — PaywallDialog createSubscription wiring + Go Pro chip v-if guard
+Stopped at: Completed 10-03-PLAN.md — deleteOldTranscripts + updateWeeklyLeaderboard cron functions + createdAt Firestore index. Phase 10 complete.

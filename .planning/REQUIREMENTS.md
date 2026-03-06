@@ -122,8 +122,8 @@
 - [x] **FUNC-03**: `endSession` HTTPS callable — calls Gemini to score full transcript (fluency/grammar/vocabulary/overall), updates session `scores` and `completedAt` in Firestore, updates user stats document, updates leaderboard entry for current week, returns `{ scores, feedback }`
 - [x] **FUNC-04**: `createSubscription` HTTPS callable — creates `subscriptions/{userId}` doc with `status: "pending"`, calls MozPayments API to create checkout session, returns `{ checkoutUrl, subscriptionId }`
 - [x] **FUNC-05**: `handlePaymentWebhook` HTTPS function — verifies HMAC-SHA256 webhook signature (MozPayments secret), on `payment.success` updates subscription doc to `status: "active"` with `expiresAt: now + 30 days`, updates `users/{userId}.subscriptionStatus: "active"`, appends payment to `paymentHistory`
-- [ ] **FUNC-06**: `deleteOldTranscripts` scheduled function (daily 02:00 UTC) — batch-queries sessions where `createdAt < now - 30 days`, removes `transcript` field (batch delete 500 at a time), preserves scores/mistakes
-- [ ] **FUNC-07**: `updateWeeklyLeaderboard` scheduled function (Monday 00:00 UTC) — queries top 100 users by `weeklySessionTime`, calculates final ranks, archives to `leaderboard_archive/{weekId}`, creates new week doc with reset stats
+- [x] **FUNC-06**: `deleteOldTranscripts` scheduled function (daily 02:00 UTC) — batch-queries sessions where `createdAt < now - 30 days`, removes `transcript` field (batch delete 500 at a time), preserves scores/mistakes
+- [x] **FUNC-07**: `updateWeeklyLeaderboard` scheduled function (Monday 00:00 UTC) — queries top 100 users by `weeklySessionTime`, calculates final ranks, archives to `leaderboard_archive/{weekId}`, creates new week doc with reset stats
 
 ### Payments & Subscriptions
 
@@ -225,8 +225,8 @@ Updated during roadmap creation.
 | SUB-03 | Phase 10 | Complete |
 | FUNC-04 | Phase 10 | Complete |
 | FUNC-05 | Phase 10 | Complete |
-| FUNC-06 | Phase 10 | Pending |
-| FUNC-07 | Phase 10 | Pending |
+| FUNC-06 | Phase 10 | Complete |
+| FUNC-07 | Phase 10 | Complete |
 
 **v1.1 Coverage:**
 - v1.1 requirements: 35 total
