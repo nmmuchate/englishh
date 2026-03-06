@@ -197,7 +197,7 @@ Plans:
   4. `handlePaymentWebhook` function correctly verifies HMAC-SHA256 signature and rejects invalid webhook payloads
   5. `deleteOldTranscripts` cron runs daily and removes `transcript` field from sessions older than 30 days
   6. `updateWeeklyLeaderboard` cron runs every Monday — new week document created, previous week archived with final ranks
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
 - [ ] 10-01-PLAN.md — Cloud Functions: createSubscription (MozPayments checkout) + handlePaymentWebhook (signature verify, subscription activation)
