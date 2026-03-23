@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "timestamp": "2026-03-22T21:13:26.222Z",
+  "timestamp": "2026-03-23T12:06:05.620Z",
   "phase": "09",
   "phase_name": "session-scoring",
   "phase_dir": ".planning/phases/09-session-scoring",
@@ -10,10 +10,13 @@
   "status": "paused",
   "completed_tasks": [
     {"id": 1, "name": "09-01: endSession Cloud Function with Gemini scoring", "status": "done", "commit": "see 09-01-SUMMARY.md"},
-    {"id": 2, "name": "09-02 Task 1: Wire FeedbackPage to Firestore session data", "status": "done", "commit": "e57024e"}
+    {"id": 2, "name": "09-02 Task 1: Wire FeedbackPage to Firestore session data", "status": "done", "commit": "e57024e"},
+    {"id": 3, "name": "GSD updated from v1.20.6 to v1.28.0", "status": "done", "commit": "fe50155 (handoff)"},
+    {"id": 4, "name": "Phase 10: MozPayments + cron jobs — all 3 plans done and verified", "status": "done", "commit": "see 10-VERIFICATION.md"}
   ],
   "remaining_tasks": [
-    {"id": 3, "name": "09-02 Task 2: Human verification checkpoint — run real session, confirm FeedbackPage shows real Gemini scores", "status": "not_started"}
+    {"id": 5, "name": "09-02 Task 2: Human verification checkpoint — run real session, confirm FeedbackPage shows real Gemini scores", "status": "not_started"},
+    {"id": 6, "name": "Create Excel project tracker (tasks done / needed / failed / checks / commands)", "status": "not_started"}
   ],
   "blockers": [
     {
@@ -27,6 +30,11 @@
       "action": "Run `npx quasar dev` in the project root, sign in, start a session, complete 2-3 exchanges, end session, verify FeedbackPage shows real Gemini scores (not 85/70/90), real mistakes, and real vocabulary words",
       "context": "Phase 09-02 Task 2 is the human verification gate for the full session scoring pipeline. Once confirmed, write 09-02-SUMMARY.md and check off Phase 9 in ROADMAP.md",
       "blocking": true
+    },
+    {
+      "action": "Create an Excel project tracker with sheets: Tasks Done, Tasks Needed, Tasks Failed, Checks Required, Commands to Run",
+      "context": "User requested this during the session — use data from ROADMAP.md, REQUIREMENTS.md, fixIt.md, and phase SUMMARY.md files",
+      "blocking": false
     }
   ],
   "decisions": [
@@ -40,7 +48,6 @@
     "firebase.json",
     "package-lock.json",
     ".firebaserc",
-    ".planning/phases/09-session-scoring/.continue-here.md",
     ".planning/phases/10-payments-cron/10-VERIFICATION.md",
     "TRD.md",
     "apphosting.yaml",
@@ -48,6 +55,6 @@
     "functions/.gitignore",
     "public/index.html"
   ],
-  "next_action": "Run `npx quasar dev` in project root, complete a real session (sign in → dashboard → start session → 2-3 exchanges → end session → confirm), verify FeedbackPage shows real Gemini scores/mistakes/vocab, then /gsd:resume-work to write 09-02-SUMMARY.md and close out Phase 09",
-  "context_notes": "Milestone v1.1 is nearly complete. Phase 09 is the last open phase — it's fully implemented, just needs human verification. Phase 10 (payments/cron) was built and verified while Phase 09 was blocked. After Phase 09 verification passes, milestone v1.1 is done and /gsd:complete-milestone can be run."
+  "next_action": "Run `npx quasar dev` in project root, complete a real session (sign in → dashboard → start session → 2-3 exchanges → end session → confirm), verify FeedbackPage shows real Gemini scores/mistakes/vocab, then /gsd:resume-work to write the final 09-02-SUMMARY.md and close out Phase 09 + Milestone v1.1",
+  "context_notes": "Milestone v1.1 is nearly complete. Phase 09 is the last open phase — fully implemented, just needs human verification. After Phase 09 passes, run /gsd:complete-milestone to wrap v1.1. Excel tracker was requested but not yet created — use fixIt.md + ROADMAP.md + REQUIREMENTS.md as source data."
 }
