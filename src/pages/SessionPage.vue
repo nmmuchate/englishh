@@ -31,6 +31,20 @@
       <q-linear-progress :value="0.45" color="primary" track-color="grey-9" size="4px" />
     </div>
 
+    <!-- Start error banner -->
+    <q-banner
+      v-if="startError"
+      dense
+      rounded
+      class="q-ma-md text-white bg-negative"
+      icon="sym_o_error"
+    >
+      {{ startError }}
+      <template #action>
+        <q-btn flat no-caps label="Go back" @click="handleBack" />
+      </template>
+    </q-banner>
+
     <!-- Scrollable content -->
     <div class="session-scroll q-pb-xl">
 
@@ -260,6 +274,7 @@ const interimText = ref('')   // shows live transcript while speaking
 
 // Track whether we need to show paywall
 const showPaywallDialog = ref(false)
+const startError = ref('')
 
 // Mic toggle state (SESS-02)
 const isMicActive = ref(false)
@@ -343,6 +358,10 @@ onMounted(async () => {
   const result = await session.startSession()
   if (result?.paywallRequired) {
     showPaywallDialog.value = true
+    return
+  }
+  if (result?.error) {
+    startError.value = 'Failed to start session. Check your connection and try again.'
     return
   }
   timerInterval = setInterval(() => {
