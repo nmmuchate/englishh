@@ -168,6 +168,7 @@
           class="full-width logout-btn"
           icon="sym_o_logout"
           label="Logout"
+          @click="authStore.signOutUser()"
         />
       </div>
 
@@ -185,9 +186,11 @@
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useProfileStore } from 'src/stores/profile'
+import { useAuthStore } from 'src/stores/auth'
 
 const router = useRouter()
 const profile = useProfileStore()
+const authStore = useAuthStore()
 
 // Initials from displayName — same pattern as DashboardPage
 const initials = computed(() => {
