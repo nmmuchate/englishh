@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "timestamp": "2026-03-23T12:06:05.620Z",
+  "timestamp": "2026-03-28T09:24:41.113Z",
   "phase": "09",
   "phase_name": "session-scoring",
   "phase_dir": ".planning/phases/09-session-scoring",
@@ -41,20 +41,7 @@
     {"decision": "GSD updated from v1.20.6 to v1.28.0", "rationale": "New commands: /gsd:workstreams, /gsd:forensics, /gsd:milestone-summary, /gsd:review, /gsd:ship, /gsd:stats, etc.", "phase": "meta"},
     {"decision": "Phase 10 fully implemented and verified while Phase 09 was blocked at human gate", "rationale": "Phase 10 (payments/cron) had no human-blocking dependency so it was completed first", "phase": "10"}
   ],
-  "uncommitted_files": [
-    ".env.example",
-    ".planning/codebase/STACK.md",
-    ".planning/phases/07-firestore-data/07-02-SUMMARY.md",
-    "firebase.json",
-    "package-lock.json",
-    ".firebaserc",
-    ".planning/phases/10-payments-cron/10-VERIFICATION.md",
-    "TRD.md",
-    "apphosting.yaml",
-    "backend/ (directory)",
-    "functions/.gitignore",
-    "public/index.html"
-  ],
+  "uncommitted_files": [],
   "next_action": "Run `npx quasar dev` in project root, complete a real session (sign in → dashboard → start session → 2-3 exchanges → end session → confirm), verify FeedbackPage shows real Gemini scores/mistakes/vocab, then /gsd:resume-work to write the final 09-02-SUMMARY.md and close out Phase 09 + Milestone v1.1",
-  "context_notes": "Milestone v1.1 is nearly complete. Phase 09 is the last open phase — fully implemented, just needs human verification. After Phase 09 passes, run /gsd:complete-milestone to wrap v1.1. Excel tracker was requested but not yet created — use fixIt.md + ROADMAP.md + REQUIREMENTS.md as source data."
+  "context_notes": "Milestone v1.1 is nearly complete. Phase 09 is the last open phase — fully implemented, just needs human verification. After Phase 09 passes, run /gsd:complete-milestone to wrap v1.1. Excel tracker was requested but not yet created — use fixIt.md + ROADMAP.md + REQUIREMENTS.md as source data. Note: gsd-template/ directory appeared in repo root (untracked) — review before committing."
 }
