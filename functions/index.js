@@ -11,7 +11,7 @@ const { defineSecret } = require('firebase-functions/params')
 const { onRequest, onCall, HttpsError } = require('firebase-functions/https')
 const { onSchedule } = require('firebase-functions/v2/scheduler')
 const logger = require('firebase-functions/logger')
-const { GoogleGenAI } = require('@google/genai')
+const OpenAI = require('openai')
 const https = require('https')
 const crypto = require('crypto')
 
@@ -22,12 +22,12 @@ setGlobalOptions({ maxInstances: 10, region: 'africa-south1' })
 // ── Secret declarations ──────────────────────────────────────────────────────
 // Secrets are stored in Firebase Secret Manager (not .env files).
 // Set values via Firebase CLI:
-//   firebase functions:secrets:set GEMINI_API_KEY
+//   firebase functions:secrets:set OPENAI_API_KEY
 //   firebase functions:secrets:set MOZPAYMENTS_API_KEY
 //
-// Access inside a function: GEMINI_API_KEY.value()
-// Functions that use a secret must declare it in their options: { secrets: [GEMINI_API_KEY] }
-const GEMINI_API_KEY = defineSecret('GEMINI_API_KEY')
+// Access inside a function: OPENAI_API_KEY.value()
+// Functions that use a secret must declare it in their options: { secrets: [OPENAI_API_KEY] }
+const OPENAI_API_KEY = defineSecret('OPENAI_API_KEY')
 const MOZPAYMENTS_API_KEY = defineSecret('MOZPAYMENTS_API_KEY')
 
 // ── Firebase Admin SDK ───────────────────────────────────────────────────────
@@ -53,8 +53,7 @@ exports.healthCheck = onRequest((request, response) => {
 })
 
 // ── Phase 8: AI Conversation functions ────────────────────────────────────
-exports.startConversation = onCall({ region: "africa-south1", secrets: [GEMINI_API_KEY] }, async (request) => {
-  // Auth gate
+exports.startConversation = onCall({ region: "africa-south1", secrets: [OPENAI_API_KEY] }, async (request) => {
   if (!request.auth) {
     throw new HttpsError('unauthenticated', 'Authentication required')
   }
@@ -69,102 +68,98 @@ exports.startConversation = onCall({ region: "africa-south1", secrets: [GEMINI_A
     }
   }
 
-  // Gemini topic assignment
-  // Instantiate inside handler — GEMINI_API_KEY.value() only works during invocation
-  const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY.value() })
+  // Instantiate inside handler — OPENAI_API_KEY.value() only works during invocation
+  const openai = new OpenAI({ apiKey: OPENAI_API_KEY.value() })
 
-  const topicPrompt = `Generate an engaging conversation topic for a ${userLevel} English learner.
+  const topicResponse = await openai.chat.completions.create({
+    model: 'gpt-4o-mini',
+    temperature: 0.8,
+    max_tokens: 200,
+    response_format: { type: 'json_object' },
+    messages: [
+      {
+        role: 'system',
+        content: 'You generate English conversation topics. Always respond with valid JSON only.'
+      },
+      {
+        role: 'user',
+        content: `Generate a conversation topic for a ${userLevel} English learner (session #${sessionNumber}).
 
-LEVEL GUIDELINES:
-- A1-A2 (Beginner): Daily routines, family, hobbies, food, weather
-- B1-B2 (Intermediate): Work, travel experiences, opinions on current events, hypothetical scenarios
-- C1-C2 (Advanced): Abstract concepts, debates, professional discussions, cultural analysis
+Level guide: A1-A2=daily life, B1-B2=opinions/travel/work, C1-C2=abstract/debates.
 
-SESSION NUMBER: ${sessionNumber}
-
-OUTPUT (JSON only):
-{"topic": "Clear specific topic statement", "openingQuestion": "Friendly first question to start conversation"}`
-
-  const topicResult = await ai.models.generateContent({
-    model: 'gemini-3.1-pro-preview',
-    contents: topicPrompt,
-    config: { responseMimeType: 'application/json' }
+JSON format: {"topic": "specific topic", "openingQuestion": "friendly first question"}`
+      }
+    ]
   })
-  const { topic, openingQuestion } = JSON.parse(topicResult.text)
+
+  const { topic, openingQuestion } = JSON.parse(topicResponse.choices[0].message.content)
 
   // Create session document in Firestore
   const sessionRef = await admin.firestore().collection('sessions').add({
     userId: uid,
-    sessionNumber: sessionNumber,
-    topic: topic,
-    userLevel: userLevel,
+    sessionNumber,
+    topic,
+    userLevel,
     transcript: [],
     mistakes: [],
     newVocabulary: [],
-    aiModel: 'gemini-1.5-flash',
+    aiModel: 'gpt-4o-mini',
     createdAt: FieldValue.serverTimestamp()
   })
-  console.log("Created session:", sessionRef.id)
   return {
     sessionId: sessionRef.id,
-    topic: topic,
+    topic,
     initialMessage: openingQuestion
   }
 })
 
-exports.sendMessage = onCall({ region: "africa-south1", secrets: [GEMINI_API_KEY] }, async (request) => {
+exports.sendMessage = onCall({ region: "africa-south1", secrets: [OPENAI_API_KEY] }, async (request) => {
   if (!request.auth) {
     throw new HttpsError('unauthenticated', 'Authentication required')
   }
 
   const { sessionId, userMessage, conversationHistory, userLevel, topic } = request.data
 
-  // No per-message session getDoc — the Firestore update below will throw if the
-  // doc doesn't exist, and the auth check above ensures the caller is authenticated.
-  // Removing the getDoc saves 100-300 ms of Firestore round-trip per message.
+  if (!sessionId || !userMessage) {
+    throw new HttpsError('invalid-argument', 'sessionId and userMessage are required')
+  }
 
-  const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY.value() })
+  const openai = new OpenAI({ apiKey: OPENAI_API_KEY.value() })
 
-  // Use native multi-turn contents format instead of JSON.stringify(history) inside
-  // a prompt string. Fewer tokens and proper role-based context for the model.
   const history = (conversationHistory || []).slice(-10)
-  const contents = [
-    ...history.map(msg => ({
-      role: msg.speaker === 'user' ? 'user' : 'model',
-      parts: [{ text: msg.text }]
-    })),
-    { role: 'user', parts: [{ text: userMessage }] }
+  const chatMessages = [
+    {
+      role: 'system',
+      content: `You are Alex, a friendly English conversation teacher. Level: ${userLevel}. Topic: ${topic || 'General'}.
+
+Rules: Ask follow-up questions. Keep replies short (2-3 sentences). Don't correct mistakes mid-conversation — track them silently. Introduce 1-2 new words naturally.
+
+Always respond with JSON: {"response":"your reply","mistakes":[{"type":"grammar","original":"wrong","correction":"right","explanation":"why"}],"newVocabulary":[{"word":"w","definition":"d","example":"e"}]}`
+    }
   ]
 
-  // Concise system instruction — rules only, no JSON schema examples (schema is
-  // enforced by responseMimeType + responseSchema, so examples waste tokens).
-  const systemInstruction = `You are Alex, an encouraging English teacher in a spoken ${userLevel}-level conversation about: ${topic || 'general English'}. Reply naturally in 2-3 sentences, adapt vocabulary to ${userLevel}, track grammar mistakes silently, introduce 1-2 useful words when natural. Never correct mistakes mid-conversation.`
+  for (const msg of history) {
+    chatMessages.push({
+      role: msg.speaker === 'user' ? 'user' : 'assistant',
+      content: msg.speaker === 'ai'
+        ? JSON.stringify({ response: msg.text, mistakes: [], newVocabulary: [] })
+        : msg.text
+    })
+  }
+  chatMessages.push({ role: 'user', content: userMessage })
 
-  const result = await ai.models.generateContent({
-    model: 'gemini-3.1-pro-preview',
-    contents,
-    config: {
-      systemInstruction,
-      responseMimeType: 'application/json',
-      responseSchema: {
-        type: 'object',
-        properties: {
-          response:      { type: 'string' },
-          mistakes:      { type: 'array', items: { type: 'object', properties: { type: { type: 'string' }, original: { type: 'string' }, correction: { type: 'string' }, explanation: { type: 'string' } }, required: ['type','original','correction','explanation'] } },
-          newVocabulary: { type: 'array', items: { type: 'object', properties: { word: { type: 'string' }, definition: { type: 'string' }, example: { type: 'string' } }, required: ['word','definition','example'] } }
-        },
-        required: ['response', 'mistakes', 'newVocabulary']
-      },
-      temperature: 0.7,
-      maxOutputTokens: 512
-    }
+  const completion = await openai.chat.completions.create({
+    model: 'gpt-4o-mini',
+    temperature: 0.7,
+    max_tokens: 512,
+    response_format: { type: 'json_object' },
+    messages: chatMessages
   })
 
   let parsed
   try {
-    parsed = JSON.parse(result.text)
+    parsed = JSON.parse(completion.choices[0].message.content)
   } catch {
-    // Fallback if parsing fails (should not happen with responseMimeType: json)
     parsed = {
       response: "That's interesting! Tell me more about that.",
       mistakes: [],
@@ -191,7 +186,7 @@ exports.sendMessage = onCall({ region: "africa-south1", secrets: [GEMINI_API_KEY
 })
 
 // ── Phase 9: Session scoring ────────────────────────────────────────────────
-exports.endSession = onCall({ region: 'africa-south1', secrets: [GEMINI_API_KEY] }, async (request) => {
+exports.endSession = onCall({ region: 'africa-south1', secrets: [OPENAI_API_KEY] }, async (request) => {
   if (!request.auth) {
     throw new HttpsError('unauthenticated', 'Authentication required')
   }
@@ -213,44 +208,33 @@ exports.endSession = onCall({ region: 'africa-south1', secrets: [GEMINI_API_KEY]
     throw new HttpsError('permission-denied', 'Session does not belong to user')
   }
 
-  const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY.value() })
-
-  const scoringPrompt = `You are an English language assessment expert. Analyze this conversation transcript and provide objective scores.
-
-TRANSCRIPT:
-${JSON.stringify(finalTranscript)}
-
-Score each dimension 0-100 based on:
-- fluency: Flow, pace, natural expression, lack of hesitation
-- grammar: Correctness of grammar, verb tenses, articles, prepositions
-- vocabulary: Range of words used, appropriate complexity for topic
-- overall: Weighted average (fluency 30%, grammar 40%, vocabulary 30%)
-
-OUTPUT (JSON only, no markdown):
-{
-  "scores": {
-    "fluency": number,
-    "grammar": number,
-    "vocabulary": number,
-    "overall": number
-  },
-  "feedback": {
-    "pronunciationIssues": [],
-    "grammarMistakes": [],
-    "vocabularySuggestions": []
-  }
-}`
+  const openai = new OpenAI({ apiKey: OPENAI_API_KEY.value() })
 
   let parsed
   try {
-    const result = await ai.models.generateContent({
-      model: 'gemini-3.1-pro-preview',
-      contents: scoringPrompt,
-      config: { responseMimeType: 'application/json' }
+    const scoringResponse = await openai.chat.completions.create({
+      model: 'gpt-4o-mini',
+      temperature: 0.3,
+      max_tokens: 512,
+      response_format: { type: 'json_object' },
+      messages: [
+        {
+          role: 'system',
+          content: 'You are an English language assessment expert. Analyze transcripts and provide objective scores. Always respond with valid JSON.'
+        },
+        {
+          role: 'user',
+          content: `Score this conversation (0-100 each):
+
+${JSON.stringify(finalTranscript)}
+
+JSON format: {"scores":{"fluency":N,"grammar":N,"vocabulary":N,"overall":N},"feedback":{"pronunciationIssues":[],"grammarMistakes":[],"vocabularySuggestions":[]}}`
+        }
+      ]
     })
-    parsed = JSON.parse(result.text)
+    parsed = JSON.parse(scoringResponse.choices[0].message.content)
   } catch (err) {
-    logger.warn('endSession: Gemini parse failed, using fallback scores', err)
+    logger.warn('endSession: OpenAI scoring failed, using fallback scores', err)
     parsed = {
       scores: { fluency: 70, grammar: 70, vocabulary: 70, overall: 70 },
       feedback: { pronunciationIssues: [], grammarMistakes: [], vocabularySuggestions: [] }
@@ -260,13 +244,8 @@ OUTPUT (JSON only, no markdown):
   const scores = parsed.scores
   const now = Timestamp.now()
   const durationMinutes = Math.round((durationSeconds ?? 0) / 60)
-
-  // Update session document with scores + completedAt + durationSeconds
-  await sessionRef.update({
-    scores: scores,
-    completedAt: now,
-    durationSeconds: durationSeconds ?? 0
-  })
+  // BUG FIX: store hours (not raw minutes) in totalHoursPracticed
+  const durationHours = Math.round(((durationSeconds ?? 0) / 3600) * 100) / 100
 
   // Update user stats with rolling average (last 10 sessions window)
   const userSnap = await admin.firestore().doc(`users/${uid}`).get()
@@ -299,28 +278,34 @@ OUTPUT (JSON only, no markdown):
     newStreak = userData.dailyStreak ?? 1      // already played today — keep streak
   }
 
-  await admin.firestore().doc(`users/${uid}`).update({
-    totalSessionsCompleted: FieldValue.increment(1),
-    totalMinutesPracticed: FieldValue.increment(durationMinutes),
-    averageScore: newAvg,
-    dailyStreak: newStreak,
-    lastSessionDate: now,
-    freeSessionUsed: true,
-    updatedAt: now
-  })
-
-  // Update leaderboard entry for current week
+  // OPTIMIZATION: run all 3 Firestore writes in parallel
   const weekId = getWeekId()
-  await admin.firestore()
-    .doc(`leaderboard/${weekId}/users/${uid}`)
-    .set({
-      displayName: userData.displayName ?? '',
-      photoURL: userData.photoURL ?? '',
-      weeklySessionTime: FieldValue.increment(durationMinutes),
-      weeklySessionCount: FieldValue.increment(1),
-      currentStreak: newStreak,
-      lastUpdated: now
-    }, { merge: true })
+  await Promise.all([
+    sessionRef.update({
+      scores,
+      completedAt: now,
+      durationSeconds: durationSeconds ?? 0
+    }),
+    admin.firestore().doc(`users/${uid}`).update({
+      totalSessionsCompleted: FieldValue.increment(1),
+      totalHoursPracticed: FieldValue.increment(durationHours),
+      averageScore: newAvg,
+      dailyStreak: newStreak,
+      lastSessionDate: now,
+      freeSessionUsed: true,
+      updatedAt: now
+    }),
+    admin.firestore()
+      .doc(`leaderboard/${weekId}/users/${uid}`)
+      .set({
+        displayName: userData.displayName ?? '',
+        photoURL: userData.photoURL ?? '',
+        weeklySessionTime: FieldValue.increment(durationMinutes),
+        weeklySessionCount: FieldValue.increment(1),
+        currentStreak: newStreak,
+        lastUpdated: now
+      }, { merge: true })
+  ])
 
   logger.info('endSession complete', { uid, sessionId, scores })
   return { scores, feedback: parsed.feedback }
