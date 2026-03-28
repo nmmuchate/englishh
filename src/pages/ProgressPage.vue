@@ -160,11 +160,21 @@
 </template>
 
 <script setup>
+import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useProfileStore } from 'stores/profile'
+import { useVocabularyStore } from 'stores/vocabulary'
 
 const router = useRouter()
 const profile = useProfileStore()
+const vocabStore = useVocabularyStore()
+
+onMounted(() => {
+  vocabStore.loadWords()
+})
+
+// Show up to 3 words from the user's vocabulary bank
+const miniVocabWords = computed(() => vocabStore.words.slice(0, 3))
 
 // Day labels — FRI is peak
 const chartDays = [
@@ -175,25 +185,6 @@ const chartDays = [
   { label: 'FRI', isPeak: true },
   { label: 'SAT', isPeak: false },
   { label: 'SUN', isPeak: false },
-]
-
-// Mini vocabulary cards — matches Stitch your_progress design
-const miniVocabWords = [
-  {
-    word: 'Ambience',
-    phonetic: '/ˈæmbiəns/',
-    definition: 'The character and atmosphere of a place.',
-  },
-  {
-    word: 'Resilient',
-    phonetic: '/rɪˈzɪliənt/',
-    definition: 'Able to withstand or recover quickly from difficult conditions.',
-  },
-  {
-    word: 'Pragmatic',
-    phonetic: '/præɡˈmætɪk/',
-    definition: 'Dealing with things sensibly and realistically.',
-  },
 ]
 </script>
 

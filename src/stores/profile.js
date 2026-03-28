@@ -10,7 +10,7 @@ export const useProfileStore = defineStore('profile', () => {
   const totalSessionsCompleted = ref(0)
   const totalVocabularyWords   = ref(0)
   const averageScore           = ref(0)
-  const totalHoursPracticed    = ref(0)
+  const totalMinutesPracticed    = ref(0)
   // Paywall fields
   const freeSessionUsed        = ref(false)
   const subscriptionStatus     = ref('none')     // 'none' | 'active' | 'cancelled'
@@ -24,7 +24,7 @@ export const useProfileStore = defineStore('profile', () => {
     totalSessionsCompleted.value = data.totalSessionsCompleted ?? 0
     totalVocabularyWords.value   = data.totalVocabularyWords  ?? 0
     averageScore.value           = data.averageScore          ?? 0
-    totalHoursPracticed.value    = data.totalHoursPracticed   ?? 0
+    totalMinutesPracticed.value    = data.totalMinutesPracticed   ?? 0
     freeSessionUsed.value        = data.freeSessionUsed       ?? false
     subscriptionStatus.value     = data.subscriptionStatus    ?? 'none'
   }
@@ -37,7 +37,7 @@ export const useProfileStore = defineStore('profile', () => {
     totalSessionsCompleted.value = 0
     totalVocabularyWords.value   = 0
     averageScore.value           = 0
-    totalHoursPracticed.value    = 0
+    totalMinutesPracticed.value    = 0
     freeSessionUsed.value        = false
     subscriptionStatus.value     = 'none'
   }
@@ -50,7 +50,7 @@ export const useProfileStore = defineStore('profile', () => {
     totalSessionsCompleted,
     totalVocabularyWords,
     averageScore,
-    totalHoursPracticed,
+    totalMinutesPracticed,
     freeSessionUsed,
     subscriptionStatus,
     setProfile,

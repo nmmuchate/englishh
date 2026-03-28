@@ -192,14 +192,15 @@ Your response (JSON only):`
     }
   }
 
-  // Append both messages to Firestore transcript atomically
-
+  // Append transcript entries and accumulate mistakes/vocabulary atomically
   const now = Date.now()
   await admin.firestore().doc(`sessions/${sessionId}`).update({
     transcript: FieldValue.arrayUnion(
       { speaker: 'user', text: userMessage, timestamp: now },
       { speaker: 'ai', text: parsed.response, timestamp: now + 1 }
-    )
+    ),
+    ...(parsed.mistakes?.length ? { mistakes: FieldValue.arrayUnion(...parsed.mistakes) } : {}),
+    ...(parsed.newVocabulary?.length ? { newVocabulary: FieldValue.arrayUnion(...parsed.newVocabulary) } : {})
   })
 
   return {
@@ -303,7 +304,7 @@ OUTPUT (JSON only, no markdown):
 
   await admin.firestore().doc(`users/${uid}`).update({
     totalSessionsCompleted: FieldValue.increment(1),
-    totalHoursPracticed: FieldValue.increment(durationMinutes),
+    totalMinutesPracticed: FieldValue.increment(durationMinutes),
     averageScore: newAvg,
     dailyStreak: newStreak,
     lastSessionDate: now,
@@ -340,15 +341,19 @@ function getWeekId() {
 // ── MozPayments helper ────────────────────────────────────────────────────
 // NOTE: hostname and path are ASSUMED from TRD spec — no public MozPayments docs found.
 // Replace api.mozpayments.co.mz and /v1/checkout when real endpoint is confirmed.
-function mozPaymentsCreateCheckout({ apiKey, userId, phoneNumber, paymentMethod }) {
+// plan: 'monthly' = 400 MZN/month, 'annual' = 3360 MZN/year (30% discount off 4800)
+const PLAN_AMOUNTS = { monthly: 400, annual: 3360 }
+const PLAN_IDS     = { monthly: 'monthly_unlimited', annual: 'annual_unlimited' }
+
+function mozPaymentsCreateCheckout({ apiKey, userId, phoneNumber, paymentMethod, plan }) {
   return new Promise((resolve, reject) => {
     const payload = JSON.stringify({
       userId,
       phoneNumber,
       paymentMethod,
-      plan: 'monthly_unlimited',
+      plan: PLAN_IDS[plan] ?? PLAN_IDS.monthly,
       currency: 'MZN',
-      amount: 400,
+      amount: PLAN_AMOUNTS[plan] ?? PLAN_AMOUNTS.monthly,
       webhookUrl: `https://africa-south1-${process.env.GCLOUD_PROJECT}.cloudfunctions.net/handlePaymentWebhook`
     })
     const options = {
@@ -382,14 +387,15 @@ exports.createSubscription = onCall({ region: 'africa-south1', secrets: [MOZPAYM
   }
 
   const uid = request.auth.uid
-  const { phoneNumber = '', paymentMethod = 'mpesa' } = request.data
+  const { phoneNumber = '', paymentMethod = 'mpesa', plan = 'monthly' } = request.data
 
   try {
     const response = await mozPaymentsCreateCheckout({
       apiKey: MOZPAYMENTS_API_KEY.value(),
       userId: uid,
       phoneNumber,
-      paymentMethod
+      paymentMethod,
+      plan
     })
 
     // Write pending subscription doc — store externalSubscriptionId so webhook can reverse-lookup userId

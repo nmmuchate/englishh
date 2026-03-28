@@ -311,3 +311,352 @@ Issues? Report them at https://github.com/firebase/firebase-tools/issues and att
 [debug] [2026-03-25T15:37:55.860Z] Finishing up request with event=finish {"metadata":{"emulator":{"name":"functions"},"function":{"name":"africa-south1-sendMessage"},"extension":{},"message":"Finishing up request with event=finish"}}
 [debug] [2026-03-25T15:37:55.860Z] Finishing up request with event=close {"metadata":{"emulator":{"name":"functions"},"function":{"name":"africa-south1-sendMessage"},"extension":{},"message":"Finishing up request with event=close"}}
 [debug] [2026-03-25T15:37:55.860Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":[],"workRunningCount":0}
+[debug] [2026-03-28T09:21:26.521Z] ----------------------------------------------------------------------
+[debug] [2026-03-28T09:21:26.528Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\User\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js emulators:start
+[debug] [2026-03-28T09:21:26.529Z] CLI Version:   15.9.0
+[debug] [2026-03-28T09:21:26.529Z] Platform:      win32
+[debug] [2026-03-28T09:21:26.529Z] Node Version:  v22.16.0
+[debug] [2026-03-28T09:21:26.530Z] Time:          Sat Mar 28 2026 16:21:26 GMT+0700 (Indochina Time)
+[debug] [2026-03-28T09:21:26.531Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-03-28T09:21:26.537Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2026-03-28T09:24:32.368Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-03-28T09:24:32.369Z] > authorizing via signed-in user (nicolas.muchate@gmail.com)
+[debug] [2026-03-28T09:24:36.611Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2026-03-28T09:24:36.612Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[debug] [2026-03-28T09:24:38.486Z] java version "24.0.1" 2025-04-15
+
+[debug] [2026-03-28T09:24:38.487Z] Java(TM) SE Runtime Environment (build 24.0.1+9-30)
+Java HotSpot(TM) 64-Bit Server VM (build 24.0.1+9-30, mixed mode, sharing)
+
+[debug] [2026-03-28T09:24:38.543Z] Parsed Java major version: 24
+[info] i  emulators: Starting emulators: auth, functions, firestore, hosting, extensions {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: auth, functions, firestore, hosting, extensions"}}
+[debug] [2026-03-28T09:24:38.549Z] Checked if tokens are valid: false, expires at: 1774455780531
+[debug] [2026-03-28T09:24:38.549Z] Checked if tokens are valid: false, expires at: 1774455780531
+[debug] [2026-03-28T09:24:38.550Z] > refreshing access token with scopes: []
+[debug] [2026-03-28T09:24:38.554Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-03-28T09:24:38.555Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-03-28T09:24:39.011Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-03-28T09:24:39.011Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-03-28T09:24:39.565Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/englishteacherbloora [none]
+[debug] [2026-03-28T09:24:41.476Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/englishteacherbloora 200
+[debug] [2026-03-28T09:24:41.476Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/englishteacherbloora {"projectNumber":"235834247193","projectId":"englishteacherbloora","lifecycleState":"ACTIVE","name":"englishteacherBloora","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2026-02-12T22:06:53.354303Z"}
+[debug] [2026-03-28T09:24:41.528Z] [logging] Logging Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2026-03-28T09:24:41.528Z] [auth] Authentication Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2026-03-28T09:24:41.529Z] [firestore] Firestore Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2026-03-28T09:24:41.529Z] [firestore.websocket] websocket server for firestore only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2026-03-28T09:24:41.529Z] [hosting] Hosting Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2026-03-28T09:24:41.530Z] assigned listening specs for emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000},{"address":"::1","family":"IPv6","port":4000}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"auth":[{"address":"127.0.0.1","family":"IPv4","port":9099}],"firestore":[{"address":"127.0.0.1","family":"IPv4","port":8080}],"firestore.websocket":[{"address":"127.0.0.1","family":"IPv4","port":9150}],"hosting":[{"address":"127.0.0.1","family":"IPv4","port":5000}]},"metadata":{"message":"assigned listening specs for emulators"}}
+[debug] [2026-03-28T09:24:41.545Z] Found emulator hub locator: {"version":"15.9.0","origins":["http://127.0.0.1:4400","http://[::1]:4400"],"pid":8372}
+[debug] [2026-03-28T09:24:41.549Z] Write emulator hub locator at C:\Users\User\AppData\Local\Temp\hub-englishteacherbloora.json
+[debug] [2026-03-28T09:24:41.568Z] [Extensions] Started Extensions emulator, this is a noop.
+[debug] [2026-03-28T09:24:41.581Z] [functions] Functions Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2026-03-28T09:24:41.581Z] [eventarc] Eventarc Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2026-03-28T09:24:41.581Z] [tasks] Cloud Tasks Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2026-03-28T09:24:41.581Z] late-assigned ports for functions and eventarc emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000},{"address":"::1","family":"IPv6","port":4000}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"auth":[{"address":"127.0.0.1","family":"IPv4","port":9099}],"firestore":[{"address":"127.0.0.1","family":"IPv4","port":8080}],"firestore.websocket":[{"address":"127.0.0.1","family":"IPv4","port":9150}],"hosting":[{"address":"127.0.0.1","family":"IPv4","port":5000}],"functions":[{"address":"127.0.0.1","family":"IPv4","port":5001}],"eventarc":[{"address":"127.0.0.1","family":"IPv4","port":9299}],"tasks":[{"address":"127.0.0.1","family":"IPv4","port":9499}]},"metadata":{"message":"late-assigned ports for functions and eventarc emulators"}}
+[warn] !  functions: The following emulators are not running, calls to these services from the Functions emulator will affect production: apphosting, database, pubsub, storage, dataconnect {"metadata":{"emulator":{"name":"functions"},"message":"The following emulators are not running, calls to these services from the Functions emulator will affect production: \u001b[1mapphosting, database, pubsub, storage, dataconnect\u001b[22m"}}
+[debug] [2026-03-28T09:24:41.644Z] defaultcredentials: writing to file C:\Users\User\AppData\Roaming\firebase\nicolas_muchate_gmail.com_application_default_credentials.json
+[debug] [2026-03-28T09:24:41.646Z] Setting GAC to C:\Users\User\AppData\Roaming\firebase\nicolas_muchate_gmail.com_application_default_credentials.json {"metadata":{"emulator":{"name":"functions"},"message":"Setting GAC to C:\\Users\\User\\AppData\\Roaming\\firebase\\nicolas_muchate_gmail.com_application_default_credentials.json"}}
+[debug] [2026-03-28T09:24:41.647Z] Checked if tokens are valid: true, expires at: 1774693478011
+[debug] [2026-03-28T09:24:41.647Z] Checked if tokens are valid: true, expires at: 1774693478011
+[debug] [2026-03-28T09:24:41.648Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/englishteacherbloora/adminSdkConfig [none]
+[debug] [2026-03-28T09:24:42.489Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/englishteacherbloora/adminSdkConfig 200
+[debug] [2026-03-28T09:24:42.490Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/englishteacherbloora/adminSdkConfig {"projectId":"englishteacherbloora","storageBucket":"englishteacherbloora.firebasestorage.app"}
+[debug] [2026-03-28T09:24:42.578Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2026-03-28T09:24:42.578Z] Ignoring unsupported arg: single_project_mode_error {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: single_project_mode_error"}}
+[debug] [2026-03-28T09:24:42.578Z] Starting Firestore Emulator with command {"binary":"java","args":["-Dgoogle.cloud_firestore.debug_log_level=FINE","-Duser.language=en","-jar","C:\\Users\\User\\.cache\\firebase\\emulators\\cloud-firestore-emulator-v1.20.2.jar","--host","127.0.0.1","--port",8080,"--websocket_port",9150,"--project_id","englishteacherbloora","--rules","C:\\Users\\User\\Documents\\GitHub\\englishh\\firestore.rules","--single_project_mode",true,"--functions_emulator","127.0.0.1:5001"],"optionalArgs":["port","webchannel_port","host","rules","websocket_port","functions_emulator","seed_from_export","project_id","single_project_mode"],"joinArgs":false,"shell":false,"port":8080} {"metadata":{"emulator":{"name":"firestore"},"message":"Starting Firestore Emulator with command {\"binary\":\"java\",\"args\":[\"-Dgoogle.cloud_firestore.debug_log_level=FINE\",\"-Duser.language=en\",\"-jar\",\"C:\\\\Users\\\\User\\\\.cache\\\\firebase\\\\emulators\\\\cloud-firestore-emulator-v1.20.2.jar\",\"--host\",\"127.0.0.1\",\"--port\",8080,\"--websocket_port\",9150,\"--project_id\",\"englishteacherbloora\",\"--rules\",\"C:\\\\Users\\\\User\\\\Documents\\\\GitHub\\\\englishh\\\\firestore.rules\",\"--single_project_mode\",true,\"--functions_emulator\",\"127.0.0.1:5001\"],\"optionalArgs\":[\"port\",\"webchannel_port\",\"host\",\"rules\",\"websocket_port\",\"functions_emulator\",\"seed_from_export\",\"project_id\",\"single_project_mode\"],\"joinArgs\":false,\"shell\":false,\"port\":8080}"}}
+[info] i  firestore: Firestore Emulator logging to firestore-debug.log {"metadata":{"emulator":{"name":"firestore"},"message":"Firestore Emulator logging to \u001b[1mfirestore-debug.log\u001b[22m"}}
+[info] +  firestore: Firestore Emulator UI websocket is running on 9150. {"metadata":{"emulator":{"name":"firestore"},"message":"Firestore Emulator UI websocket is running on 9150."}}
+[debug] [2026-03-28T09:25:46.670Z] Checked if tokens are valid: true, expires at: 1774693478011
+[debug] [2026-03-28T09:25:46.670Z] Checked if tokens are valid: true, expires at: 1774693478011
+[debug] [2026-03-28T09:25:46.675Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/englishteacherbloora/sites 
+[debug] [2026-03-28T09:25:49.007Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/englishteacherbloora/sites 200
+[debug] [2026-03-28T09:25:49.007Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/englishteacherbloora/sites {"sites":[{"name":"projects/englishteacherbloora/sites/englishteacherbloora","defaultUrl":"https://englishteacherbloora.web.app","appId":"1:235834247193:web:83985cbf49117a37738288","type":"DEFAULT_SITE"}]}
+[debug] [2026-03-28T09:25:49.008Z] Checked if tokens are valid: true, expires at: 1774693478011
+[debug] [2026-03-28T09:25:49.008Z] Checked if tokens are valid: true, expires at: 1774693478011
+[debug] [2026-03-28T09:25:49.008Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/englishteacherbloora/webApps/1:235834247193:web:83985cbf49117a37738288/config [none]
+[debug] [2026-03-28T09:25:49.836Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/englishteacherbloora/webApps/1:235834247193:web:83985cbf49117a37738288/config 200
+[debug] [2026-03-28T09:25:49.836Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/englishteacherbloora/webApps/1:235834247193:web:83985cbf49117a37738288/config {"projectId":"englishteacherbloora","appId":"1:235834247193:web:83985cbf49117a37738288","storageBucket":"englishteacherbloora.firebasestorage.app","apiKey":"AIzaSyBKm0S7MoBFi2iMVBImWpCc54eyLyamIPQ","authDomain":"englishteacherbloora.firebaseapp.com","messagingSenderId":"235834247193","projectNumber":"235834247193","version":"2"}
+[debug] [2026-03-28T09:25:51.808Z] Checked if tokens are valid: true, expires at: 1774693478011
+[debug] [2026-03-28T09:25:51.808Z] Checked if tokens are valid: true, expires at: 1774693478011
+[debug] [2026-03-28T09:25:51.809Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/englishteacherbloora [none]
+[debug] [2026-03-28T09:25:52.400Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/englishteacherbloora 200
+[debug] [2026-03-28T09:25:52.400Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/englishteacherbloora {"projectId":"englishteacherbloora","projectNumber":"235834247193","displayName":"englishteacherBloora","name":"projects/englishteacherbloora","resources":{"hostingSite":"englishteacherbloora"},"state":"ACTIVE","etag":"1_d4fb370f-7b23-463f-b5fa-4021a32f5838"}
+[info] i  hosting[englishteacherbloora]: Serving hosting files from: public {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1mpublic\u001b[22m"}}
+[info] +  hosting[englishteacherbloora]: Local server: http://127.0.0.1:5000 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://127.0.0.1:5000\u001b[22m\u001b[24m"}}
+[debug] [2026-03-28T09:25:53.982Z] [Extensions] Connecting Extensions emulator, this is a noop.
+[info] i  functions: Watching "C:\Users\User\Documents\GitHub\englishh\functions" for Cloud Functions... {"metadata":{"emulator":{"name":"functions"},"message":"Watching \"C:\\Users\\User\\Documents\\GitHub\\englishh\\functions\" for Cloud Functions..."}}
+[debug] [2026-03-28T09:25:54.174Z] Validating nodejs source
+[warn] !  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[debug] [2026-03-28T09:26:02.529Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "24"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "@google/genai": "^1.0.0",
+    "firebase-admin": "^13.6.0",
+    "firebase-functions": "^7.0.0"
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^3.4.1"
+  },
+  "private": true
+}
+[debug] [2026-03-28T09:26:02.530Z] Building nodejs source
+[debug] [2026-03-28T09:26:02.531Z] Failed to find version of module node: reached end of search path C:\Users\User\Documents\GitHub\englishh\functions\node_modules
+[warn] !  functions: Your requested "node" version "24" doesn't match your global version "22". Using node@22 from host. 
+[debug] [2026-03-28T09:26:02.594Z] Could not find functions.yaml. Must use http discovery
+[debug] [2026-03-28T09:26:02.715Z] Found firebase-functions binary at 'C:\Users\User\Documents\GitHub\englishh\functions\node_modules\.bin\firebase-functions'
+[debug] [2026-03-28T09:26:13.359Z] Failed to call quitquitquit. This often means the server failed to start request to http://localhost:8001/__/quitquitquit failed, reason:  {"message":"request to http://localhost:8001/__/quitquitquit failed, reason: ","type":"system","errno":"ECONNREFUSED","code":"ECONNREFUSED"}
+[error] !!  functions: Failed to load function definition from source: FirebaseError: User code failed to load. Cannot determine backend specification. Timeout after 10000. See https://firebase.google.com/docs/functions/tips#avoid_deployment_timeouts_during_initialization' {"metadata":{"emulator":{"name":"functions"},"message":"Failed to load function definition from source: FirebaseError: User code failed to load. Cannot determine backend specification. Timeout after 10000. See https://firebase.google.com/docs/functions/tips#avoid_deployment_timeouts_during_initialization'"}}
+[info] i  functions: Watching "C:\Users\User\Documents\GitHub\englishh\backend" for Cloud Functions... {"metadata":{"emulator":{"name":"functions"},"message":"Watching \"C:\\Users\\User\\Documents\\GitHub\\englishh\\backend\" for Cloud Functions..."}}
+[debug] [2026-03-28T09:26:23.397Z] Validating nodejs source
+[debug] [2026-03-28T09:26:35.218Z] checkFunctionsSDKVersion was unable to fetch information from NPM Error: spawnSync C:\Windows\system32\cmd.exe ETIMEDOUT
+    at Object.spawnSync (node:internal/child_process:1120:20)
+    at Object.spawnSync (node:child_process:868:24)
+    at Function.spawnSync [as sync] (C:\Users\User\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\cross-spawn\index.js:26:23)
+    at Object.getLatestSDKVersion (C:\Users\User\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\runtimes\node\versioning.js:55:25)
+    at Object.checkFunctionsSDKVersion (C:\Users\User\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\runtimes\node\versioning.js:74:32)
+    at Delegate.validate (C:\Users\User\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\runtimes\node\index.js:88:20)
+    at FunctionsEmulator.discoverTriggers (C:\Users\User\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\functionsEmulator.js:321:35)
+    at async FunctionsEmulator.loadTriggers (C:\Users\User\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\functionsEmulator.js:367:34)
+    at async FunctionsEmulator.connect (C:\Users\User\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\functionsEmulator.js:283:13)
+    at async Object.startAll (C:\Users\User\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\controller.js:683:13)
+[debug] [2026-03-28T09:26:35.219Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "24"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^13.6.0",
+    "firebase-functions": "^7.0.0"
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^3.4.1"
+  },
+  "private": true
+}
+[debug] [2026-03-28T09:26:35.219Z] Building nodejs source
+[debug] [2026-03-28T09:26:35.219Z] Failed to find version of module node: reached end of search path C:\Users\User\Documents\GitHub\englishh\backend\node_modules
+[warn] !  functions: Your requested "node" version "24" doesn't match your global version "22". Using node@22 from host. 
+[debug] [2026-03-28T09:26:35.222Z] Could not find functions.yaml. Must use http discovery
+[debug] [2026-03-28T09:26:35.486Z] Found firebase-functions binary at 'C:\Users\User\Documents\GitHub\englishh\backend\node_modules\.bin\firebase-functions'
+[debug] [2026-03-28T09:26:45.519Z] Failed to call quitquitquit. This often means the server failed to start request to http://localhost:8324/__/quitquitquit failed, reason:  {"message":"request to http://localhost:8324/__/quitquitquit failed, reason: ","type":"system","errno":"ECONNREFUSED","code":"ECONNREFUSED"}
+[info] Serving at port 8001
+
+[info] Serving at port 8324
+
+[error] !!  functions: Failed to load function definition from source: FirebaseError: User code failed to load. Cannot determine backend specification. Timeout after 10000. See https://firebase.google.com/docs/functions/tips#avoid_deployment_timeouts_during_initialization' {"metadata":{"emulator":{"name":"functions"},"message":"Failed to load function definition from source: FirebaseError: User code failed to load. Cannot determine backend specification. Timeout after 10000. See https://firebase.google.com/docs/functions/tips#avoid_deployment_timeouts_during_initialization'"}}
+[debug] [2026-03-28T09:26:55.549Z] Could not find VSCode notification endpoint: FetchError: request to http://localhost:40001/vscode/notify failed, reason: . If you are not running the Firebase Data Connect VSCode extension, this is expected and not an issue.
+[info] 
+┌─────────────────────────────────────────────────────────────┐
+│ ✔  All emulators ready! It is now safe to connect your app. │
+│ i  View Emulator UI at http://127.0.0.1:4000/               │
+└─────────────────────────────────────────────────────────────┘
+
+┌────────────────┬────────────────┬──────────────────────────────────┐
+│ Emulator       │ Host:Port      │ View in Emulator UI              │
+├────────────────┼────────────────┼──────────────────────────────────┤
+│ Authentication │ 127.0.0.1:9099 │ http://127.0.0.1:4000/auth       │
+├────────────────┼────────────────┼──────────────────────────────────┤
+│ Functions      │ 127.0.0.1:5001 │ http://127.0.0.1:4000/functions  │
+├────────────────┼────────────────┼──────────────────────────────────┤
+│ Firestore      │ 127.0.0.1:8080 │ http://127.0.0.1:4000/firestore  │
+├────────────────┼────────────────┼──────────────────────────────────┤
+│ Hosting        │ 127.0.0.1:5000 │ n/a                              │
+├────────────────┼────────────────┼──────────────────────────────────┤
+│ Extensions     │ 127.0.0.1:5001 │ http://127.0.0.1:4000/extensions │
+└────────────────┴────────────────┴──────────────────────────────────┘
+  Emulator Hub host: 127.0.0.1 port: 4400
+  Other reserved ports: 4500, 9150
+┌─────────────────────────┬───────────────┬─────────────────────┐
+│ Extension Instance Name │ Extension Ref │ View in Emulator UI │
+└─────────────────────────┴───────────────┴─────────────────────┘
+Issues? Report them at https://github.com/firebase/firebase-tools/issues and attach the *-debug.log files.
+ 
+[debug] [2026-03-28T09:39:23.624Z] >>> [apiv2][query] POST http://127.0.0.1:5001/functions/projects/englishteacherbloora/trigger_multicast [none]
+[debug] [2026-03-28T09:39:23.624Z] >>> [apiv2][body] POST http://127.0.0.1:5001/functions/projects/englishteacherbloora/trigger_multicast {"eventId":"fe42d68f-6c9e-416a-9ef6-0fd7657fb9b9","eventType":"providers/firebase.auth/eventTypes/user.create","resource":{"name":"projects/englishteacherbloora","service":"firebaseauth.googleapis.com"},"params":{},"timestamp":"2026-03-28T09:39:23.623Z","data":{"uid":"Rl4aiuZNQ1HWYDfiEtk9KhphH8Nr","email":"raccoon.orange.490@example.com","emailVerified":true,"displayName":"Raccoon Orange","metadata":{"creationTime":"2026-03-28T09:39:23.620Z","lastSignInTime":"2026-03-28T09:39:23.620Z"},"customClaims":{},"providerData":[{"rawId":"1724370057047435192446162242988778879101","providerId":"google.com","displayName":"Raccoon Orange","email":"raccoon.orange.490@example.com","federatedId":"1724370057047435192446162242988778879101","screenName":"orange_raccoon"}]}}
+[debug] [2026-03-28T09:39:23.655Z] <<< [apiv2][status] POST http://127.0.0.1:5001/functions/projects/englishteacherbloora/trigger_multicast 200
+[debug] [2026-03-28T09:39:23.655Z] <<< [apiv2][body] POST http://127.0.0.1:5001/functions/projects/englishteacherbloora/trigger_multicast {"status":"multicast_acknowledged"}
+[debug] [2026-03-28T09:39:38.058Z] [work-queue] {"queuedWork":["/englishteacherbloora/africa-south1/startConversation-2026-03-28T09:39:38.058Z"],"queueLength":1,"runningWork":[],"workRunningCount":0}
+[debug] [2026-03-28T09:39:38.059Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":["/englishteacherbloora/africa-south1/startConversation-2026-03-28T09:39:38.058Z"],"workRunningCount":1}
+[debug] [2026-03-28T09:39:38.061Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":[],"workRunningCount":0}
+[debug] [2026-03-28T09:45:53.829Z] File C:\Users\User\Documents\GitHub\englishh\functions\index.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File C:\\Users\\User\\Documents\\GitHub\\englishh\\functions\\index.js changed, reloading triggers"}}
+[debug] [2026-03-28T09:45:54.847Z] Validating nodejs source
+[warn] !  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[debug] [2026-03-28T09:46:01.540Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "24"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "@google/genai": "^1.0.0",
+    "firebase-admin": "^13.6.0",
+    "firebase-functions": "^7.0.0"
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^3.4.1"
+  },
+  "private": true
+}
+[debug] [2026-03-28T09:46:01.540Z] Building nodejs source
+[debug] [2026-03-28T09:46:01.540Z] Failed to find version of module node: reached end of search path C:\Users\User\Documents\GitHub\englishh\functions\node_modules
+[warn] !  functions: Your requested "node" version "24" doesn't match your global version "22". Using node@22 from host. 
+[debug] [2026-03-28T09:46:01.544Z] Could not find functions.yaml. Must use http discovery
+[debug] [2026-03-28T09:46:01.568Z] Found firebase-functions binary at 'C:\Users\User\Documents\GitHub\englishh\functions\node_modules\.bin\firebase-functions'
+[info] Serving at port 8206
+
+[debug] [2026-03-28T09:46:04.029Z] Got response from /__/functions.yaml {"endpoints":{"healthCheck":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":10,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["africa-south1"],"labels":{},"httpsTrigger":{},"entryPoint":"healthCheck"},"startConversation":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":10,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["africa-south1"],"secretEnvironmentVariables":[{"key":"GEMINI_API_KEY"}],"labels":{},"callableTrigger":{},"entryPoint":"startConversation"},"sendMessage":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":10,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["africa-south1"],"secretEnvironmentVariables":[{"key":"GEMINI_API_KEY"}],"labels":{},"callableTrigger":{},"entryPoint":"sendMessage"},"endSession":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":10,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["africa-south1"],"secretEnvironmentVariables":[{"key":"GEMINI_API_KEY"}],"labels":{},"callableTrigger":{},"entryPoint":"endSession"},"createSubscription":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":10,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["africa-south1"],"secretEnvironmentVariables":[{"key":"MOZPAYMENTS_API_KEY"}],"labels":{},"callableTrigger":{},"entryPoint":"createSubscription"},"handlePaymentWebhook":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":10,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["africa-south1"],"secretEnvironmentVariables":[{"key":"MOZPAYMENTS_API_KEY"}],"labels":{},"httpsTrigger":{},"entryPoint":"handlePaymentWebhook"},"deleteOldTranscripts":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":10,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["africa-south1"],"labels":{},"scheduleTrigger":{"schedule":"0 2 * * *","retryConfig":{},"timeZone":"UTC"},"entryPoint":"deleteOldTranscripts"},"updateWeeklyLeaderboard":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":10,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["africa-south1"],"labels":{},"scheduleTrigger":{"schedule":"0 0 * * 1","retryConfig":{},"timeZone":"UTC"},"entryPoint":"updateWeeklyLeaderboard"}},"specVersion":"v1alpha1","requiredAPIs":[{"api":"cloudscheduler.googleapis.com","reason":"Needed for scheduled functions."}],"extensions":{},"params":[{"type":"secret","name":"GEMINI_API_KEY"},{"type":"secret","name":"MOZPAYMENTS_API_KEY"}]}
+[debug] [2026-03-28T09:46:08.121Z] defaultcredentials: writing to file C:\Users\User\AppData\Roaming\firebase\nicolas_muchate_gmail.com_application_default_credentials.json
+[debug] [2026-03-28T09:46:08.123Z] Setting GAC to C:\Users\User\AppData\Roaming\firebase\nicolas_muchate_gmail.com_application_default_credentials.json {"metadata":{"emulator":{"name":"functions"},"message":"Setting GAC to C:\\Users\\User\\AppData\\Roaming\\firebase\\nicolas_muchate_gmail.com_application_default_credentials.json"}}
+[info] +  functions: Loaded functions definitions from source: healthCheck, startConversation, sendMessage, endSession, createSubscription, handlePaymentWebhook, deleteOldTranscripts, updateWeeklyLeaderboard. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: healthCheck, startConversation, sendMessage, endSession, createSubscription, handlePaymentWebhook, deleteOldTranscripts, updateWeeklyLeaderboard."}}
+[info] +  functions[africa-south1-healthCheck]: http function initialized (http://127.0.0.1:5001/englishteacherbloora/africa-south1/healthCheck). {"metadata":{"emulator":{"name":"functions"},"message":"\u001b[1mhttp\u001b[22m function initialized (http://127.0.0.1:5001/englishteacherbloora/africa-south1/healthCheck)."}}
+[info] +  functions[africa-south1-startConversation]: http function initialized (http://127.0.0.1:5001/englishteacherbloora/africa-south1/startConversation). {"metadata":{"emulator":{"name":"functions"},"message":"\u001b[1mhttp\u001b[22m function initialized (http://127.0.0.1:5001/englishteacherbloora/africa-south1/startConversation)."}}
+[info] +  functions[africa-south1-sendMessage]: http function initialized (http://127.0.0.1:5001/englishteacherbloora/africa-south1/sendMessage). {"metadata":{"emulator":{"name":"functions"},"message":"\u001b[1mhttp\u001b[22m function initialized (http://127.0.0.1:5001/englishteacherbloora/africa-south1/sendMessage)."}}
+[info] +  functions[africa-south1-endSession]: http function initialized (http://127.0.0.1:5001/englishteacherbloora/africa-south1/endSession). {"metadata":{"emulator":{"name":"functions"},"message":"\u001b[1mhttp\u001b[22m function initialized (http://127.0.0.1:5001/englishteacherbloora/africa-south1/endSession)."}}
+[info] +  functions[africa-south1-createSubscription]: http function initialized (http://127.0.0.1:5001/englishteacherbloora/africa-south1/createSubscription). {"metadata":{"emulator":{"name":"functions"},"message":"\u001b[1mhttp\u001b[22m function initialized (http://127.0.0.1:5001/englishteacherbloora/africa-south1/createSubscription)."}}
+[info] +  functions[africa-south1-handlePaymentWebhook]: http function initialized (http://127.0.0.1:5001/englishteacherbloora/africa-south1/handlePaymentWebhook). {"metadata":{"emulator":{"name":"functions"},"message":"\u001b[1mhttp\u001b[22m function initialized (http://127.0.0.1:5001/englishteacherbloora/africa-south1/handlePaymentWebhook)."}}
+[info] i  functions[africa-south1-deleteOldTranscripts]: function ignored because the pubsub emulator does not exist or is not running. {"metadata":{"emulator":{"name":"functions"},"message":"function ignored because the pubsub emulator does not exist or is not running."}}
+[info] i  functions[africa-south1-updateWeeklyLeaderboard]: function ignored because the pubsub emulator does not exist or is not running. {"metadata":{"emulator":{"name":"functions"},"message":"function ignored because the pubsub emulator does not exist or is not running."}}
+[debug] [2026-03-28T09:48:26.447Z] File C:\Users\User\Documents\GitHub\englishh\functions\index.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File C:\\Users\\User\\Documents\\GitHub\\englishh\\functions\\index.js changed, reloading triggers"}}
+[debug] [2026-03-28T09:48:27.455Z] Validating nodejs source
+[warn] !  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[debug] [2026-03-28T09:48:30.646Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "24"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "@google/genai": "^1.0.0",
+    "firebase-admin": "^13.6.0",
+    "firebase-functions": "^7.0.0"
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^3.4.1"
+  },
+  "private": true
+}
+[debug] [2026-03-28T09:48:30.647Z] Building nodejs source
+[debug] [2026-03-28T09:48:30.647Z] Failed to find version of module node: reached end of search path C:\Users\User\Documents\GitHub\englishh\functions\node_modules
+[warn] !  functions: Your requested "node" version "24" doesn't match your global version "22". Using node@22 from host. 
+[debug] [2026-03-28T09:48:30.651Z] Could not find functions.yaml. Must use http discovery
+[debug] [2026-03-28T09:48:30.673Z] Found firebase-functions binary at 'C:\Users\User\Documents\GitHub\englishh\functions\node_modules\.bin\firebase-functions'
+[info] Serving at port 8251
+
+[debug] [2026-03-28T09:48:32.798Z] Got response from /__/functions.yaml {"endpoints":{"healthCheck":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":10,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["africa-south1"],"labels":{},"httpsTrigger":{},"entryPoint":"healthCheck"},"startConversation":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":10,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["africa-south1"],"secretEnvironmentVariables":[{"key":"GEMINI_API_KEY"}],"labels":{},"callableTrigger":{},"entryPoint":"startConversation"},"sendMessage":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":10,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["africa-south1"],"secretEnvironmentVariables":[{"key":"GEMINI_API_KEY"}],"labels":{},"callableTrigger":{},"entryPoint":"sendMessage"},"endSession":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":10,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["africa-south1"],"secretEnvironmentVariables":[{"key":"GEMINI_API_KEY"}],"labels":{},"callableTrigger":{},"entryPoint":"endSession"},"createSubscription":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":10,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["africa-south1"],"secretEnvironmentVariables":[{"key":"MOZPAYMENTS_API_KEY"}],"labels":{},"callableTrigger":{},"entryPoint":"createSubscription"},"handlePaymentWebhook":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":10,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["africa-south1"],"secretEnvironmentVariables":[{"key":"MOZPAYMENTS_API_KEY"}],"labels":{},"httpsTrigger":{},"entryPoint":"handlePaymentWebhook"},"deleteOldTranscripts":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":10,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["africa-south1"],"labels":{},"scheduleTrigger":{"schedule":"0 2 * * *","retryConfig":{},"timeZone":"UTC"},"entryPoint":"deleteOldTranscripts"},"updateWeeklyLeaderboard":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":10,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["africa-south1"],"labels":{},"scheduleTrigger":{"schedule":"0 0 * * 1","retryConfig":{},"timeZone":"UTC"},"entryPoint":"updateWeeklyLeaderboard"}},"specVersion":"v1alpha1","requiredAPIs":[{"api":"cloudscheduler.googleapis.com","reason":"Needed for scheduled functions."}],"extensions":{},"params":[{"type":"secret","name":"GEMINI_API_KEY"},{"type":"secret","name":"MOZPAYMENTS_API_KEY"}]}
+[debug] [2026-03-28T09:48:36.871Z] defaultcredentials: writing to file C:\Users\User\AppData\Roaming\firebase\nicolas_muchate_gmail.com_application_default_credentials.json
+[debug] [2026-03-28T09:48:36.873Z] Setting GAC to C:\Users\User\AppData\Roaming\firebase\nicolas_muchate_gmail.com_application_default_credentials.json {"metadata":{"emulator":{"name":"functions"},"message":"Setting GAC to C:\\Users\\User\\AppData\\Roaming\\firebase\\nicolas_muchate_gmail.com_application_default_credentials.json"}}
+[info] +  functions: Loaded functions definitions from source: healthCheck, startConversation, sendMessage, endSession, createSubscription, handlePaymentWebhook, deleteOldTranscripts, updateWeeklyLeaderboard. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: healthCheck, startConversation, sendMessage, endSession, createSubscription, handlePaymentWebhook, deleteOldTranscripts, updateWeeklyLeaderboard."}}
+[debug] [2026-03-28T09:51:36.987Z] File C:\Users\User\Documents\GitHub\englishh\functions\index.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File C:\\Users\\User\\Documents\\GitHub\\englishh\\functions\\index.js changed, reloading triggers"}}
+[debug] [2026-03-28T09:51:37.994Z] Validating nodejs source
+[warn] !  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[debug] [2026-03-28T09:51:44.264Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "24"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "@google/genai": "^1.0.0",
+    "firebase-admin": "^13.6.0",
+    "firebase-functions": "^7.0.0"
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^3.4.1"
+  },
+  "private": true
+}
+[debug] [2026-03-28T09:51:44.264Z] Building nodejs source
+[debug] [2026-03-28T09:51:44.264Z] Failed to find version of module node: reached end of search path C:\Users\User\Documents\GitHub\englishh\functions\node_modules
+[warn] !  functions: Your requested "node" version "24" doesn't match your global version "22". Using node@22 from host. 
+[debug] [2026-03-28T09:51:44.267Z] Could not find functions.yaml. Must use http discovery
+[debug] [2026-03-28T09:51:44.293Z] Found firebase-functions binary at 'C:\Users\User\Documents\GitHub\englishh\functions\node_modules\.bin\firebase-functions'
+[info] Serving at port 8155
+
+[debug] [2026-03-28T09:51:46.867Z] Got response from /__/functions.yaml {"endpoints":{"healthCheck":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":10,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["africa-south1"],"labels":{},"httpsTrigger":{},"entryPoint":"healthCheck"},"startConversation":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":10,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["africa-south1"],"secretEnvironmentVariables":[{"key":"GEMINI_API_KEY"}],"labels":{},"callableTrigger":{},"entryPoint":"startConversation"},"sendMessage":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":10,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["africa-south1"],"secretEnvironmentVariables":[{"key":"GEMINI_API_KEY"}],"labels":{},"callableTrigger":{},"entryPoint":"sendMessage"},"endSession":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":10,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["africa-south1"],"secretEnvironmentVariables":[{"key":"GEMINI_API_KEY"}],"labels":{},"callableTrigger":{},"entryPoint":"endSession"},"createSubscription":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":10,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["africa-south1"],"secretEnvironmentVariables":[{"key":"MOZPAYMENTS_API_KEY"}],"labels":{},"callableTrigger":{},"entryPoint":"createSubscription"},"handlePaymentWebhook":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":10,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["africa-south1"],"secretEnvironmentVariables":[{"key":"MOZPAYMENTS_API_KEY"}],"labels":{},"httpsTrigger":{},"entryPoint":"handlePaymentWebhook"},"deleteOldTranscripts":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":10,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["africa-south1"],"labels":{},"scheduleTrigger":{"schedule":"0 2 * * *","retryConfig":{},"timeZone":"UTC"},"entryPoint":"deleteOldTranscripts"},"updateWeeklyLeaderboard":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":10,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["africa-south1"],"labels":{},"scheduleTrigger":{"schedule":"0 0 * * 1","retryConfig":{},"timeZone":"UTC"},"entryPoint":"updateWeeklyLeaderboard"}},"specVersion":"v1alpha1","requiredAPIs":[{"api":"cloudscheduler.googleapis.com","reason":"Needed for scheduled functions."}],"extensions":{},"params":[{"type":"secret","name":"GEMINI_API_KEY"},{"type":"secret","name":"MOZPAYMENTS_API_KEY"}]}
+[debug] [2026-03-28T09:51:49.000Z] File C:\Users\User\Documents\GitHub\englishh\functions\index.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File C:\\Users\\User\\Documents\\GitHub\\englishh\\functions\\index.js changed, reloading triggers"}}
+[debug] [2026-03-28T09:51:50.016Z] Validating nodejs source
+[warn] !  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[debug] [2026-03-28T09:51:53.203Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "24"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "@google/genai": "^1.0.0",
+    "firebase-admin": "^13.6.0",
+    "firebase-functions": "^7.0.0"
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^3.4.1"
+  },
+  "private": true
+}
+[debug] [2026-03-28T09:51:53.203Z] Building nodejs source
+[debug] [2026-03-28T09:51:53.204Z] Failed to find version of module node: reached end of search path C:\Users\User\Documents\GitHub\englishh\functions\node_modules
+[warn] !  functions: Your requested "node" version "24" doesn't match your global version "22". Using node@22 from host. 
+[debug] [2026-03-28T09:51:53.207Z] Could not find functions.yaml. Must use http discovery
+[debug] [2026-03-28T09:51:53.229Z] Found firebase-functions binary at 'C:\Users\User\Documents\GitHub\englishh\functions\node_modules\.bin\firebase-functions'
+[debug] [2026-03-28T09:51:53.240Z] defaultcredentials: writing to file C:\Users\User\AppData\Roaming\firebase\nicolas_muchate_gmail.com_application_default_credentials.json
+[debug] [2026-03-28T09:51:53.247Z] Setting GAC to C:\Users\User\AppData\Roaming\firebase\nicolas_muchate_gmail.com_application_default_credentials.json {"metadata":{"emulator":{"name":"functions"},"message":"Setting GAC to C:\\Users\\User\\AppData\\Roaming\\firebase\\nicolas_muchate_gmail.com_application_default_credentials.json"}}
+[info] +  functions: Loaded functions definitions from source: healthCheck, startConversation, sendMessage, endSession, createSubscription, handlePaymentWebhook, deleteOldTranscripts, updateWeeklyLeaderboard. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: healthCheck, startConversation, sendMessage, endSession, createSubscription, handlePaymentWebhook, deleteOldTranscripts, updateWeeklyLeaderboard."}}
+[info] Serving at port 8545
+
+[debug] [2026-03-28T09:51:55.514Z] Got response from /__/functions.yaml {"endpoints":{"healthCheck":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":10,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["africa-south1"],"labels":{},"httpsTrigger":{},"entryPoint":"healthCheck"},"startConversation":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":10,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["africa-south1"],"secretEnvironmentVariables":[{"key":"GEMINI_API_KEY"}],"labels":{},"callableTrigger":{},"entryPoint":"startConversation"},"sendMessage":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":10,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["africa-south1"],"secretEnvironmentVariables":[{"key":"GEMINI_API_KEY"}],"labels":{},"callableTrigger":{},"entryPoint":"sendMessage"},"endSession":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":10,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["africa-south1"],"secretEnvironmentVariables":[{"key":"GEMINI_API_KEY"}],"labels":{},"callableTrigger":{},"entryPoint":"endSession"},"createSubscription":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":10,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["africa-south1"],"secretEnvironmentVariables":[{"key":"MOZPAYMENTS_API_KEY"}],"labels":{},"callableTrigger":{},"entryPoint":"createSubscription"},"handlePaymentWebhook":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":10,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["africa-south1"],"secretEnvironmentVariables":[{"key":"MOZPAYMENTS_API_KEY"}],"labels":{},"httpsTrigger":{},"entryPoint":"handlePaymentWebhook"},"deleteOldTranscripts":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":10,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["africa-south1"],"labels":{},"scheduleTrigger":{"schedule":"0 2 * * *","retryConfig":{},"timeZone":"UTC"},"entryPoint":"deleteOldTranscripts"},"updateWeeklyLeaderboard":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":10,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["africa-south1"],"labels":{},"scheduleTrigger":{"schedule":"0 0 * * 1","retryConfig":{},"timeZone":"UTC"},"entryPoint":"updateWeeklyLeaderboard"}},"specVersion":"v1alpha1","requiredAPIs":[{"api":"cloudscheduler.googleapis.com","reason":"Needed for scheduled functions."}],"extensions":{},"params":[{"type":"secret","name":"GEMINI_API_KEY"},{"type":"secret","name":"MOZPAYMENTS_API_KEY"}]}
+[debug] [2026-03-28T09:51:59.588Z] defaultcredentials: writing to file C:\Users\User\AppData\Roaming\firebase\nicolas_muchate_gmail.com_application_default_credentials.json
+[debug] [2026-03-28T09:51:59.590Z] Setting GAC to C:\Users\User\AppData\Roaming\firebase\nicolas_muchate_gmail.com_application_default_credentials.json {"metadata":{"emulator":{"name":"functions"},"message":"Setting GAC to C:\\Users\\User\\AppData\\Roaming\\firebase\\nicolas_muchate_gmail.com_application_default_credentials.json"}}
+[info] +  functions: Loaded functions definitions from source: healthCheck, startConversation, sendMessage, endSession, createSubscription, handlePaymentWebhook, deleteOldTranscripts, updateWeeklyLeaderboard. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: healthCheck, startConversation, sendMessage, endSession, createSubscription, handlePaymentWebhook, deleteOldTranscripts, updateWeeklyLeaderboard."}}

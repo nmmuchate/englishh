@@ -64,7 +64,7 @@
           >
             <div class="col">
               <div class="row items-center q-gutter-sm">
-                <span class="text-weight-bold">$79.99 / year</span>
+                <span class="text-weight-bold">3.360 MZN / ano</span>
                 <span class="save-badge text-caption text-weight-bold">Save 30%</span>
               </div>
               <div class="text-caption text-primary text-weight-bold q-mt-xs">Best Value</div>
@@ -84,8 +84,8 @@
             @click="selectedPlan = 'monthly'"
           >
             <div class="col">
-              <div class="text-weight-medium">$9.99 / month</div>
-              <div class="text-caption text-grey-6 q-mt-xs">Billed monthly</div>
+              <div class="text-weight-medium">400 MZN / mês</div>
+              <div class="text-caption text-grey-6 q-mt-xs">Cobrado mensalmente</div>
             </div>
             <q-radio
               :model-value="selectedPlan"
@@ -94,6 +94,20 @@
               @update:model-value="selectedPlan = 'monthly'"
             />
           </div>
+        </div>
+
+        <!-- Phone number input -->
+        <div class="q-px-lg q-pt-sm q-pb-xs">
+          <q-input
+            v-model="phoneNumber"
+            outlined
+            dense
+            color="primary"
+            label="Phone number (M-Pesa / e-Mola)"
+            placeholder="+258 8X XXX XXXX"
+            class="phone-input"
+            input-class="text-white"
+          />
         </div>
 
         <!-- Subscribe button -->
@@ -143,6 +157,7 @@ defineEmits(['update:modelValue'])
 const createSubscriptionFn = httpsCallable(functions, 'createSubscription')
 
 const selectedPlan = ref('annual')
+const phoneNumber = ref('')
 const isSubscribing = ref(false)
 
 const features = [
@@ -156,7 +171,9 @@ async function handleSubscribe() {
   isSubscribing.value = true
   try {
     const result = await createSubscriptionFn({
-      paymentMethod: selectedPlan.value === 'monthly' ? 'mpesa' : 'emola'
+      plan: selectedPlan.value,
+      paymentMethod: selectedPlan.value === 'monthly' ? 'mpesa' : 'emola',
+      phoneNumber: phoneNumber.value
     })
     // Redirect to MozPayments hosted checkout page
     window.location.href = result.data.checkoutUrl
@@ -271,6 +288,12 @@ async function handleSubscribe() {
 .link-text {
   font-size: 11px;
   letter-spacing: 0.05em;
+}
+
+/* Phone input */
+:deep(.phone-input .q-field__control) {
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
 }
 
 /* iOS home indicator */

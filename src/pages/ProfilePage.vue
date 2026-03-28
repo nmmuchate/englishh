@@ -191,6 +191,7 @@ const profile = useProfileStore()
 
 // Initials from displayName — same pattern as DashboardPage
 const initials = computed(() => {
+  if (!profile.displayName) return '?'
   return profile.displayName
     .split(' ')
     .map(n => n[0])

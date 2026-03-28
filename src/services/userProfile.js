@@ -33,7 +33,7 @@ export async function createUserProfile(firebaseUser) {
     dailyStreak:            0,
     lastSessionDate:        null,
     totalVocabularyWords:   0,
-    totalHoursPracticed:    0,
+    totalMinutesPracticed:  0,
     totalSessionsCompleted: 0,
     averageScore:           0,
     onboardingCompleted:    false,

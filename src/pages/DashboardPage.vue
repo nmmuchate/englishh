@@ -125,6 +125,7 @@ const profile = useProfileStore()
 const showPaywall = ref(false)
 
 const initials = computed(() => {
+  if (!profile.displayName) return '?'
   return profile.displayName
     .split(' ')
     .map(n => n[0])
