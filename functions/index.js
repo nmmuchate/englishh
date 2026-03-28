@@ -119,64 +119,44 @@ exports.sendMessage = onCall({ region: "africa-south1", secrets: [GEMINI_API_KEY
 
   const { sessionId, userMessage, conversationHistory, userLevel, topic } = request.data
 
-  // Validate session exists
-  const sessionSnap = await admin.firestore().doc(`sessions/${sessionId}`).get()
-  if (!sessionSnap.exists) {
-    throw new HttpsError('not-found', 'Session not found')
-  }
+  // No per-message session getDoc — the Firestore update below will throw if the
+  // doc doesn't exist, and the auth check above ensures the caller is authenticated.
+  // Removing the getDoc saves 100-300 ms of Firestore round-trip per message.
 
   const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY.value() })
 
-  // Build conversation prompt from TRD template
+  // Use native multi-turn contents format instead of JSON.stringify(history) inside
+  // a prompt string. Fewer tokens and proper role-based context for the model.
   const history = (conversationHistory || []).slice(-10)
-  const systemPrompt = `You are an encouraging English conversation teacher named Alex. You are having a 5-10 minute spoken conversation with a ${userLevel} English learner.
-
-TOPIC: ${topic || 'General English conversation'}
-
-RULES:
-1. Ask engaging follow-up questions about the topic
-2. Respond naturally to their answers like a friend would
-3. Adapt vocabulary to ${userLevel} level
-4. If they make a grammar mistake, continue naturally - do NOT correct mid-conversation
-5. Track mistakes silently and include them in response metadata
-6. Introduce 1-2 new useful words during conversation when natural
-7. Keep responses short (2-3 sentences) to encourage more speaking
-8. Be warm, patient, and positive
-
-OUTPUT FORMAT (JSON only, no markdown):
-{
-  "response": "Your conversational reply here",
-  "mistakes": [
-    {
-      "type": "grammar",
-      "original": "what user said incorrectly",
-      "correction": "correct version",
-      "explanation": "brief explanation"
-    }
-  ],
-  "newVocabulary": [
-    {
-      "word": "word",
-      "definition": "definition",
-      "example": "example sentence"
-    }
+  const contents = [
+    ...history.map(msg => ({
+      role: msg.speaker === 'user' ? 'user' : 'model',
+      parts: [{ text: msg.text }]
+    })),
+    { role: 'user', parts: [{ text: userMessage }] }
   ]
-}
 
-CONVERSATION HISTORY:
-${JSON.stringify(history)}
-
-USER'S LATEST MESSAGE: "${userMessage}"
-
-Your response (JSON only):`
+  // Concise system instruction — rules only, no JSON schema examples (schema is
+  // enforced by responseMimeType + responseSchema, so examples waste tokens).
+  const systemInstruction = `You are Alex, an encouraging English teacher in a spoken ${userLevel}-level conversation about: ${topic || 'general English'}. Reply naturally in 2-3 sentences, adapt vocabulary to ${userLevel}, track grammar mistakes silently, introduce 1-2 useful words when natural. Never correct mistakes mid-conversation.`
 
   const result = await ai.models.generateContent({
     model: 'gemini-3.1-pro-preview',
-    contents: systemPrompt,
+    contents,
     config: {
+      systemInstruction,
       responseMimeType: 'application/json',
+      responseSchema: {
+        type: 'object',
+        properties: {
+          response:      { type: 'string' },
+          mistakes:      { type: 'array', items: { type: 'object', properties: { type: { type: 'string' }, original: { type: 'string' }, correction: { type: 'string' }, explanation: { type: 'string' } }, required: ['type','original','correction','explanation'] } },
+          newVocabulary: { type: 'array', items: { type: 'object', properties: { word: { type: 'string' }, definition: { type: 'string' }, example: { type: 'string' } }, required: ['word','definition','example'] } }
+        },
+        required: ['response', 'mistakes', 'newVocabulary']
+      },
       temperature: 0.7,
-      maxOutputTokens: 1024
+      maxOutputTokens: 512
     }
   })
 
