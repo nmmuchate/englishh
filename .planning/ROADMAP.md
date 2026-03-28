@@ -25,7 +25,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 6: Firebase Auth & Infrastructure** - SDK setup, real Google Sign-In, Firestore user docs, route guards (completed 2026-02-24)
 - [x] **Phase 7: Firestore Data Layer** - All Pinia stores connected to Firestore, all pages read real data, offline persistence (completed 2026-02-24)
 - [x] **Phase 8: AI Conversation Engine** - Cloud Functions (startConversation + sendMessage), Web Speech API, Gemini integration (completed 2026-02-26)
-- [ ] **Phase 9: Session Scoring & Real Feedback** - Cloud Function endSession, FeedbackPage reads real data, vocabulary save
+- [x] **Phase 9: Session Scoring & Real Feedback** - Cloud Function endSession, FeedbackPage reads real data, vocabulary save
 - [x] **Phase 10: Payments, Subscriptions & Cron Jobs** - MozPayments integration, webhook handler, scheduled cleanup functions (completed 2026-03-06)
 
 ## Phase Details
@@ -183,8 +183,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 09-01-PLAN.md — Cloud Function: endSession (Gemini transcript scoring, user stats update, leaderboard entry update, return scores + feedback)
-- [ ] 09-02-PLAN.md — FeedbackPage connected to Firestore sessions/{sessionId} (real scores in rings, real mistakes tab, real vocabulary tab, Add to Bank wired)
+- [x] 09-01-PLAN.md — Cloud Function: endSession (Gemini transcript scoring, user stats update, leaderboard entry update, return scores + feedback)
+- [x] 09-02-PLAN.md — FeedbackPage connected to Firestore sessions/{sessionId} (real scores in rings, real mistakes tab, real vocabulary tab, Add to Bank wired)
 
 ### Phase 10: Payments, Subscriptions & Cron Jobs
 **Goal**: The monetization loop is complete — MozPayments processes real subscription payments via Cloud Functions, the webhook confirms payment and unlocks unlimited sessions, and scheduled cron jobs maintain data hygiene and weekly leaderboard resets
