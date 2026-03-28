@@ -40,16 +40,22 @@ export const useSessionStore = defineStore('session', () => {
       return { paywallRequired: true }
     }
 
-    const result = await startConversationFn({
-      userLevel:     profileStore.currentLevel ?? 'B1',
-      sessionNumber: profileStore.totalSessionsCompleted + 1
-    })
-    // result.data = { sessionId, topic, initialMessage }
-    sessionId.value = result.data.sessionId
-    topic.value = result.data.topic
+    try {
+      const result = await startConversationFn({
+        userLevel: profileStore.currentLevel ?? 'B1',
+        sessionNumber: profileStore.totalSessionsCompleted + 1
+      })
+      // result.data = { sessionId, topic, initialMessage }
+      sessionId.value = result.data.sessionId
+      topic.value = result.data.topic
 
-    // Add initial AI message to transcript
-    transcript.value.push({ speaker: 'ai', text: result.data.initialMessage })
+      // Add initial AI message to transcript
+      transcript.value.push({ speaker: 'ai', text: result.data.initialMessage })
+    } catch (err) {
+      console.error('startSession error:', err)
+      isActive.value = false
+      return { paywallRequired: false, error: err.message }
+    }
 
     return { paywallRequired: false }
   }
@@ -61,14 +67,20 @@ export const useSessionStore = defineStore('session', () => {
     // Add user message to transcript immediately (optimistic)
     transcript.value.push({ speaker: 'user', text: userText.trim() })
 
+    if (!sessionId.value) {
+      console.error('sendMessage: no sessionId — startSession did not complete')
+      isSending.value = false
+      return
+    }
+
     try {
       const profileStore = useProfileStore()
       const result = await sendMessageFn({
-        sessionId:           sessionId.value,
-        userMessage:         userText.trim(),
+        sessionId: sessionId.value,
+        userMessage: userText.trim(),
         conversationHistory: transcript.value.slice(-10),
-        userLevel:           profileStore.currentLevel ?? 'B1',
-        topic:               topic.value
+        userLevel: profileStore.currentLevel ?? 'B1',
+        topic: topic.value
       })
       // result.data = { aiResponse, mistakes, newVocabulary }
       transcript.value.push({ speaker: 'ai', text: result.data.aiResponse })
@@ -86,17 +98,17 @@ export const useSessionStore = defineStore('session', () => {
     isActive.value = false
     try {
       const result = await endSessionFn({
-        sessionId:       sessionId.value,
+        sessionId: sessionId.value,
         finalTranscript: transcript.value,
         durationSeconds: durationSeconds.value
       })
       // result.data = { scores: { fluency, grammar, vocabulary, overall }, feedback }
-      scores.value       = result.data.scores
+      scores.value = result.data.scores
       overallScore.value = result.data.scores?.overall ?? 0
     } catch (err) {
       console.error('endSession error:', err)
       overallScore.value = 0
-      scores.value       = null
+      scores.value = null
     }
   }
 

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Home Dashboard - AI English Practice</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4cae4f",
+                        "background-light": "#f6f7f6",
+                        "background-dark": "#151d15",
+                        "accent-orange": "#FF6B35",
+                        "muted-stone": "#757575",
+                        "deep-slate": "#131613"
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .ios-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-white dark:bg-background-dark text-deep-slate transition-colors duration-300">
+<div class="relative flex h-screen w-full flex-col overflow-hidden max-w-[430px] mx-auto border-x border-gray-100 dark:border-gray-800">
+<!-- Header -->
+<header class="flex items-center bg-white dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10">
+<div class="flex size-10 shrink-0 items-center">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/20" data-alt="Close up portrait of a smiling user" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCN_8o-uGCUbpLrPAGZlxoGlwRd5bQ8NSvWWpzrF8ox3xUAk8-Gj9kjAatcrNIjuyO6S91g28gMZ9YNUCOl1ALWtTCmUBtJr20CTDWo1wRoW9Jl99sF7VuMItsVOhg4ZhbNM6oL_9b93iLCoaHhzKRClOaOIWr9VKsvha8fYOGekXoGBtMc-95bS4KRpEkzd8C2Xu_tVcPA9UHzAXxTeMyWyWRM6wSfx9N-YrOBqQ_Yf3CM7oyXj4ZXebRjcvmvejTdjwdyT3qy-TI");'>
+</div>
+</div>
+<div class="flex-1 px-3">
+<p class="text-xs font-medium text-muted-stone dark:text-gray-400">Welcome back,</p>
+<h2 class="text-deep-slate dark:text-white text-lg font-bold leading-tight">Alex Rivera</h2>
+</div>
+<div class="flex items-center gap-1 bg-accent-orange/10 px-3 py-1.5 rounded-full border border-accent-orange/20">
+<span class="text-lg">🔥</span>
+<p class="text-accent-orange text-sm font-extrabold tracking-tight shrink-0">15</p>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto pb-24 scroll-smooth">
+<!-- Hero Card -->
+<div class="p-4">
+<div class="flex flex-col items-stretch justify-start rounded-xl shadow-sm bg-background-light dark:bg-zinc-900 overflow-hidden">
+<div class="relative w-full h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center p-6">
+<!-- Custom illustration placement -->
+<div class="absolute right-4 bottom-0 w-32 h-32 opacity-80" data-alt="Abstract character waving or celebrating fluency progress" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCRWzaZq4gHqJXCuGLh5mNL_ZBVZ16zc10vpKhTCNm6anzIABb2CutuDX9o7AgqUQRuiMOhFuPAMBKhMdpIQyUt05Q_YJwiScKRWndxA8NX8Qu7dNFnRp3NYV5AHI63UTd-x6jNXpgAmLkGCu2AhWyZDjVk9Bnil-yrr8VJtJsmp8czo6emKEKDQtFuAV7QqWbc7v9vCHUUGST8W7TNlutEGZsAo4zqEkW1bzo6rShmBRzVlfzOeetYj--s1yDnCFL6bC4uuzBsX9A'); background-size: contain; background-repeat: no-repeat;">
+</div>
+<div class="relative z-10">
+<span class="inline-block px-3 py-1 rounded-full bg-primary text-white text-[10px] font-bold tracking-widest uppercase mb-2">Daily Practice</span>
+<h3 class="text-deep-slate dark:text-white text-2xl font-extrabold leading-tight max-w-[180px]">Ready for today's session?</h3>
+</div>
+</div>
+<div class="flex w-full flex-col items-stretch justify-center gap-4 p-5">
+<p class="text-muted-stone dark:text-gray-400 text-sm font-medium leading-relaxed">
+                            Boost your fluency with a 5-minute real-time chat about your weekend plans.
+                        </p>
+<button class="w-full flex cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 bg-primary text-white text-base font-bold shadow-lg shadow-primary/30 active:scale-95 transition-transform">
+<span class="material-symbols-outlined mr-2">mic</span>
+<span>Start Session</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Daily Goal Section -->
+<section class="px-4 py-2">
+<div class="flex items-center justify-between mb-3">
+<h3 class="text-deep-slate dark:text-white text-lg font-bold">Daily Goal</h3>
+<span class="text-primary text-xs font-bold bg-primary/10 px-2 py-0.5 rounded">75% Done</span>
+</div>
+<div class="bg-background-light dark:bg-zinc-900 p-4 rounded-xl">
+<div class="flex flex-col gap-3">
+<div class="flex gap-6 justify-between items-center">
+<p class="text-deep-slate dark:text-gray-300 text-sm font-medium">Almost there! 5 more mins.</p>
+<p class="text-deep-slate dark:text-white text-sm font-bold">15/20 <span class="text-muted-stone font-normal">min</span></p>
+</div>
+<div class="rounded-full bg-gray-200 dark:bg-gray-700 h-3 overflow-hidden">
+<div class="h-full rounded-full bg-primary" style="width: 75%;"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Leaderboard Section -->
+<section class="px-4 py-4">
+<div class="flex items-center justify-between mb-3">
+<h3 class="text-deep-slate dark:text-white text-lg font-bold">Leaderboard</h3>
+<button class="text-primary text-sm font-semibold">View All</button>
+</div>
+<div class="bg-background-light dark:bg-zinc-900 rounded-xl divide-y divide-gray-100 dark:divide-gray-800">
+<!-- Rank 1 -->
+<div class="flex items-center p-3 gap-3">
+<div class="flex items-center justify-center size-6 rounded-full bg-yellow-400 text-white text-[10px] font-bold">1</div>
+<div class="size-10 rounded-full bg-cover" data-alt="User avatar for Sarah" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCmRJs-a663wQQgPAViXPOXrNqbukhSS-pAtwVcw0_iV3G4DOqZ7EmLlfTk453YQr5wfmUqeiHh_9Ca-lRXfHlANQ-yg-cKZPiOcDq-WKim9vHJAvV1hQ2oHt6_XkbmoMFWWTQ5uumeBpBvsGwnL__rQESM-N0Rc82Sza1JkfscYElBzxSFiMUWmPYNNaj8e-0BJNTZiIxLMqeaz9d4hsbTAj8rI2u0QcUVCi95--j257gZDb9XeSnp8l5CwD-_UM0of3iBpP8q6hM");'></div>
+<div class="flex-1">
+<p class="text-sm font-bold text-deep-slate dark:text-white">Sarah Jenkins</p>
+<p class="text-[10px] text-muted-stone">1,240 XP</p>
+</div>
+<div class="text-primary text-xs font-bold">↑ 2</div>
+</div>
+<!-- Rank 2 -->
+<div class="flex items-center p-3 gap-3">
+<div class="flex items-center justify-center size-6 rounded-full bg-gray-300 text-white text-[10px] font-bold">2</div>
+<div class="size-10 rounded-full bg-cover" data-alt="User avatar for Mark" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBLgiTu2yBkcPlY5HbZcYL8YA05QY434iWVeyl3AB5AXToHzLpcWHYvW5x6DFLC_Di3ADADjCtJLTHJwRwS-If8gFtoeriiZKR_IOB1UOukWAwtKkTkSa3hnOVBcvYRdfXBC0JOiurOo7fQVs1HZWt_r8PJLzus-6wvSszOknt8talAPXmtUPRtc36iF4yz_TVBmiVBWfbeCWETeX6cIs6LnkpieJDBeya3f9DbXGhoisZIxgSm-hWHGDn_TbAHj852usc22nxBr2Q");'></div>
+<div class="flex-1">
+<p class="text-sm font-bold text-deep-slate dark:text-white">Mark Thompson</p>
+<p class="text-[10px] text-muted-stone">1,150 XP</p>
+</div>
+<div class="text-muted-stone text-xs font-bold">—</div>
+</div>
+<!-- Rank 3 (You) -->
+<div class="flex items-center p-3 gap-3 bg-primary/5">
+<div class="flex items-center justify-center size-6 rounded-full bg-orange-400 text-white text-[10px] font-bold">3</div>
+<div class="size-10 rounded-full bg-cover border-2 border-primary" data-alt="User avatar for current user" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDKocHuLsr_9cMD6RDtLrFyc6ob3bRz3AJ3byDpzyedDbrTWjFpxHw-7KvJmR1ikHyah1WvdzlY6krBZDS0shNCVJ7c8IWOXgD52SirrHmb9L1ObD62pHy9DX3TeDPEtQcXXSDYGs9n3AghCo27Uh13W1HfddItBfJhd7ussFKyLyDR_CgTO1do3jgWff6h7xEEPyEXckeZHIJ8Um4STbRUclk0WYamL8VZDBrqozF0PBCEGrQdzJNaYjDNUz9le0svv5RQAKvtsrI");'></div>
+<div class="flex-1">
+<p class="text-sm font-bold text-deep-slate dark:text-white">Alex (You)</p>
+<p class="text-[10px] text-muted-stone">980 XP</p>
+</div>
+<div class="text-accent-orange text-xs font-bold">↑ 5</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Floating Action Button -->
+<button class="absolute bottom-24 right-6 size-14 bg-primary text-white rounded-full flex items-center justify-center shadow-xl shadow-primary/40 z-20 active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] h-20 bg-white/80 dark:bg-background-dark/80 ios-blur border-t border-gray-100 dark:border-gray-800 flex items-center justify-around px-4 z-30">
+<div class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined filled">home</span>
+<span class="text-[10px] font-bold">Home</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-muted-stone dark:text-gray-500">
+<span class="material-symbols-outlined">school</span>
+<span class="text-[10px] font-medium">Lessons</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-muted-stone dark:text-gray-500">
+<span class="material-symbols-outlined">bar_chart</span>
+<span class="text-[10px] font-medium">Stats</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-muted-stone dark:text-gray-500">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium">Profile</span>
+</div>
+</nav>
+</div>
+</body></html>

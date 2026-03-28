@@ -6,14 +6,14 @@
  * Active function implementations are added in Phases 8, 9, and 10.
  */
 
-const { setGlobalOptions }  = require('firebase-functions')
-const { defineSecret }      = require('firebase-functions/params')
+const { setGlobalOptions } = require('firebase-functions')
+const { defineSecret } = require('firebase-functions/params')
 const { onRequest, onCall, HttpsError } = require('firebase-functions/https')
-const { onSchedule }                    = require('firebase-functions/v2/scheduler')
-const logger                = require('firebase-functions/logger')
-const { GoogleGenAI }       = require('@google/genai')
-const https                 = require('https')
-const crypto                = require('crypto')
+const { onSchedule } = require('firebase-functions/v2/scheduler')
+const logger = require('firebase-functions/logger')
+const { GoogleGenAI } = require('@google/genai')
+const https = require('https')
+const crypto = require('crypto')
 
 // All functions run in africa-south1 to minimize latency to the Firestore database.
 // maxInstances: 10 prevents runaway scaling costs.
@@ -27,7 +27,7 @@ setGlobalOptions({ maxInstances: 10, region: 'africa-south1' })
 //
 // Access inside a function: GEMINI_API_KEY.value()
 // Functions that use a secret must declare it in their options: { secrets: [GEMINI_API_KEY] }
-const GEMINI_API_KEY      = defineSecret('GEMINI_API_KEY')
+const GEMINI_API_KEY = defineSecret('GEMINI_API_KEY')
 const MOZPAYMENTS_API_KEY = defineSecret('MOZPAYMENTS_API_KEY')
 
 // ── Firebase Admin SDK ───────────────────────────────────────────────────────
@@ -38,6 +38,7 @@ const admin = require('firebase-admin')
 if (!admin.apps.length) {
   admin.initializeApp()
 }
+const { FieldValue, Timestamp } = require('firebase-admin/firestore')
 
 // ── Health check (development/testing only) ──────────────────────────────────
 // Simple onRequest function to verify deployment works.
@@ -52,7 +53,7 @@ exports.healthCheck = onRequest((request, response) => {
 })
 
 // ── Phase 8: AI Conversation functions ────────────────────────────────────
-exports.startConversation = onCall({ secrets: [GEMINI_API_KEY] }, async (request) => {
+exports.startConversation = onCall({ region: "africa-south1", secrets: [GEMINI_API_KEY] }, async (request) => {
   // Auth gate
   if (!request.auth) {
     throw new HttpsError('unauthenticated', 'Authentication required')
@@ -85,7 +86,7 @@ OUTPUT (JSON only):
 {"topic": "Clear specific topic statement", "openingQuestion": "Friendly first question to start conversation"}`
 
   const topicResult = await ai.models.generateContent({
-    model: 'gemini-1.5-flash',
+    model: 'gemini-3.1-pro-preview',
     contents: topicPrompt,
     config: { responseMimeType: 'application/json' }
   })
@@ -93,25 +94,25 @@ OUTPUT (JSON only):
 
   // Create session document in Firestore
   const sessionRef = await admin.firestore().collection('sessions').add({
-    userId:        uid,
+    userId: uid,
     sessionNumber: sessionNumber,
-    topic:         topic,
-    userLevel:     userLevel,
-    transcript:    [],
-    mistakes:      [],
+    topic: topic,
+    userLevel: userLevel,
+    transcript: [],
+    mistakes: [],
     newVocabulary: [],
-    aiModel:       'gemini-1.5-flash',
-    createdAt:     admin.firestore.FieldValue.serverTimestamp()
+    aiModel: 'gemini-1.5-flash',
+    createdAt: FieldValue.serverTimestamp()
   })
-
+  console.log("Created session:", sessionRef.id)
   return {
-    sessionId:      sessionRef.id,
-    topic:          topic,
+    sessionId: sessionRef.id,
+    topic: topic,
     initialMessage: openingQuestion
   }
 })
 
-exports.sendMessage = onCall({ secrets: [GEMINI_API_KEY] }, async (request) => {
+exports.sendMessage = onCall({ region: "africa-south1", secrets: [GEMINI_API_KEY] }, async (request) => {
   if (!request.auth) {
     throw new HttpsError('unauthenticated', 'Authentication required')
   }
@@ -170,7 +171,7 @@ USER'S LATEST MESSAGE: "${userMessage}"
 Your response (JSON only):`
 
   const result = await ai.models.generateContent({
-    model: 'gemini-1.5-flash',
+    model: 'gemini-3.1-pro-preview',
     contents: systemPrompt,
     config: {
       responseMimeType: 'application/json',
@@ -192,24 +193,24 @@ Your response (JSON only):`
   }
 
   // Append both messages to Firestore transcript atomically
-  const FieldValue = admin.firestore.FieldValue
+
   const now = Date.now()
   await admin.firestore().doc(`sessions/${sessionId}`).update({
     transcript: FieldValue.arrayUnion(
       { speaker: 'user', text: userMessage, timestamp: now },
-      { speaker: 'ai',   text: parsed.response, timestamp: now + 1 }
+      { speaker: 'ai', text: parsed.response, timestamp: now + 1 }
     )
   })
 
   return {
-    aiResponse:    parsed.response,
-    mistakes:      parsed.mistakes      || [],
+    aiResponse: parsed.response,
+    mistakes: parsed.mistakes || [],
     newVocabulary: parsed.newVocabulary || []
   }
 })
 
 // ── Phase 9: Session scoring ────────────────────────────────────────────────
-exports.endSession = onCall({ secrets: [GEMINI_API_KEY] }, async (request) => {
+exports.endSession = onCall({ region: 'africa-south1', secrets: [GEMINI_API_KEY] }, async (request) => {
   if (!request.auth) {
     throw new HttpsError('unauthenticated', 'Authentication required')
   }
@@ -262,7 +263,7 @@ OUTPUT (JSON only, no markdown):
   let parsed
   try {
     const result = await ai.models.generateContent({
-      model: 'gemini-1.5-flash',
+      model: 'gemini-3.1-pro-preview',
       contents: scoringPrompt,
       config: { responseMimeType: 'application/json' }
     })
@@ -276,13 +277,13 @@ OUTPUT (JSON only, no markdown):
   }
 
   const scores = parsed.scores
-  const now = admin.firestore.Timestamp.now()
+  const now = Timestamp.now()
   const durationMinutes = Math.round((durationSeconds ?? 0) / 60)
 
   // Update session document with scores + completedAt + durationSeconds
   await sessionRef.update({
-    scores:          scores,
-    completedAt:     now,
+    scores: scores,
+    completedAt: now,
     durationSeconds: durationSeconds ?? 0
   })
 
@@ -290,24 +291,24 @@ OUTPUT (JSON only, no markdown):
   const userSnap = await admin.firestore().doc(`users/${uid}`).get()
   const userData = userSnap.data() ?? {}
   const prevTotal = userData.totalSessionsCompleted ?? 0
-  const newTotal  = prevTotal + 1
-  const newAvg    = Math.round(
+  const newTotal = prevTotal + 1
+  const newAvg = Math.round(
     ((userData.averageScore ?? 0) * Math.min(prevTotal, 9) + scores.overall)
     / Math.min(newTotal, 10)
   )
-  const lastDate      = userData.lastSessionDate?.toDate?.()
-  const today         = new Date()
+  const lastDate = userData.lastSessionDate?.toDate?.()
+  const today = new Date()
   const isConsecutive = lastDate && (today - lastDate) < 48 * 60 * 60 * 1000
-  const newStreak     = isConsecutive ? (userData.dailyStreak ?? 0) + 1 : 1
+  const newStreak = isConsecutive ? (userData.dailyStreak ?? 0) + 1 : 1
 
   await admin.firestore().doc(`users/${uid}`).update({
-    totalSessionsCompleted: admin.firestore.FieldValue.increment(1),
-    totalHoursPracticed:    admin.firestore.FieldValue.increment(durationMinutes),
-    averageScore:           newAvg,
-    dailyStreak:            newStreak,
-    lastSessionDate:        now,
-    freeSessionUsed:        true,
-    updatedAt:              now
+    totalSessionsCompleted: FieldValue.increment(1),
+    totalHoursPracticed: FieldValue.increment(durationMinutes),
+    averageScore: newAvg,
+    dailyStreak: newStreak,
+    lastSessionDate: now,
+    freeSessionUsed: true,
+    updatedAt: now
   })
 
   // Update leaderboard entry for current week
@@ -315,12 +316,12 @@ OUTPUT (JSON only, no markdown):
   await admin.firestore()
     .doc(`leaderboard/${weekId}/users/${uid}`)
     .set({
-      displayName:        userData.displayName ?? '',
-      photoURL:           userData.photoURL ?? '',
-      weeklySessionTime:  admin.firestore.FieldValue.increment(durationMinutes),
-      weeklySessionCount: admin.firestore.FieldValue.increment(1),
-      currentStreak:      newStreak,
-      lastUpdated:        now
+      displayName: userData.displayName ?? '',
+      photoURL: userData.photoURL ?? '',
+      weeklySessionTime: FieldValue.increment(durationMinutes),
+      weeklySessionCount: FieldValue.increment(1),
+      currentStreak: newStreak,
+      lastUpdated: now
     }, { merge: true })
 
   logger.info('endSession complete', { uid, sessionId, scores })
@@ -328,9 +329,9 @@ OUTPUT (JSON only, no markdown):
 })
 
 function getWeekId() {
-  const now   = new Date()
+  const now = new Date()
   const start = new Date(now.getFullYear(), 0, 1)
-  const week  = Math.ceil(((now - start) / 86400000 + start.getDay() + 1) / 7)
+  const week = Math.ceil(((now - start) / 86400000 + start.getDay() + 1) / 7)
   return `${now.getFullYear()}-${week.toString().padStart(2, '0')}`
 }
 
@@ -339,24 +340,24 @@ function getWeekId() {
 // ── MozPayments helper ────────────────────────────────────────────────────
 // NOTE: hostname and path are ASSUMED from TRD spec — no public MozPayments docs found.
 // Replace api.mozpayments.co.mz and /v1/checkout when real endpoint is confirmed.
-function mozPaymentsCreateCheckout ({ apiKey, userId, phoneNumber, paymentMethod }) {
+function mozPaymentsCreateCheckout({ apiKey, userId, phoneNumber, paymentMethod }) {
   return new Promise((resolve, reject) => {
     const payload = JSON.stringify({
       userId,
       phoneNumber,
       paymentMethod,
-      plan:       'monthly_unlimited',
-      currency:   'MZN',
-      amount:     400,
+      plan: 'monthly_unlimited',
+      currency: 'MZN',
+      amount: 400,
       webhookUrl: `https://africa-south1-${process.env.GCLOUD_PROJECT}.cloudfunctions.net/handlePaymentWebhook`
     })
     const options = {
       hostname: 'api.mozpayments.co.mz',
-      path:     '/v1/checkout',
-      method:   'POST',
+      path: '/v1/checkout',
+      method: 'POST',
       headers: {
-        'Content-Type':   'application/json',
-        'Authorization':  `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`,
         'Content-Length': Buffer.byteLength(payload)
       }
     }
@@ -375,7 +376,7 @@ function mozPaymentsCreateCheckout ({ apiKey, userId, phoneNumber, paymentMethod
 }
 
 // ── createSubscription (onCall) ───────────────────────────────────────────
-exports.createSubscription = onCall({ secrets: [MOZPAYMENTS_API_KEY] }, async (request) => {
+exports.createSubscription = onCall({ region: 'africa-south1', secrets: [MOZPAYMENTS_API_KEY] }, async (request) => {
   if (!request.auth) {
     throw new HttpsError('unauthenticated', 'Authentication required')
   }
@@ -385,33 +386,33 @@ exports.createSubscription = onCall({ secrets: [MOZPAYMENTS_API_KEY] }, async (r
 
   try {
     const response = await mozPaymentsCreateCheckout({
-      apiKey:        MOZPAYMENTS_API_KEY.value(),
-      userId:        uid,
+      apiKey: MOZPAYMENTS_API_KEY.value(),
+      userId: uid,
       phoneNumber,
       paymentMethod
     })
 
     // Write pending subscription doc — store externalSubscriptionId so webhook can reverse-lookup userId
     await admin.firestore().doc(`subscriptions/${uid}`).set({
-      status:                 'pending',
-      plan:                   'monthly_unlimited',
-      paymentProvider:        'mozpayments',
+      status: 'pending',
+      plan: 'monthly_unlimited',
+      paymentProvider: 'mozpayments',
       externalSubscriptionId: response.subscriptionId,
-      priceId:                '',
-      startedAt:              null,
-      expiresAt:              null,
-      renewsAt:               null,
-      cancelledAt:            null,
-      paymentHistory:         [],
-      createdAt:              admin.firestore.FieldValue.serverTimestamp()
+      priceId: '',
+      startedAt: null,
+      expiresAt: null,
+      renewsAt: null,
+      cancelledAt: null,
+      paymentHistory: [],
+      createdAt: FieldValue.serverTimestamp()
     })
 
     logger.info('createSubscription: pending subscription created', { uid, subscriptionId: response.subscriptionId })
 
     return {
-      checkoutUrl:    response.checkoutUrl,
+      checkoutUrl: response.checkoutUrl,
       subscriptionId: response.subscriptionId,
-      expiresIn:      response.expiresIn ?? 900
+      expiresIn: response.expiresIn ?? 900
     }
   } catch (err) {
     logger.error('createSubscription: failed', { uid, error: err.message })
@@ -423,12 +424,12 @@ exports.createSubscription = onCall({ secrets: [MOZPAYMENTS_API_KEY] }, async (r
 // rawBody is a Buffer in deployed Cloud Functions (Firebase PR #420 confirmed).
 // Fallback to Buffer.from(JSON.stringify(req.body)) allows emulator testing
 // but is NOT production-safe (JSON serialization may differ from raw bytes).
-function verifyMozPaymentsSignature (req, secret) {
+function verifyMozPaymentsSignature(req, secret) {
   const signature = req.headers['x-mozpayments-signature'] || ''
-  const rawBody   = req.rawBody || Buffer.from(JSON.stringify(req.body))
-  const computed  = crypto.createHmac('sha256', secret).update(rawBody).digest('hex')
-  const sigBuf    = Buffer.from(signature, 'utf8')
-  const calcBuf   = Buffer.from(computed, 'utf8')
+  const rawBody = req.rawBody || Buffer.from(JSON.stringify(req.body))
+  const computed = crypto.createHmac('sha256', secret).update(rawBody).digest('hex')
+  const sigBuf = Buffer.from(signature, 'utf8')
+  const calcBuf = Buffer.from(computed, 'utf8')
   if (sigBuf.length !== calcBuf.length) return false
   return crypto.timingSafeEqual(sigBuf, calcBuf)
 }
@@ -468,28 +469,28 @@ exports.handlePaymentWebhook = onRequest({ region: 'africa-south1', secrets: [MO
       const subDoc = subQuery.docs[0]
       const userId = subDoc.id  // subscriptions collection is keyed by userId per TRD schema
 
-      const now       = admin.firestore.Timestamp.now()
-      const expiresAt = admin.firestore.Timestamp.fromDate(
+      const now = Timestamp.now()
+      const expiresAt = Timestamp.fromDate(
         new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
       )
 
       await Promise.all([
         subDoc.ref.update({
-          status:    'active',
+          status: 'active',
           expiresAt: expiresAt,
-          paymentHistory: admin.firestore.FieldValue.arrayUnion({
-            amount:        amount,
-            currency:      'MZN',
+          paymentHistory: FieldValue.arrayUnion({
+            amount: amount,
+            currency: 'MZN',
             paymentMethod: 'mpesa',
-            status:        'success',
-            paidAt:        now,
-            receiptId:     receiptId || ''
+            status: 'success',
+            paidAt: now,
+            receiptId: receiptId || ''
           })
         }),
         admin.firestore().doc(`users/${userId}`).update({
-          subscriptionStatus:    'active',
+          subscriptionStatus: 'active',
           subscriptionExpiresAt: expiresAt,
-          updatedAt:             now
+          updatedAt: now
         })
       ])
 
@@ -515,7 +516,7 @@ exports.deleteOldTranscripts = onSchedule(
     try {
       logger.info('deleteOldTranscripts: starting daily cleanup')
 
-      const cutoff = admin.firestore.Timestamp.fromDate(
+      const cutoff = Timestamp.fromDate(
         new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
       )
 
@@ -536,7 +537,7 @@ exports.deleteOldTranscripts = onSchedule(
         const chunk = docs.slice(i, i + batchSize)
         const batch = admin.firestore().batch()
         for (const doc of chunk) {
-          batch.update(doc.ref, { transcript: admin.firestore.FieldValue.delete() })
+          batch.update(doc.ref, { transcript: FieldValue.delete() })
         }
         await batch.commit()
       }
@@ -595,8 +596,8 @@ exports.updateWeeklyLeaderboard = onSchedule(
         .doc(`leaderboard_archive/${currentWeekId}`)
         .set(
           {
-            weekId:            currentWeekId,
-            archivedAt:        admin.firestore.Timestamp.now(),
+            weekId: currentWeekId,
+            archivedAt: Timestamp.now(),
             totalParticipants: snap.size
           },
           { merge: true }
@@ -614,8 +615,8 @@ exports.updateWeeklyLeaderboard = onSchedule(
       await admin.firestore()
         .doc(`leaderboard/${nextWeekId}`)
         .set({
-          weekId:            nextWeekId,
-          createdAt:         admin.firestore.Timestamp.now(),
+          weekId: nextWeekId,
+          createdAt: Timestamp.now(),
           totalParticipants: 0
         })
 

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Upgrade to Pro</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4cae4f",
+                        "background-light": "#f6f7f6",
+                        "background-dark": "#151d15",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-radio-dot {
+            --radio-dot-svg: url('data:image/svg+xml,%3csvg viewBox=%270 0 16 16%27 fill=%27rgb(76,174,79)%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3ccircle cx=%278%27 cy=%278%27 r=%274%27/%3e%3c/svg%3e');
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-slate-200 dark:bg-black font-display antialiased flex items-center justify-center min-h-screen p-4">
+<!-- Modal Container -->
+<div class="relative w-full max-w-[400px] bg-background-light dark:bg-background-dark rounded-xl shadow-2xl overflow-hidden flex flex-col">
+<!-- Top App Bar / Header -->
+<div class="flex items-center justify-between p-5 pb-2">
+<h2 class="text-[#131613] dark:text-white text-lg font-bold leading-tight tracking-tight">Upgrade to Pro</h2>
+<button class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined text-[#131613] dark:text-white">close</span>
+</button>
+</div>
+<!-- Hero Illustration Area -->
+<div class="px-5 py-2">
+<div class="w-full bg-gradient-to-br from-primary/20 to-primary/5 rounded-xl min-h-[160px] flex items-center justify-center relative overflow-hidden group">
+<!-- Abstract visual representation of conversation growth -->
+<div class="absolute inset-0 flex items-center justify-center opacity-20">
+<span class="material-symbols-outlined text-[120px] text-primary">forum</span>
+</div>
+<div class="relative flex flex-col items-center text-center p-6">
+<div class="bg-white dark:bg-zinc-800 p-3 rounded-full shadow-lg mb-3">
+<span class="material-symbols-outlined text-primary text-3xl">auto_awesome</span>
+</div>
+<p class="text-xs font-semibold uppercase tracking-widest text-primary">Master English Faster</p>
+</div>
+</div>
+</div>
+<!-- Headline -->
+<div class="px-5 pt-4 text-center">
+<h1 class="text-[#131613] dark:text-white text-2xl font-bold leading-tight px-2">
+                Go Pro for Faster Growth
+            </h1>
+</div>
+<!-- Checklists -->
+<div class="px-6 py-4 space-y-1">
+<div class="flex items-center gap-x-3 py-2">
+<div class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-sm font-bold">check</span>
+</div>
+<p class="text-[#131613] dark:text-slate-300 text-sm font-medium">Unlimited AI sessions</p>
+</div>
+<div class="flex items-center gap-x-3 py-2">
+<div class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-sm font-bold">check</span>
+</div>
+<p class="text-[#131613] dark:text-slate-300 text-sm font-medium">Advanced Grammar Analysis</p>
+</div>
+<div class="flex items-center gap-x-3 py-2">
+<div class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-sm font-bold">check</span>
+</div>
+<p class="text-[#131613] dark:text-slate-300 text-sm font-medium">Priority Support</p>
+</div>
+</div>
+<!-- Pricing Options -->
+<div class="px-5 py-2 space-y-3 custom-radio-dot">
+<!-- Yearly Option (Selected by Default) -->
+<label class="flex items-center gap-4 rounded-xl border-2 border-primary bg-white dark:bg-zinc-900 p-4 flex-row-reverse cursor-pointer transition-all hover:border-primary/60">
+<input checked="" class="h-5 w-5 border-2 border-primary bg-transparent text-transparent checked:border-primary checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0 checked:focus:border-primary" name="plan" type="radio"/>
+<div class="flex grow flex-col">
+<div class="flex items-center gap-2">
+<p class="text-[#131613] dark:text-white text-base font-bold">$79.99 / year</p>
+<span class="bg-[#FF9800] text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Save 30%</span>
+</div>
+<p class="text-primary text-xs font-semibold mt-0.5">Best Value</p>
+</div>
+</label>
+<!-- Monthly Option -->
+<label class="flex items-center gap-4 rounded-xl border border-[#dee3de] dark:border-zinc-700 bg-white/50 dark:bg-zinc-900/50 p-4 flex-row-reverse cursor-pointer transition-all hover:border-primary/40">
+<input class="h-5 w-5 border-2 border-[#dee3de] dark:border-zinc-600 bg-transparent text-transparent checked:border-primary checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0 checked:focus:border-primary" name="plan" type="radio"/>
+<div class="flex grow flex-col">
+<p class="text-[#131613] dark:text-white text-base font-medium">$9.99 / month</p>
+<p class="text-[#6c7f6d] dark:text-slate-400 text-xs">Billed monthly</p>
+</div>
+</label>
+</div>
+<!-- Action Button -->
+<div class="p-5 mt-auto">
+<button class="w-full bg-primary hover:bg-primary/90 text-white py-4 rounded-xl font-bold text-lg shadow-lg shadow-primary/20 transition-all active:scale-[0.98]">
+                Subscribe Now
+            </button>
+<div class="flex justify-center gap-6 mt-4">
+<button class="text-[11px] text-slate-500 dark:text-slate-500 font-medium hover:underline uppercase tracking-tight">Restore Purchase</button>
+<button class="text-[11px] text-slate-500 dark:text-slate-500 font-medium hover:underline uppercase tracking-tight">Terms of Service</button>
+</div>
+</div>
+<!-- Subtle indicator for iOS look -->
+<div class="mx-auto w-16 h-1 bg-slate-300 dark:bg-zinc-700 rounded-full mb-2"></div>
+</div>
+</body></html>

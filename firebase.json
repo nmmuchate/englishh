@@ -31,17 +31,17 @@
       ]
     }
   ],
-  "apphosting": {
-    "backendId": "englishh",
-    "rootDir": "/",
-    "ignore": [
-      "node_modules",
-      ".git",
-      "firebase-debug.log",
-      "firebase-debug.*.log",
-      "functions"
-    ]
-  },
+  // "apphosting": {
+  //   "backendId": "englishh",
+  //   "rootDir": "/",
+  //   "ignore": [
+  //     "node_modules",
+  //     ".git",
+  //     "firebase-debug.log",
+  //     "firebase-debug.*.log",
+  //     "functions"
+  //   ]
+  // },
   "hosting": {
     "public": "public",
     "ignore": [

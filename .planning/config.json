@@ -1,6 +1,5 @@
 {
   "mode": "interactive",
-  "depth": "standard",
   "parallelization": false,
   "commit_docs": true,
   "model_profile": "balanced",
@@ -8,5 +7,6 @@
     "research": true,
     "plan_check": true,
     "verifier": false
-  }
+  },
+  "granularity": "standard"
 }

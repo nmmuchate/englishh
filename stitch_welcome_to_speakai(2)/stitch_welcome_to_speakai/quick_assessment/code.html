@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4cae4f",
+                        "background-light": "#f6f7f6",
+                        "background-dark": "#151d15",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .radio-dot-svg {
+            --radio-dot-svg: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e");
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex justify-center items-start">
+<!-- Mobile Container (Phone Form Factor) -->
+<div class="relative flex min-h-screen w-full max-w-[430px] flex-col bg-white dark:bg-background-dark overflow-x-hidden shadow-2xl">
+<!-- Top App Bar -->
+<div class="flex items-center bg-white dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10">
+<div class="text-[#131613] dark:text-white flex size-12 shrink-0 items-center cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<h2 class="text-[#131613] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">Quick Assessment</h2>
+</div>
+<!-- Progress Indicator -->
+<div class="flex flex-col gap-3 p-6 pt-2">
+<div class="flex gap-6 justify-between items-center">
+<p class="text-[#131613] dark:text-white text-sm font-semibold uppercase tracking-wider">Onboarding Progress</p>
+<p class="text-primary text-sm font-bold leading-normal">Step 2 of 3</p>
+</div>
+<div class="rounded-full bg-[#dee3de] dark:bg-gray-700 h-2 w-full overflow-hidden">
+<div class="h-full rounded-full bg-primary" style="width: 66%;"></div>
+</div>
+</div>
+<!-- Headline & Context -->
+<div class="px-6 py-4">
+<h2 class="text-[#131613] dark:text-white tracking-tight text-[28px] font-bold leading-tight pb-2">
+                What is your main goal for learning English?
+            </h2>
+<p class="text-[#6c7f6d] dark:text-gray-400 text-base font-normal leading-relaxed">
+                This helps us personalize your practice sessions and AI-generated scenarios.
+            </p>
+</div>
+<!-- Assessment Options (Radio List) -->
+<div class="flex flex-col gap-4 p-6 radio-dot-svg">
+<label class="group relative flex items-center gap-4 rounded-xl border-2 border-solid border-gray-100 dark:border-gray-800 p-5 cursor-pointer transition-all hover:border-primary/50 has-[:checked]:border-primary has-[:checked]:bg-primary/5 dark:has-[:checked]:bg-primary/10 shadow-sm">
+<div class="flex size-10 items-center justify-center rounded-lg bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 group-has-[:checked]:bg-primary group-has-[:checked]:text-white transition-colors">
+<span class="material-symbols-outlined">work</span>
+</div>
+<div class="flex grow flex-col">
+<p class="text-[#131613] dark:text-white text-base font-semibold">Career growth</p>
+<p class="text-[#6c7f6d] dark:text-gray-400 text-sm font-normal">Advance in your professional field</p>
+</div>
+<input checked="" class="h-6 w-6 border-2 border-gray-300 dark:border-gray-600 bg-transparent text-primary checked:border-primary checked:bg-primary focus:ring-0 focus:ring-offset-0 transition-all cursor-pointer" name="goal" type="radio"/>
+</label>
+<label class="group relative flex items-center gap-4 rounded-xl border-2 border-solid border-gray-100 dark:border-gray-800 p-5 cursor-pointer transition-all hover:border-primary/50 has-[:checked]:border-primary has-[:checked]:bg-primary/5 dark:has-[:checked]:bg-primary/10 shadow-sm">
+<div class="flex size-10 items-center justify-center rounded-lg bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 group-has-[:checked]:bg-primary group-has-[:checked]:text-white transition-colors">
+<span class="material-symbols-outlined">flight_takeoff</span>
+</div>
+<div class="flex grow flex-col">
+<p class="text-[#131613] dark:text-white text-base font-semibold">Travel</p>
+<p class="text-[#6c7f6d] dark:text-gray-400 text-sm font-normal">Communicate easily on your trips</p>
+</div>
+<input class="h-6 w-6 border-2 border-gray-300 dark:border-gray-600 bg-transparent text-primary checked:border-primary checked:bg-primary focus:ring-0 focus:ring-offset-0 transition-all cursor-pointer" name="goal" type="radio"/>
+</label>
+<label class="group relative flex items-center gap-4 rounded-xl border-2 border-solid border-gray-100 dark:border-gray-800 p-5 cursor-pointer transition-all hover:border-primary/50 has-[:checked]:border-primary has-[:checked]:bg-primary/5 dark:has-[:checked]:bg-primary/10 shadow-sm">
+<div class="flex size-10 items-center justify-center rounded-lg bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 group-has-[:checked]:bg-primary group-has-[:checked]:text-white transition-colors">
+<span class="material-symbols-outlined">school</span>
+</div>
+<div class="flex grow flex-col">
+<p class="text-[#131613] dark:text-white text-base font-semibold">Education</p>
+<p class="text-[#6c7f6d] dark:text-gray-400 text-sm font-normal">Succeed in your academic studies</p>
+</div>
+<input class="h-6 w-6 border-2 border-gray-300 dark:border-gray-600 bg-transparent text-primary checked:border-primary checked:bg-primary focus:ring-0 focus:ring-offset-0 transition-all cursor-pointer" name="goal" type="radio"/>
+</label>
+<label class="group relative flex items-center gap-4 rounded-xl border-2 border-solid border-gray-100 dark:border-gray-800 p-5 cursor-pointer transition-all hover:border-primary/50 has-[:checked]:border-primary has-[:checked]:bg-primary/5 dark:has-[:checked]:bg-primary/10 shadow-sm">
+<div class="flex size-10 items-center justify-center rounded-lg bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 group-has-[:checked]:bg-primary group-has-[:checked]:text-white transition-colors">
+<span class="material-symbols-outlined">sentiment_satisfied</span>
+</div>
+<div class="flex grow flex-col">
+<p class="text-[#131613] dark:text-white text-base font-semibold">Just for fun</p>
+<p class="text-[#6c7f6d] dark:text-gray-400 text-sm font-normal">Enjoy movies and books in English</p>
+</div>
+<input class="h-6 w-6 border-2 border-gray-300 dark:border-gray-600 bg-transparent text-primary checked:border-primary checked:bg-primary focus:ring-0 focus:ring-offset-0 transition-all cursor-pointer" name="goal" type="radio"/>
+</label>
+</div>
+<!-- Spacer for push to bottom effect -->
+<div class="flex-grow"></div>
+<!-- Bottom CTA -->
+<div class="p-6 pb-10 bg-white dark:bg-background-dark border-t border-gray-100 dark:border-gray-800">
+<button class="w-full bg-primary hover:bg-opacity-90 text-white text-lg font-bold py-4 rounded-xl shadow-lg shadow-primary/20 transition-all active:scale-95 flex items-center justify-center gap-2">
+                Continue
+                <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<p class="text-center text-xs text-gray-400 mt-4 uppercase tracking-widest font-medium">You can change this later</p>
+</div>
+</div>
+</body></html>

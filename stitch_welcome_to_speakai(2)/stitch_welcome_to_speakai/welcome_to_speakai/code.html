@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Welcome to SpeakAI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4cae4f",
+                        "background-light": "#f6f7f6",
+                        "background-dark": "#151d15",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .ios-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+        .feature-card-shadow {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark overflow-x-hidden max-w-[480px] mx-auto border-x border-gray-100 dark:border-gray-800 shadow-xl">
+<!-- TopAppBar -->
+<div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-50">
+<div class="text-primary flex size-12 shrink-0 items-center justify-start" data-icon="Language">
+<span class="material-symbols-outlined text-3xl">language</span>
+</div>
+<h2 class="text-[#131613] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">SpeakAI</h2>
+</div>
+<!-- Hero Section -->
+<div class="px-4 py-2">
+<div class="w-full bg-[#e8f5e9] dark:bg-[#1a2e1a] flex flex-col justify-center items-center overflow-hidden rounded-xl min-h-64 relative" data-alt="A person talking to a friendly floating robot">
+<!-- Abstract Illustration Representation -->
+<div class="flex items-center justify-center space-x-8">
+<div class="w-24 h-24 bg-primary rounded-full flex items-center justify-center text-white shadow-lg">
+<span class="material-symbols-outlined text-5xl">person</span>
+</div>
+<div class="w-16 h-1 bg-primary/30 rounded-full animate-pulse"></div>
+<div class="w-24 h-24 bg-white dark:bg-gray-800 rounded-3xl flex items-center justify-center text-primary shadow-lg border-2 border-primary/20">
+<span class="material-symbols-outlined text-5xl">smart_toy</span>
+</div>
+</div>
+<div class="mt-8 flex space-x-2">
+<div class="w-32 h-2 bg-primary/20 rounded-full"></div>
+<div class="w-16 h-2 bg-primary/40 rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- HeadlineText -->
+<div class="px-4 text-center">
+<h1 class="text-[#131613] dark:text-white tracking-tight text-[32px] font-extrabold leading-tight pt-6">Master English by Speaking</h1>
+</div>
+<!-- BodyText -->
+<div class="px-8 text-center">
+<p class="text-[#4e5a4e] dark:text-gray-400 text-lg font-medium leading-normal pt-2 pb-6">Practice 10 minutes a day with your personal AI tutor.</p>
+</div>
+<!-- SingleButton -->
+<div class="flex px-4 py-3">
+<button class="flex min-w-[84px] w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 px-5 bg-primary text-white text-lg font-bold leading-normal tracking-wide ios-shadow active:scale-95 transition-transform">
+<span class="truncate">Get Started</span>
+</button>
+</div>
+<!-- Features Section -->
+<div class="px-4 pt-8 pb-4">
+<h3 class="text-[#131613] dark:text-white text-sm font-bold uppercase tracking-widest mb-4 opacity-60 ml-1">Key Features</h3>
+<div class="space-y-4 mb-10">
+<!-- Feature Card 1 -->
+<div class="flex items-center p-4 bg-white dark:bg-gray-800 rounded-xl feature-card-shadow border border-gray-50 dark:border-gray-700">
+<div class="bg-primary/10 p-3 rounded-lg mr-4">
+<span class="material-symbols-outlined text-primary">record_voice_over</span>
+</div>
+<div class="flex-1">
+<h4 class="text-[#131613] dark:text-white font-bold">Real-time Feedback</h4>
+<p class="text-sm text-[#4e5a4e] dark:text-gray-400">Instant corrections to improve your accent and grammar.</p>
+</div>
+</div>
+<!-- Feature Card 2 -->
+<div class="flex items-center p-4 bg-white dark:bg-gray-800 rounded-xl feature-card-shadow border border-gray-50 dark:border-gray-700">
+<div class="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-lg mr-4">
+<span class="material-symbols-outlined text-blue-600">psychology</span>
+</div>
+<div class="flex-1">
+<h4 class="text-[#131613] dark:text-white font-bold">Native-like AI</h4>
+<p class="text-sm text-[#4e5a4e] dark:text-gray-400">Conversations that feel natural and adapt to your level.</p>
+</div>
+</div>
+<!-- Feature Card 3 -->
+<div class="flex items-center p-4 bg-white dark:bg-gray-800 rounded-xl feature-card-shadow border border-gray-50 dark:border-gray-700">
+<div class="bg-orange-100 dark:bg-orange-900/30 p-3 rounded-lg mr-4">
+<span class="material-symbols-outlined text-orange-600">local_fire_department</span>
+</div>
+<div class="flex-1">
+<h4 class="text-[#131613] dark:text-white font-bold">Daily Streaks</h4>
+<p class="text-sm text-[#4e5a4e] dark:text-gray-400">Stay motivated and build a habit that sticks.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation Spacer (iOS Home Indicator Area) -->
+<div class="h-8 bg-background-light dark:bg-background-dark"></div>
+<!-- Floating Navigation Bar -->
+<div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] px-4 pb-4">
+<div class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-2xl flex justify-around items-center h-16 shadow-2xl border border-white/20">
+<button class="flex flex-col items-center text-primary">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-bold">Home</span>
+</button>
+<button class="flex flex-col items-center text-gray-400">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-[10px] font-bold">Progress</span>
+</button>
+<button class="flex flex-col items-center text-gray-400">
+<span class="material-symbols-outlined">groups</span>
+<span class="text-[10px] font-bold">Social</span>
+</button>
+<button class="flex flex-col items-center text-gray-400">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-bold">Settings</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Active Session - AI English Tutor</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4cae4f",
+                        "background-light": "#f6f7f6",
+                        "background-dark": "#151d15",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .mistake-underline {
+            text-decoration: underline;
+            text-decoration-color: #ef4444;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+        .waveform-bar {
+            height: 4px;
+            width: 3px;
+            background-color: #4cae4f;
+            border-radius: 2px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#131613] dark:text-white transition-colors duration-300">
+<!-- Sticky Header -->
+<header class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-800">
+<div class="flex items-center p-4 justify-between">
+<div class="flex size-10 items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</div>
+<div class="flex flex-col items-center">
+<h2 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-widest">Active Session</h2>
+<p class="text-lg font-bold">Ordering at a Cafe</p>
+</div>
+<div class="flex size-10 items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+<span class="material-symbols-outlined text-2xl">info</span>
+</div>
+</div>
+<!-- Progress Bar -->
+<div class="w-full h-1 bg-gray-100 dark:bg-gray-800 overflow-hidden">
+<div class="h-full bg-primary" style="width: 45%;"></div>
+</div>
+</header>
+<main class="flex flex-col min-h-[calc(100vh-140px)] pb-32">
+<!-- Timer Section -->
+<div class="flex justify-center py-6 px-4">
+<div class="flex items-center gap-2 bg-white dark:bg-gray-800 px-6 py-2 rounded-full shadow-sm border border-gray-50 dark:border-gray-700">
+<span class="material-symbols-outlined text-primary text-xl">timer</span>
+<span class="text-xl font-bold tracking-tighter tabular-nums">05:00</span>
+</div>
+</div>
+<!-- Chat Transcript -->
+<div class="flex flex-col gap-6 px-4">
+<!-- AI Message -->
+<div class="flex items-end gap-3 max-w-[85%]">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10 h-10 shrink-0 border-2 border-primary/20" data-alt="AI tutor avatar minimalist illustration" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCl-E5l0Z2j7NUS00y1uQhHTwz7L5kbZFZg6JTMDkSNiYGkzkOesJr8rHwAp7cs6NK6gcPSSgDbWKavu1CyINBbmQ_DKYz1C8X33ATtaqvfR29X64nxOFLK7Bwoe0IJePdNndS-HiY401_1j_B6dHLAgPRyljNsuBiUzVSvRrLspII21Os1pBM4XavvbGpGpUXwASdg3t2udX-4N_RYx0FYNOCalL_S76e4pNf4B20dI7rR5TxOQSlPn7U_uo0P-CpME_llh1XmhjY");'></div>
+<div class="flex flex-col gap-1 items-start">
+<p class="text-gray-500 text-[11px] font-semibold ml-2 uppercase">Barista (AI)</p>
+<div class="rounded-2xl rounded-bl-none px-4 py-3 bg-white dark:bg-gray-800 shadow-sm border border-gray-50 dark:border-gray-700">
+<p class="text-base leading-relaxed">
+                            Welcome to the café! What can I get for you today?
+                        </p>
+</div>
+</div>
+</div>
+<!-- User Message -->
+<div class="flex items-end gap-3 justify-end self-end max-w-[85%]">
+<div class="flex flex-col gap-1 items-end">
+<p class="text-gray-500 text-[11px] font-semibold mr-2 uppercase">You</p>
+<div class="rounded-2xl rounded-br-none px-4 py-3 bg-primary text-white shadow-lg shadow-primary/20">
+<p class="text-base leading-relaxed">
+                            Hello! I would like <span class="mistake-underline decoration-red-400">a espresso</span> and a croissant, please.
+                        </p>
+</div>
+<!-- Feedback Tooltip -->
+<div class="mt-2 flex items-center gap-2 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 px-3 py-1.5 rounded-lg border border-red-100 dark:border-red-900/30 text-xs font-medium">
+<span class="material-symbols-outlined text-sm">lightbulb</span>
+<span>Use "an" before words starting with a vowel sound: <strong class="underline">an espresso</strong></span>
+</div>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10 h-10 shrink-0 border-2 border-white" data-alt="User avatar placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuACnfwARy-ZoGJD0FGRB24F-jMBkGymCFFiDvhGfnooSP5oIQaZWR_dJhk3VqHxksVX5kTWk6_Z09K8mLlvgjVhj2m4PcnDI0iqg7UoNPos61D0FzXgNndIJ-Cwk06wwazKj3nFJm4iyOMLzMkpBQeEqhy7E3Kv8TPLr3OlfJVrIULET9mDyTfs4FdzkRwdQ7Qee7_tOm9Pr4E7esTFqCnwRfdJOEkjYfna5jFaYWZxi049ddklv2w1ZM90BjoJg6lTDNFZCO3F6pw");'></div>
+</div>
+<!-- AI Message 2 -->
+<div class="flex items-end gap-3 max-w-[85%]">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10 h-10 shrink-0 border-2 border-primary/20" data-alt="AI tutor avatar minimalist illustration" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDLpSc6nQsih4PJU7F66_IAG0CF1OHCv1OxKBUHMxDS05WzdjQp4_G3dnlfBLlavGOQIttZ5os52N6BMSfSh8bdLW1ea38Ccg-8cTql54AxgUAhGxFKia5DxuVZrPtGxpEqE-5lqeVj1MhDNiN0YbCPaKk_fcPJlIM5Dwpg1mXwBSfth2CCG6q9XVHZW4Lz4QMzmeY7-gmsHmuHJ8eck1oznE4R-7tWmMkMdd838M5Muh5vZ4gkMSBF2aTAcugE4pg_oQrIPOjgWOE");'></div>
+<div class="flex flex-col gap-1 items-start">
+<p class="text-gray-500 text-[11px] font-semibold ml-2 uppercase">Barista (AI)</p>
+<div class="rounded-2xl rounded-bl-none px-4 py-3 bg-white dark:bg-gray-800 shadow-sm border border-gray-50 dark:border-gray-700">
+<p class="text-base leading-relaxed">
+                            Excellent choice. Would you like that croissant warmed up?
+                        </p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Action Bar -->
+<footer class="fixed bottom-0 w-full p-6 bg-gradient-to-t from-background-light dark:from-background-dark via-background-light/95 to-transparent">
+<div class="max-w-md mx-auto flex flex-col items-center gap-4">
+<!-- Waveform simulation -->
+<div class="flex items-center gap-1 h-8">
+<div class="waveform-bar h-2"></div>
+<div class="waveform-bar h-4"></div>
+<div class="waveform-bar h-6"></div>
+<div class="waveform-bar h-3"></div>
+<div class="waveform-bar h-5"></div>
+<div class="waveform-bar h-2"></div>
+<div class="waveform-bar h-4"></div>
+<div class="waveform-bar h-3"></div>
+</div>
+<div class="flex items-center justify-between w-full">
+<!-- Keyboard Toggle -->
+<button class="flex size-12 items-center justify-center rounded-full bg-white dark:bg-gray-800 shadow-md border border-gray-100 dark:border-gray-700">
+<span class="material-symbols-outlined text-gray-500">keyboard</span>
+</button>
+<!-- Voice Button -->
+<div class="relative group">
+<div class="absolute -inset-4 bg-primary/20 rounded-full blur-xl group-active:blur-2xl transition-all"></div>
+<button class="relative flex size-20 items-center justify-center rounded-full bg-primary text-white shadow-xl transform transition-transform active:scale-95">
+<span class="material-symbols-outlined text-4xl font-light">mic</span>
+</button>
+</div>
+<!-- Session Stats Toggle -->
+<button class="flex size-12 items-center justify-center rounded-full bg-white dark:bg-gray-800 shadow-md border border-gray-100 dark:border-gray-700">
+<span class="material-symbols-outlined text-gray-500">monitoring</span>
+</button>
+</div>
+<p class="text-[10px] text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em] font-bold">Tap to speak</p>
+</div>
+</footer>
+</body></html>

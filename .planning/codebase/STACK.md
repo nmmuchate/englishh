@@ -8,9 +8,7 @@
 - JavaScript (ES2022+) - All application code and configuration
 - Vue 3 - Component templates and single-file components (.vue files)
 
-**Secondary:**
-- HTML5 - Template markup via index.html
-- CSS 3 - Styling via PostCSS with autoprefixing
+
 
 ## Runtime
 

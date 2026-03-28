@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Account Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4cae4f",
+                        "background-light": "#f6f7f6",
+                        "background-dark": "#151d15",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 24px;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+<div class="relative mx-auto flex h-auto min-h-screen w-full max-w-[430px] flex-col bg-white dark:bg-background-dark shadow-2xl overflow-x-hidden pb-20">
+<!-- Header -->
+<div class="flex items-center bg-white dark:bg-background-dark p-4 pb-2 sticky top-0 z-10 border-b border-primary/10">
+<div class="text-slate-900 dark:text-slate-100 flex size-12 shrink-0 items-center justify-start cursor-pointer">
+<span class="material-symbols-outlined">chevron_left</span>
+</div>
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">Settings</h2>
+</div>
+<!-- Profile Section -->
+<div class="flex p-6 @container">
+<div class="flex w-full flex-col gap-4 items-center">
+<div class="flex gap-4 flex-col items-center">
+<div class="relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full min-h-32 w-32 border-4 border-primary/20" data-alt="Professional woman portrait with friendly smile" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDMJvnYkb1TRZ4_gIzEHQFw6qK2-T6LTuvDW4GUuFYJ-5iutWBq8U9lDXq1XDJZWDV7Ly_Pik1nUM8gHoyZETZtHuA59Eh3ydnxMv8n7bclGaVZxAk2Zb-SMeZzrQ3DlIk2nXcZLyABtyPy6XqObCMvKTtg2C7umt6E2U1I7nexf9QPEiyCon7SCxfqgJXTj1-u_0S61bupmHiAAtjTQx4ytilgYej7UU_E-XxyJkYID5HdBo76LTK5joioC1Jo0QaGaD4zlPBZdbU");'>
+</div>
+<div class="absolute bottom-0 right-0 bg-primary text-white p-1 rounded-full border-2 border-white dark:border-background-dark flex items-center justify-center">
+<span class="material-symbols-outlined text-sm" style="font-size: 16px;">edit</span>
+</div>
+</div>
+<div class="flex flex-col items-center justify-center">
+<div class="flex items-center gap-2">
+<p class="text-slate-900 dark:text-slate-100 text-[24px] font-bold leading-tight tracking-[-0.015em] text-center">Jane Doe</p>
+<span class="bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border border-primary/20">Pro</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium leading-normal text-center mt-1">jane.doe@example.com</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Progress Tracker Snippet (AI Context) -->
+<div class="mx-4 mb-6 p-4 bg-primary/5 dark:bg-primary/10 rounded-xl border border-primary/20 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="flex h-10 w-10 items-center justify-center rounded-full bg-primary/20 text-primary">
+<span class="material-symbols-outlined">auto_awesome</span>
+</div>
+<div>
+<p class="text-slate-900 dark:text-slate-100 text-sm font-bold">AI Practice Goal</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs">85% of daily target reached</p>
+</div>
+</div>
+<div class="text-primary font-bold text-sm">12 Day Streak</div>
+</div>
+<!-- Menu Groups -->
+<div class="space-y-6">
+<!-- Group 1: General -->
+<section>
+<h3 class="text-slate-400 dark:text-slate-500 text-[11px] font-bold uppercase tracking-widest px-6 pb-2">Account Details</h3>
+<div class="bg-white dark:bg-background-dark border-y border-primary/5">
+<!-- Item -->
+<div class="flex items-center gap-4 px-6 min-h-14 hover:bg-slate-50 dark:hover:bg-white/5 cursor-pointer">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-9">
+<span class="material-symbols-outlined">person</span>
+</div>
+<div class="flex flex-1 items-center justify-between border-b border-primary/5 py-3">
+<p class="text-slate-900 dark:text-slate-100 text-base font-medium leading-normal truncate">Account Settings</p>
+<span class="material-symbols-outlined text-slate-300">chevron_right</span>
+</div>
+</div>
+<!-- Item -->
+<div class="flex items-center gap-4 px-6 min-h-14 hover:bg-slate-50 dark:hover:bg-white/5 cursor-pointer">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-9">
+<span class="material-symbols-outlined">notifications</span>
+</div>
+<div class="flex flex-1 items-center justify-between border-b border-primary/5 py-3">
+<p class="text-slate-900 dark:text-slate-100 text-base font-medium leading-normal truncate">Notifications</p>
+<span class="material-symbols-outlined text-slate-300">chevron_right</span>
+</div>
+</div>
+<!-- Item -->
+<div class="flex items-center gap-4 px-6 min-h-14 hover:bg-slate-50 dark:hover:bg-white/5 cursor-pointer">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-9">
+<span class="material-symbols-outlined">card_membership</span>
+</div>
+<div class="flex flex-1 items-center justify-between py-3">
+<p class="text-slate-900 dark:text-slate-100 text-base font-medium leading-normal truncate">Subscription Management</p>
+<span class="material-symbols-outlined text-slate-300">chevron_right</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Group 2: App Settings -->
+<section>
+<h3 class="text-slate-400 dark:text-slate-500 text-[11px] font-bold uppercase tracking-widest px-6 pb-2">App Preferences</h3>
+<div class="bg-white dark:bg-background-dark border-y border-primary/5">
+<!-- Item -->
+<div class="flex items-center gap-4 px-6 min-h-14 hover:bg-slate-50 dark:hover:bg-white/5 cursor-pointer">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-9">
+<span class="material-symbols-outlined">translate</span>
+</div>
+<div class="flex flex-1 items-center justify-between border-b border-primary/5 py-3">
+<p class="text-slate-900 dark:text-slate-100 text-base font-medium leading-normal truncate">Language Preferences</p>
+<span class="material-symbols-outlined text-slate-300">chevron_right</span>
+</div>
+</div>
+<!-- Item -->
+<div class="flex items-center gap-4 px-6 min-h-14 hover:bg-slate-50 dark:hover:bg-white/5 cursor-pointer">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-9">
+<span class="material-symbols-outlined">help</span>
+</div>
+<div class="flex flex-1 items-center justify-between py-3">
+<p class="text-slate-900 dark:text-slate-100 text-base font-medium leading-normal truncate">Help &amp; Support</p>
+<span class="material-symbols-outlined text-slate-300">chevron_right</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Logout Button -->
+<div class="mt-12 px-6">
+<button class="w-full flex items-center justify-center gap-2 rounded-xl py-4 bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400 font-bold border border-rose-200 dark:border-rose-500/20 active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined">logout</span>
+                Logout
+            </button>
+<p class="text-center text-slate-400 dark:text-slate-600 text-[11px] mt-6 font-medium">LingoFlow v2.4.0 (Build 2024)</p>
+</div>
+<!-- Bottom Navigation Bar (Modified from Template) -->
+<div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] flex gap-2 border-t border-primary/10 bg-white/90 dark:bg-background-dark/90 backdrop-blur-md px-4 pb-6 pt-3">
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">chat_bubble</span>
+<p class="text-[10px] font-bold uppercase tracking-wider leading-normal">Practice</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">monitoring</span>
+<p class="text-[10px] font-bold uppercase tracking-wider leading-normal">Progress</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">groups</span>
+<p class="text-[10px] font-bold uppercase tracking-wider leading-normal">Community</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span>
+<p class="text-[10px] font-bold uppercase tracking-wider leading-normal">Settings</p>
+</a>
+</div>
+</div>
+</body></html>
