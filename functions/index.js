@@ -297,10 +297,27 @@ OUTPUT (JSON only, no markdown):
     ((userData.averageScore ?? 0) * Math.min(prevTotal, 9) + scores.overall)
     / Math.min(newTotal, 10)
   )
-  const lastDate = userData.lastSessionDate?.toDate?.()
+  // Streak uses calendar-day comparison in UTC+2 (Mozambique)
+  // to avoid midnight-boundary issues when server runs in UTC.
+  const MZT_OFFSET_MS = 2 * 60 * 60 * 1000
+  const toMZTDay = ts => {
+    const d = new Date(ts.getTime() + MZT_OFFSET_MS)
+    return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`
+  }
   const today = new Date()
-  const isConsecutive = lastDate && (today - lastDate) < 48 * 60 * 60 * 1000
-  const newStreak = isConsecutive ? (userData.dailyStreak ?? 0) + 1 : 1
+  const todayDay = toMZTDay(today)
+  const prevDay  = toMZTDay(new Date(today.getTime() - 24 * 60 * 60 * 1000))
+  const lastDate = userData.lastSessionDate?.toDate?.()
+  const lastDay  = lastDate ? toMZTDay(lastDate) : null
+
+  let newStreak
+  if (!lastDay || lastDay < prevDay) {
+    newStreak = 1                              // first session or streak broken
+  } else if (lastDay === prevDay) {
+    newStreak = (userData.dailyStreak ?? 0) + 1  // consecutive calendar day
+  } else {
+    newStreak = userData.dailyStreak ?? 1      // already played today — keep streak
+  }
 
   await admin.firestore().doc(`users/${uid}`).update({
     totalSessionsCompleted: FieldValue.increment(1),
@@ -542,10 +559,14 @@ exports.deleteOldTranscripts = onSchedule(
       for (let i = 0; i < docs.length; i += batchSize) {
         const chunk = docs.slice(i, i + batchSize)
         const batch = admin.firestore().batch()
+        let writeCount = 0
         for (const doc of chunk) {
+          // Skip docs where transcript was already removed — avoids wasted writes
+          if (doc.data().transcript === undefined) continue
           batch.update(doc.ref, { transcript: FieldValue.delete() })
+          writeCount++
         }
-        await batch.commit()
+        if (writeCount > 0) await batch.commit()
       }
 
       logger.info(`deleteOldTranscripts: cleaned ${snap.size} sessions`)
