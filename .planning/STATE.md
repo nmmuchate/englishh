@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-02-23)
 
 ## Current Position
 
-Phase: 09-session-scoring → COMPLETE (2/2 plans done, human verification passed 2026-03-28)
-Phase: 10-payments-cron → COMPLETE (3/3 plans done)
-Status: Milestone v1.1 — ALL PHASES COMPLETE ✓
-Last activity: 2026-03-28 — Phase 09 human verification passed; ROADMAP.md checked off
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements for Milestone v1.2
+Last activity: 2026-04-06 — Milestone v1.2 Onboarding Assessment & Immersion Learning started
 
-Progress: [██████████] 100%  (10/10 phases done)
+Progress: [░░░░░░░░░░] 0%
 
 ## Performance Metrics
 
@@ -144,5 +144,5 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-28
-Stopped at: Phase 09 human verification passed. All 10 phases of Milestone v1.1 are complete. Run /gsd:complete-milestone to archive v1.1 and prepare for the next milestone.
+Last session: 2026-04-06
+Stopped at: Milestone v1.2 started, proceeding to define requirements.
