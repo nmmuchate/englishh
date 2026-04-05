@@ -309,45 +309,50 @@ Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PLACE-01 | TBD | Pending |
-| PLACE-02 | TBD | Pending |
-| PLACE-03 | TBD | Pending |
-| PLACE-04 | TBD | Pending |
-| PLACE-05 | TBD | Pending |
-| PLACE-06 | TBD | Pending |
-| PLACE-07 | TBD | Pending |
-| PLACE-08 | TBD | Pending |
-| PLACE-09 | TBD | Pending |
-| PLACE-10 | TBD | Pending |
-| PLACE-11 | TBD | Pending |
-| PLACE-12 | TBD | Pending |
-| SESSION-01 | TBD | Pending |
-| SESSION-02 | TBD | Pending |
-| SESSION-03 | TBD | Pending |
-| SESSION-04 | TBD | Pending |
-| SESSION-05 | TBD | Pending |
-| SESSION-06 | TBD | Pending |
-| SESSION-07 | TBD | Pending |
-| SESSION-08 | TBD | Pending |
-| PROG-v12-01 | TBD | Pending |
-| PROG-v12-02 | TBD | Pending |
-| PROG-v12-03 | TBD | Pending |
-| PROG-v12-04 | TBD | Pending |
-| PROG-v12-05 | TBD | Pending |
-| FREE-01 | TBD | Pending |
-| FREE-02 | TBD | Pending |
-| FREE-03 | TBD | Pending |
-| FREE-04 | TBD | Pending |
-| FREE-05 | TBD | Pending |
-| FREE-06 | TBD | Pending |
-| DASH-v12-01 | TBD | Pending |
-| DASH-v12-02 | TBD | Pending |
-| DASH-v12-03 | TBD | Pending |
-| INFRA-v12-01 | TBD | Pending |
-| INFRA-v12-02 | TBD | Pending |
-| INFRA-v12-03 | TBD | Pending |
-| INFRA-v12-04 | TBD | Pending |
+| PLACE-01 | Phase 12 | Pending |
+| PLACE-02 | Phase 13 | Pending |
+| PLACE-03 | Phase 14 | Pending |
+| PLACE-04 | Phase 13 | Pending |
+| PLACE-05 | Phase 15 | Pending |
+| PLACE-06 | Phase 15 | Pending |
+| PLACE-07 | Phase 15 | Pending |
+| PLACE-08 | Phase 13 | Pending |
+| PLACE-09 | Phase 15 | Pending |
+| PLACE-10 | Phase 15 | Pending |
+| PLACE-11 | Phase 12 | Pending |
+| PLACE-12 | Phase 15 | Pending |
+| SESSION-01 | Phase 16 | Pending |
+| SESSION-02 | Phase 16 | Pending |
+| SESSION-03 | Phase 16 | Pending |
+| SESSION-04 | Phase 16 | Pending |
+| SESSION-05 | Phase 16 | Pending |
+| SESSION-06 | Phase 16 | Pending |
+| SESSION-07 | Phase 16 | Pending |
+| SESSION-08 | Phase 16 | Pending |
+| PROG-v12-01 | Phase 17 | Pending |
+| PROG-v12-02 | Phase 17 | Pending |
+| PROG-v12-03 | Phase 17 | Pending |
+| PROG-v12-04 | Phase 17 | Pending |
+| PROG-v12-05 | Phase 17 | Pending |
+| FREE-01 | Phase 18 | Pending |
+| FREE-02 | Phase 18 | Pending |
+| FREE-03 | Phase 18 | Pending |
+| FREE-04 | Phase 18 | Pending |
+| FREE-05 | Phase 18 | Pending |
+| FREE-06 | Phase 18 | Pending |
+| DASH-v12-01 | Phase 19 | Pending |
+| DASH-v12-02 | Phase 19 | Pending |
+| DASH-v12-03 | Phase 19 | Pending |
+| INFRA-v12-01 | Phase 11 | Pending |
+| INFRA-v12-02 | Phase 11 | Pending |
+| INFRA-v12-03 | Phase 11 | Pending |
+| INFRA-v12-04 | Phase 11 | Pending |
+
+**v1.2 Coverage:**
+- v1.2 requirements: 38 total
+- Mapped to phases: 38
+- Unmapped: 0 (complete coverage)
 
 ---
 *Requirements defined: 2026-02-20*
-*Last updated: 2026-04-06 after v1.2 milestone start*
+*Last updated: 2026-04-06 after v1.2 roadmap created (Phases 11-19)*

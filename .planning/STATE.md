@@ -2,19 +2,19 @@
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-02-23)
+See: .planning/PROJECT.md (updated 2026-04-06)
 
 **Core value:** Every screen matches the Stitch designs pixel-for-pixel so the UI feels production-ready on mobile before any backend is wired up.
-**Current focus:** Milestone v1.1 backend — Firebase Auth, Firestore, Cloud Functions, Web Speech API, MozPayments
+**Current focus:** Milestone v1.2 — Onboarding Assessment & Immersion Learning (Phases 11-19)
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: Phase 11 — Stores & Firestore Schema
 Plan: —
-Status: Defining requirements for Milestone v1.2
-Last activity: 2026-04-06 — Milestone v1.2 Onboarding Assessment & Immersion Learning started
+Status: Roadmap created, ready to begin Phase 11
+Last activity: 2026-04-06 — v1.2 roadmap created (Phases 11-19)
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [░░░░░░░░░░] 0% (0/9 phases complete)
 
 ## Performance Metrics
 
@@ -142,7 +142,17 @@ None yet.
 - [10-03]: updateWeeklyLeaderboard computes nextWeekId inline with +7 days rather than calling getWeekId() — avoids date ambiguity at Monday midnight
 - [10-03]: onSchedule try/catch re-throws error — Cloud Scheduler retries on throw, desired for transient Firestore failures
 
+### v1.2 Context
+
+- PRD reference: /SpeakAI-Onboarding-Immersion-PRD.md
+- AI model upgrade: GPT-4o-mini for test question generation and evaluation (replaces Gemini for placement functions)
+- Browser TTS: window.speechSynthesis used for Listening test audio (Azure TTS deferred to v1.3)
+- Placement test: 5 stages (Quick Profile → Vocabulary/Reading → Listening → Grammar → Speaking/Writing)
+- Session types: 4 types — Free Talk, Scenario, Story Builder, Debate; gated by CEFR level
+- Free tier gate: 1 free session; placement test always free; retake once per 30 days
+- New Cloud Functions: generateTestQuestions, evaluateSpeakingTest, calculatePlacement, generateSessionPlan, getWeeklyReview
+
 ## Session Continuity
 
 Last session: 2026-04-06
-Stopped at: Milestone v1.2 started, proceeding to define requirements.
+Stopped at: v1.2 roadmap created — ready to begin Phase 11 planning.

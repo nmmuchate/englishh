@@ -6,6 +6,8 @@
 
 **v1.1 (Phases 6-10):** Wires a real Firebase backend into the existing UI — replacing all mock data with Firestore, mock auth with Firebase Auth, conversation bubbles with Gemini AI via Cloud Functions, mic button with Web Speech API, and the paywall dialog with real MozPayments subscriptions.
 
+**v1.2 (Phases 11-19):** Replaces the fake 3-step onboarding with a real adaptive CEFR placement test, adds a personalised immersion learning system with 4 session types, per-skill progression tracking, a mistake pattern bank, and a free→Pro conversion funnel.
+
 ## Phases
 
 **Phase Numbering:**
@@ -27,6 +29,18 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 8: AI Conversation Engine** - Cloud Functions (startConversation + sendMessage), Web Speech API, Gemini integration (completed 2026-02-26)
 - [x] **Phase 9: Session Scoring & Real Feedback** - Cloud Function endSession, FeedbackPage reads real data, vocabulary save
 - [x] **Phase 10: Payments, Subscriptions & Cron Jobs** - MozPayments integration, webhook handler, scheduled cleanup functions (completed 2026-03-06)
+
+*— v1.1 complete — v1.2 Onboarding Assessment & Immersion Learning below —*
+
+- [ ] **Phase 11: Stores & Firestore Schema** - New Pinia stores (placement.js, learning.js), Firestore schema extensions, scenarioLibrary collection
+- [ ] **Phase 12: Quick Profile & Onboarding Rewrite** - Quick Profile form, OnboardingPage rewritten as placement test wrapper, user doc extended
+- [ ] **Phase 13: Vocabulary & Grammar Test** - Adaptive Vocabulary/Reading + Grammar test stages, generateTestQuestions Cloud Function
+- [ ] **Phase 14: Listening Test** - Listening test stage with browser TTS audio, ListeningPlayer component
+- [ ] **Phase 15: Speaking, Writing & Placement Results** - Speaking + Writing stages, AI evaluation functions, calculatePlacement, PlacementResultPage with radar chart, skip logic
+- [ ] **Phase 16: Session Types & Personalisation** - 4 session types, SessionTypeSelectPage, ScenarioBriefPage, generateSessionPlan Cloud Function, CEFR gates
+- [ ] **Phase 17: Progression & Mistake Tracking** - Per-skill progression, level-up logic, mistake pattern bank, getWeeklyReview Cloud Function
+- [ ] **Phase 18: Free Tier Funnel** - Placement test always free, 1 free session gate, post-session paywall with achievement summary, free user restrictions
+- [ ] **Phase 19: Dashboard & Progress Redesign** - Skill radar mini-chart, per-skill trend charts, mistake pattern cards, recommended session card
 
 ## Phase Details
 
@@ -204,10 +218,123 @@ Plans:
 - [ ] 10-02-PLAN.md — PaywallDialog connected to real subscriptionStatus + createSubscription function
 - [ ] 10-03-PLAN.md — Cloud Functions: deleteOldTranscripts (daily cron) + updateWeeklyLeaderboard (weekly cron)
 
+*— v1.1 complete — v1.2 Onboarding Assessment & Immersion Learning below —*
+
+### Phase 11: Stores & Firestore Schema
+**Goal**: The data layer for v1.2 is in place — two new Pinia stores manage placement test state and the learning path, the Firestore user document is extended with v1.2 fields, and the scenarioLibrary collection is seeded
+**Depends on**: Phase 10
+**Requirements**: INFRA-v12-01, INFRA-v12-02, INFRA-v12-03, INFRA-v12-04
+**Success Criteria** (what must be TRUE):
+  1. `usePlacementStore` is importable in any component and exposes `currentStage`, `stageResults`, `adaptiveLevel`, and `finalResult` with correct initial values
+  2. `useLearningStore` is importable and exposes `recommendedSession`, `skillProgress`, `mistakePatterns`, and `weeklyGoal` with correct initial values
+  3. `scenarioLibrary` Firestore collection exists and contains at least one seeded scenario template document per supported field/interest category
+  4. `users/{uid}` documents contain the new v1.2 fields: `profile`, `placement`, `mistakePatterns`, and `sessionTypesCompleted` (added via migration or new sign-up flow)
+**Plans**: TBD
+
+### Phase 12: Quick Profile & Onboarding Rewrite
+**Goal**: New users entering the app for the first time see a real placement test flow instead of the mock 3-step wizard — OnboardingPage.vue becomes the placement test shell and the Quick Profile step collects occupation, interests, goal, and prior experience
+**Depends on**: Phase 11
+**Requirements**: PLACE-01, PLACE-11
+**Success Criteria** (what must be TRUE):
+  1. User sees the Quick Profile form with fields for occupation, interests, learning goal, and prior English experience — all fields are required before advancing
+  2. Completing Quick Profile writes the data to `users/{uid}.profile` in Firestore and advances to the first test stage
+  3. OnboardingPage.vue renders as a multi-stage placement test wrapper (not the old QStepper) with a visible stage progress indicator
+  4. Partially completed placement data is saved to Firestore `placementTests/{uid}` so progress is not lost on refresh
+**UI hint**: yes
+**Plans**: TBD
+
+### Phase 13: Vocabulary & Grammar Test
+**Goal**: Users can take the adaptive Vocabulary/Reading and Grammar test stages — questions are AI-generated on demand and the adaptive difficulty engine adjusts the next question based on the previous answer
+**Depends on**: Phase 12
+**Requirements**: PLACE-02, PLACE-04, PLACE-08
+**Success Criteria** (what must be TRUE):
+  1. User sees the Vocabulary & Reading test stage with 6-8 questions including at least one reading passage, rendered from GPT-4o-mini output
+  2. User sees the Grammar test stage with error-spotting and sentence completion questions, rendered from GPT-4o-mini output
+  3. Answering a question correctly increases the adaptive difficulty level for the next question; answering incorrectly decreases it — observable via question complexity change
+  4. `generateTestQuestions` Cloud Function is deployed and returns correctly structured question payloads for both vocabulary and grammar stages
+**Plans**: TBD
+
+### Phase 14: Listening Test
+**Goal**: Users can hear audio prompts for the Listening test stage using browser speechSynthesis TTS — a dedicated ListeningPlayer component handles playback, replay, and answer capture
+**Depends on**: Phase 13
+**Requirements**: PLACE-03
+**Success Criteria** (what must be TRUE):
+  1. User sees the Listening test stage with 3 tasks; each task has a play button that triggers browser speechSynthesis to speak the prompt aloud
+  2. User can replay any audio prompt at least once using a replay button
+  3. User can submit their answer for each listening task and advance to the next task
+  4. ListeningPlayer.vue component encapsulates TTS playback and exposes a `play` / `replay` interface usable by the test stage
+**UI hint**: yes
+**Plans**: TBD
+
+### Phase 15: Speaking, Writing & Placement Results
+**Goal**: The placement test is complete — users take the Speaking mini-conversation and Writing prompt stages, AI evaluates their responses, the calculatePlacement function combines all stage scores into a CEFR result, and users see a detailed results screen with a per-skill radar chart
+**Depends on**: Phase 14
+**Requirements**: PLACE-05, PLACE-06, PLACE-07, PLACE-09, PLACE-10, PLACE-12
+**Success Criteria** (what must be TRUE):
+  1. User can complete a 3-4 exchange Speaking mini-conversation using Web Speech API voice input (or text fallback) within the placement test
+  2. User can submit a 2-3 sentence written response to a single Writing prompt
+  3. `evaluateSpeakingTest` Cloud Function scores the speaking + writing responses and returns per-skill scores
+  4. `calculatePlacement` Cloud Function combines all stage scores and returns an overall CEFR level (A1–C2) with per-skill breakdown
+  5. User sees PlacementResultPage with overall CEFR level badge, per-skill scores, and a radar chart — all driven by real `calculatePlacement` output
+  6. User can skip any test stage — skipped stages default to B1 and partial progress is saved to Firestore before advancing
+**UI hint**: yes
+**Plans**: TBD
+
+### Phase 16: Session Types & Personalisation
+**Goal**: Users can choose from up to 4 session types based on their CEFR level, view a pre-session briefing, and have their session plan personalised by an AI function that considers their profile, skill gaps, and session history
+**Depends on**: Phase 15
+**Requirements**: SESSION-01, SESSION-02, SESSION-03, SESSION-04, SESSION-05, SESSION-06, SESSION-07, SESSION-08
+**Success Criteria** (what must be TRUE):
+  1. User sees SessionTypeSelectPage listing all 4 session types — Free Talk, Scenario, Story Builder, Debate — with lock icons on types unavailable at the user's CEFR level
+  2. A1–A2 users see only Free Talk and Scenario unlocked; B1+ users see all 4 types unlocked
+  3. Selecting a session type navigates to ScenarioBriefPage showing the role, context, and objectives for that session
+  4. `generateSessionPlan` Cloud Function is deployed and returns a personalised session plan incorporating the user's profile, active skill gaps, and session history
+  5. Each session type (Free Talk, Scenario, Story Builder, Debate) results in a distinctly different AI conversation framing when the session starts
+**UI hint**: yes
+**Plans**: TBD
+
+### Phase 17: Progression & Mistake Tracking
+**Goal**: The app tracks each user's progress independently per skill — skill levels advance when rolling 10-session performance meets next-level criteria, mistakes are logged and recycled into future sessions, and a weekly review session can be generated on demand
+**Depends on**: Phase 16
+**Requirements**: PROG-v12-01, PROG-v12-02, PROG-v12-03, PROG-v12-04, PROG-v12-05
+**Success Criteria** (what must be TRUE):
+  1. After each session, per-skill scores (vocabulary, reading, listening, grammar, speaking, writing) are individually updated in Firestore — each skill tracks independently
+  2. When a user's rolling 10-session average for a skill meets the next-level threshold, their level for that skill increments and a level-up event is visible in the UI
+  3. Grammar and vocabulary mistakes from sessions are persisted to `users/{uid}.mistakePatterns` with occurrence count, last correction, and active/resolved status
+  4. When `generateSessionPlan` runs for a user with active mistake patterns, the returned plan explicitly references at least one of those patterns to recycle it
+  5. `getWeeklyReview` Cloud Function is deployed and returns a review session plan that incorporates the user's mistake patterns from the past 7 days
+**Plans**: TBD
+
+### Phase 18: Free Tier Funnel
+**Goal**: The free→Pro conversion funnel is enforced — placement test is ungated, the first session is fully featured, subsequent sessions trigger a post-session paywall with an achievement summary, and free users have clearly defined read-only access to trial data
+**Depends on**: Phase 17
+**Requirements**: FREE-01, FREE-02, FREE-03, FREE-04, FREE-05, FREE-06
+**Success Criteria** (what must be TRUE):
+  1. A user with no subscription can complete the full placement test without any paywall prompt appearing
+  2. A user with no subscription can start and complete their first session with all features (session types, AI conversation, scoring) fully enabled
+  3. After the first session completes, a free user sees a post-session paywall screen displaying their session achievement summary alongside a Pro subscription CTA
+  4. A free user can open their vocabulary bank and view words saved during the trial session in read-only mode — no add/edit capability
+  5. A free user can retake the placement test — the retake is blocked by a UI prompt if they have already retaken within the past 30 days
+  6. Attempting to start a second session, switch session types, access personalised scenarios, request a weekly review, or view full progress tracking shows the Pro gate UI
+**UI hint**: yes
+**Plans**: TBD
+
+### Phase 19: Dashboard & Progress Redesign
+**Goal**: The Dashboard and Progress pages display real v1.2 data — the dashboard surfaces a skill radar mini-chart and a recommended session card, and the Progress page shows per-skill trend charts and the user's active mistake patterns
+**Depends on**: Phase 18
+**Requirements**: DASH-v12-01, DASH-v12-02, DASH-v12-03
+**Success Criteria** (what must be TRUE):
+  1. DashboardPage shows a SkillRadarChart mini-chart built from real per-skill progress data from `useLearningStore` — not a static placeholder
+  2. DashboardPage shows a recommended session card driven by `useLearningStore.recommendedSession` — card content changes based on skill gaps and session history
+  3. ProgressPage per-skill trend charts render real session score history for each of the 6 skills — replacing the static SVG chart
+  4. ProgressPage shows a list of MistakePatternCard components populated from `users/{uid}.mistakePatterns` — each card shows the mistake, occurrence count, and resolved/active status
+**UI hint**: yes
+**Plans**: TBD
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10
+Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 11 → 12 → 13 → 14 → 15 → 16 → 17 → 18 → 19
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -221,3 +348,12 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 8. AI Conversation Engine | 3/3 | Complete   | 2026-02-26 |
 | 9. Session Scoring & Real Feedback | 0/2 | Pending | — |
 | 10. Payments, Subscriptions & Cron Jobs | 3/3 | Complete   | 2026-03-06 |
+| 11. Stores & Firestore Schema | 0/0 | Not started | — |
+| 12. Quick Profile & Onboarding Rewrite | 0/0 | Not started | — |
+| 13. Vocabulary & Grammar Test | 0/0 | Not started | — |
+| 14. Listening Test | 0/0 | Not started | — |
+| 15. Speaking, Writing & Placement Results | 0/0 | Not started | — |
+| 16. Session Types & Personalisation | 0/0 | Not started | — |
+| 17. Progression & Mistake Tracking | 0/0 | Not started | — |
+| 18. Free Tier Funnel | 0/0 | Not started | — |
+| 19. Dashboard & Progress Redesign | 0/0 | Not started | — |
