@@ -233,6 +233,121 @@ Updated during roadmap creation.
 - Mapped to phases: 35
 - Unmapped: 0 (complete coverage)
 
+## v1.2 Requirements — Onboarding Assessment & Immersion Learning
+
+**Milestone:** v1.2 Onboarding Assessment & Immersion Learning
+**Defined:** 2026-04-06
+**PRD Reference:** /SpeakAI-Onboarding-Immersion-PRD.md
+
+### Placement Test (PLACE)
+
+- [ ] **PLACE-01**: User can complete Quick Profile (occupation, interests, goal, prior experience)
+- [ ] **PLACE-02**: User can take adaptive Vocabulary & Reading test (6-8 questions + 1 passage, adaptive difficulty)
+- [ ] **PLACE-03**: User can take Listening test with browser TTS audio (3 tasks, adaptive difficulty)
+- [ ] **PLACE-04**: User can take Grammar test (error-spotting + sentence completion, adaptive difficulty)
+- [ ] **PLACE-05**: User can take Speaking test (3-4 AI exchange mini-conversation via Web Speech API)
+- [ ] **PLACE-06**: User can complete Writing task (1 prompt, 2-3 sentence response)
+- [ ] **PLACE-07**: User sees Results screen with overall CEFR level + per-skill breakdown + radar chart
+- [ ] **PLACE-08**: Test questions generated dynamically via GPT-4o-mini (`generateTestQuestions` Cloud Function)
+- [ ] **PLACE-09**: Speaking + writing evaluated by AI (`evaluateSpeakingTest` Cloud Function)
+- [ ] **PLACE-10**: All stage scores combined into final CEFR placement (`calculatePlacement` Cloud Function)
+- [ ] **PLACE-11**: Placement data stored in Firestore (`placementTests` collection + extended `users` doc)
+- [ ] **PLACE-12**: User can skip any stage (defaults to B1; partial progress saved)
+
+### Session Types (SESSION)
+
+- [ ] **SESSION-01**: User can view available session types with lock states (`SessionTypeSelectPage`)
+- [ ] **SESSION-02**: User can view pre-session briefing (role, context, objectives) before starting (`ScenarioBriefPage`)
+- [ ] **SESSION-03**: Free Talk session type available (open conversation on a topic from user's life)
+- [ ] **SESSION-04**: Scenario session type available (role-play a real-world situation personalised to user's field)
+- [ ] **SESSION-05**: Story Builder session type available (narrate/continue a story with AI prompts)
+- [ ] **SESSION-06**: Debate session type available (user argues position; AI takes opposing view)
+- [ ] **SESSION-07**: Session types gated by CEFR level (A1-A2: Free Talk + Scenario only; B1+: all 4)
+- [ ] **SESSION-08**: AI session plan generated from profile + skill gaps + history (`generateSessionPlan` Cloud Function)
+
+### Progression & Learning (PROG)
+
+- [ ] **PROG-v12-01**: Per-skill progress tracked independently (6 skills: vocabulary, reading, listening, grammar, speaking, writing)
+- [ ] **PROG-v12-02**: User levels up per skill when rolling 10-session performance meets next-level criteria
+- [ ] **PROG-v12-03**: Mistake patterns tracked (occurrences, corrections, active/resolved status)
+- [ ] **PROG-v12-04**: AI recycles active mistake patterns in future session plans until resolved
+- [ ] **PROG-v12-05**: Weekly review session generated incorporating week's mistake patterns (`getWeeklyReview` Cloud Function)
+
+### Free Tier & Funnel (FREE)
+
+- [ ] **FREE-01**: Placement test is always free (no gate)
+- [ ] **FREE-02**: First session is fully free with all features enabled
+- [ ] **FREE-03**: Sessions 2+ require Pro subscription — post-session paywall shows achievement summary + subscribe CTA
+- [ ] **FREE-04**: Free users retain read-only vocabulary bank from trial session
+- [ ] **FREE-05**: Free users can retake placement test once per month
+- [ ] **FREE-06**: Pro gate enforced on: additional sessions, session type variety, personalised scenarios, review sessions, full progress tracking
+
+### Dashboard & Progress Redesign (DASH)
+
+- [ ] **DASH-v12-01**: Dashboard shows real skill data — skill radar mini-chart + next recommended session card
+- [ ] **DASH-v12-02**: ProgressPage shows per-skill trend charts (real data replacing static SVG)
+- [ ] **DASH-v12-03**: ProgressPage shows active mistake patterns list (`MistakePatternCard` component)
+
+### Infrastructure (INFRA)
+
+- [ ] **INFRA-v12-01**: `placement.js` Pinia store manages placement test state (currentStage, stageResults, adaptiveLevel, finalResult)
+- [ ] **INFRA-v12-02**: `learning.js` Pinia store manages learning path (recommendedSession, skillProgress, mistakePatterns, weeklyGoal)
+- [ ] **INFRA-v12-03**: `scenarioLibrary` Firestore collection stores scenario templates (pre-generated per field/interest)
+- [ ] **INFRA-v12-04**: `users/{uid}` extended with profile, placement, mistakePatterns, sessionTypesCompleted fields
+
+## Out of Scope (v1.2)
+
+| Feature | Reason |
+|---------|--------|
+| Real-time feedback enhancements | Separate PRD — deferred to v1.3 |
+| Azure TTS for listening audio | Browser speechSynthesis sufficient for MVP |
+| Word-by-word pronunciation scoring | Web Speech API limitation |
+| Weekly progress email | v2 feature |
+| Writing skill as separate UI stage | Assessed via Cloud Function; included in results only |
+
+**v1.2 Traceability** (updated during roadmap creation):
+
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| PLACE-01 | TBD | Pending |
+| PLACE-02 | TBD | Pending |
+| PLACE-03 | TBD | Pending |
+| PLACE-04 | TBD | Pending |
+| PLACE-05 | TBD | Pending |
+| PLACE-06 | TBD | Pending |
+| PLACE-07 | TBD | Pending |
+| PLACE-08 | TBD | Pending |
+| PLACE-09 | TBD | Pending |
+| PLACE-10 | TBD | Pending |
+| PLACE-11 | TBD | Pending |
+| PLACE-12 | TBD | Pending |
+| SESSION-01 | TBD | Pending |
+| SESSION-02 | TBD | Pending |
+| SESSION-03 | TBD | Pending |
+| SESSION-04 | TBD | Pending |
+| SESSION-05 | TBD | Pending |
+| SESSION-06 | TBD | Pending |
+| SESSION-07 | TBD | Pending |
+| SESSION-08 | TBD | Pending |
+| PROG-v12-01 | TBD | Pending |
+| PROG-v12-02 | TBD | Pending |
+| PROG-v12-03 | TBD | Pending |
+| PROG-v12-04 | TBD | Pending |
+| PROG-v12-05 | TBD | Pending |
+| FREE-01 | TBD | Pending |
+| FREE-02 | TBD | Pending |
+| FREE-03 | TBD | Pending |
+| FREE-04 | TBD | Pending |
+| FREE-05 | TBD | Pending |
+| FREE-06 | TBD | Pending |
+| DASH-v12-01 | TBD | Pending |
+| DASH-v12-02 | TBD | Pending |
+| DASH-v12-03 | TBD | Pending |
+| INFRA-v12-01 | TBD | Pending |
+| INFRA-v12-02 | TBD | Pending |
+| INFRA-v12-03 | TBD | Pending |
+| INFRA-v12-04 | TBD | Pending |
+
 ---
 *Requirements defined: 2026-02-20*
-*Last updated: 2026-02-23 after v1.1 backend milestone start*
+*Last updated: 2026-04-06 after v1.2 milestone start*
