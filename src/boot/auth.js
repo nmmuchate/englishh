@@ -11,6 +11,8 @@ import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from 'boot/firebase'
 import { useAuthStore } from 'stores/auth'
 import { useProfileStore } from 'stores/profile'
+import { usePlacementStore } from 'stores/placement'
+import { useLearningStore } from 'stores/learning'
 import { fetchUserProfile } from 'src/services/userProfile'
 
 // Routes that do NOT require authentication.
@@ -47,9 +49,17 @@ export default defineBoot(({ router }) => {
       if (profile) {
         authStore.setOnboardingCompleted(profile.onboardingCompleted ?? false)
         profileStore.setProfile(profile)
+        const placementStore = usePlacementStore()
+        const learningStore = useLearningStore()
+        placementStore.setPlacement(profile)
+        learningStore.setLearning(profile)
       }
     } else {
       profileStore.reset()
+      const placementStore = usePlacementStore()
+      const learningStore = useLearningStore()
+      placementStore.reset()
+      learningStore.reset()
     }
   })
 

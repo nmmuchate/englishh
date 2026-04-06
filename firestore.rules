@@ -66,5 +66,23 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    // -- Placement Tests ------------------------------------------------
+    // Users can read/write their own placement test document.
+    // Deletion forbidden (progress must persist for retake logic).
+    match /placementTests/{userId} {
+      allow read:   if isAuthenticated() && isOwner(userId);
+      allow create: if isAuthenticated() && isOwner(userId);
+      allow update: if isAuthenticated() && isOwner(userId);
+      allow delete: if false;
+    }
+
+    // -- Scenario Library -----------------------------------------------
+    // Any authenticated user can read scenario templates.
+    // Writes are forbidden from clients (Admin SDK seed script writes).
+    match /scenarioLibrary/{levelId}/scenarios/{scenarioId} {
+      allow read:  if isAuthenticated();
+      allow write: if false;
+    }
+
   }
 }

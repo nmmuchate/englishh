@@ -14,6 +14,11 @@ export const useProfileStore = defineStore('profile', () => {
   // Paywall fields
   const freeSessionUsed        = ref(false)
   const subscriptionStatus     = ref('none')     // 'none' | 'active' | 'cancelled'
+  // v1.2 fields
+  const profile               = ref(null)        // { occupation, field, interests, goal, priorExperience }
+  const placement             = ref(null)        // { overallLevel, skills, strengths, weaknesses, confidence, testedAt }
+  const mistakePatterns       = ref([])          // array of { pattern, occurrences, lastSeen, corrections, status }
+  const sessionTypesCompleted = ref({ freeTalk: 0, scenario: 0, storyBuilder: 0, debate: 0, review: 0 })
 
   // Actions
   function setProfile(data) {
@@ -27,6 +32,10 @@ export const useProfileStore = defineStore('profile', () => {
     totalMinutesPracticed.value    = data.totalMinutesPracticed   ?? 0
     freeSessionUsed.value        = data.freeSessionUsed       ?? false
     subscriptionStatus.value     = data.subscriptionStatus    ?? 'none'
+    profile.value               = data.profile             ?? null
+    placement.value             = data.placement           ?? null
+    mistakePatterns.value       = data.mistakePatterns     ?? []
+    sessionTypesCompleted.value = data.sessionTypesCompleted ?? { freeTalk: 0, scenario: 0, storyBuilder: 0, debate: 0, review: 0 }
   }
 
   function reset() {
@@ -40,6 +49,10 @@ export const useProfileStore = defineStore('profile', () => {
     totalMinutesPracticed.value    = 0
     freeSessionUsed.value        = false
     subscriptionStatus.value     = 'none'
+    profile.value               = null
+    placement.value             = null
+    mistakePatterns.value       = []
+    sessionTypesCompleted.value = { freeTalk: 0, scenario: 0, storyBuilder: 0, debate: 0, review: 0 }
   }
 
   return {
@@ -53,6 +66,10 @@ export const useProfileStore = defineStore('profile', () => {
     totalMinutesPracticed,
     freeSessionUsed,
     subscriptionStatus,
+    profile,
+    placement,
+    mistakePatterns,
+    sessionTypesCompleted,
     setProfile,
     reset
   }
