@@ -1,3 +1,17 @@
+---
+gsd_state_version: 1.0
+milestone: v1.0
+milestone_name: milestone
+status: Ready to execute
+stopped_at: Completed 11-01-PLAN.md
+last_updated: "2026-04-06T08:30:15.554Z"
+progress:
+  total_phases: 19
+  completed_phases: 10
+  total_plans: 29
+  completed_plans: 28
+---
+
 # Project State
 
 ## Project Reference
@@ -5,24 +19,22 @@
 See: .planning/PROJECT.md (updated 2026-04-06)
 
 **Core value:** Every screen matches the Stitch designs pixel-for-pixel so the UI feels production-ready on mobile before any backend is wired up.
-**Current focus:** Milestone v1.2 — Onboarding Assessment & Immersion Learning (Phases 11-19)
+**Current focus:** Phase 11 — stores-firestore-schema
 
 ## Current Position
 
-Phase: Phase 11 — Stores & Firestore Schema
-Plan: —
-Status: Roadmap created, ready to begin Phase 11
-Last activity: 2026-04-06 — v1.2 roadmap created (Phases 11-19)
-
-Progress: [░░░░░░░░░░] 0% (0/9 phases complete)
+Phase: 11 (stores-firestore-schema) — EXECUTING
+Plan: 2 of 2
 
 ## Performance Metrics
 
 **v1.0 Velocity:**
+
 - Total plans completed: 13 (4 + 2 + 1 + 2 + 4)
 - Average duration: ~12min/plan
 
 **v1.1 Velocity:**
+
 - Total plans completed: 12 (06-01, 06-02, 06-03, 07-01, 07-02, 07-03, 08-01, 09-01, 09-02, 10-01, 10-02, 10-03)
 - Average duration: ~6min/plan
 - 10-01: 2min (2 tasks, 1 file)
@@ -73,6 +85,7 @@ Recent decisions affecting current work:
 - [Phase 10-payments-cron]: onSchedule region passed directly in options object (not setGlobalOptions) — known CJS bug
 - [Phase 10-payments-cron]: deleteOldTranscripts uses FieldValue.delete() in 500-doc batches — preserves all session fields except transcript
 - [Phase 10-payments-cron]: updateWeeklyLeaderboard computes nextWeekId inline with +7 days rather than calling getWeekId() — avoids date ambiguity at Monday midnight
+- [Phase 11-stores-firestore-schema]: setPlacement/setLearning naming follows setProfile convention; D-05 progressive save with setDoc merge:true
 
 ### v1.1 Decisions
 
@@ -154,5 +167,5 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-06
-Stopped at: v1.2 roadmap created — ready to begin Phase 11 planning.
+Last session: 2026-04-06T08:30:15.537Z
+Stopped at: Completed 11-01-PLAN.md
