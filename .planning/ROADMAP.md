@@ -72,7 +72,11 @@ Plans:
   3. User sees a 3-step QStepper with Assessment, First Session, and Level Result steps, visually matching the Stitch welcome/assessment designs
   4. User can select language level options in the Assessment step and advance through all three steps in sequence
   5. Completing the Level Result step navigates the user to the Dashboard
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 11-01-PLAN.md — Create placement.js + learning.js stores, extend profile store with v1.2 fields, wire auth boot, update Firestore rules
+- [ ] 11-02-PLAN.md — Create idempotent scenarioLibrary seed script with 40 scenario templates
 
 Plans:
 - [x] 02-01: Build LandingPage.vue matching Stitch sign_in_to_speakai design with mock sign-in navigation
@@ -229,7 +233,11 @@ Plans:
   2. `useLearningStore` is importable and exposes `recommendedSession`, `skillProgress`, `mistakePatterns`, and `weeklyGoal` with correct initial values
   3. `scenarioLibrary` Firestore collection exists and contains at least one seeded scenario template document per supported field/interest category
   4. `users/{uid}` documents contain the new v1.2 fields: `profile`, `placement`, `mistakePatterns`, and `sessionTypesCompleted` (added via migration or new sign-up flow)
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 11-01-PLAN.md — Create placement.js + learning.js stores, extend profile store with v1.2 fields, wire auth boot, update Firestore rules
+- [ ] 11-02-PLAN.md — Create idempotent scenarioLibrary seed script with 40 scenario templates
 
 ### Phase 12: Quick Profile & Onboarding Rewrite
 **Goal**: New users entering the app for the first time see a real placement test flow instead of the mock 3-step wizard — OnboardingPage.vue becomes the placement test shell and the Quick Profile step collects occupation, interests, goal, and prior experience
@@ -241,7 +249,11 @@ Plans:
   3. OnboardingPage.vue renders as a multi-stage placement test wrapper (not the old QStepper) with a visible stage progress indicator
   4. Partially completed placement data is saved to Firestore `placementTests/{uid}` so progress is not lost on refresh
 **UI hint**: yes
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 11-01-PLAN.md — Create placement.js + learning.js stores, extend profile store with v1.2 fields, wire auth boot, update Firestore rules
+- [ ] 11-02-PLAN.md — Create idempotent scenarioLibrary seed script with 40 scenario templates
 
 ### Phase 13: Vocabulary & Grammar Test
 **Goal**: Users can take the adaptive Vocabulary/Reading and Grammar test stages — questions are AI-generated on demand and the adaptive difficulty engine adjusts the next question based on the previous answer
@@ -252,7 +264,11 @@ Plans:
   2. User sees the Grammar test stage with error-spotting and sentence completion questions, rendered from GPT-4o-mini output
   3. Answering a question correctly increases the adaptive difficulty level for the next question; answering incorrectly decreases it — observable via question complexity change
   4. `generateTestQuestions` Cloud Function is deployed and returns correctly structured question payloads for both vocabulary and grammar stages
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 11-01-PLAN.md — Create placement.js + learning.js stores, extend profile store with v1.2 fields, wire auth boot, update Firestore rules
+- [ ] 11-02-PLAN.md — Create idempotent scenarioLibrary seed script with 40 scenario templates
 
 ### Phase 14: Listening Test
 **Goal**: Users can hear audio prompts for the Listening test stage using browser speechSynthesis TTS — a dedicated ListeningPlayer component handles playback, replay, and answer capture
@@ -264,7 +280,11 @@ Plans:
   3. User can submit their answer for each listening task and advance to the next task
   4. ListeningPlayer.vue component encapsulates TTS playback and exposes a `play` / `replay` interface usable by the test stage
 **UI hint**: yes
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 11-01-PLAN.md — Create placement.js + learning.js stores, extend profile store with v1.2 fields, wire auth boot, update Firestore rules
+- [ ] 11-02-PLAN.md — Create idempotent scenarioLibrary seed script with 40 scenario templates
 
 ### Phase 15: Speaking, Writing & Placement Results
 **Goal**: The placement test is complete — users take the Speaking mini-conversation and Writing prompt stages, AI evaluates their responses, the calculatePlacement function combines all stage scores into a CEFR result, and users see a detailed results screen with a per-skill radar chart
@@ -278,7 +298,11 @@ Plans:
   5. User sees PlacementResultPage with overall CEFR level badge, per-skill scores, and a radar chart — all driven by real `calculatePlacement` output
   6. User can skip any test stage — skipped stages default to B1 and partial progress is saved to Firestore before advancing
 **UI hint**: yes
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 11-01-PLAN.md — Create placement.js + learning.js stores, extend profile store with v1.2 fields, wire auth boot, update Firestore rules
+- [ ] 11-02-PLAN.md — Create idempotent scenarioLibrary seed script with 40 scenario templates
 
 ### Phase 16: Session Types & Personalisation
 **Goal**: Users can choose from up to 4 session types based on their CEFR level, view a pre-session briefing, and have their session plan personalised by an AI function that considers their profile, skill gaps, and session history
@@ -291,7 +315,11 @@ Plans:
   4. `generateSessionPlan` Cloud Function is deployed and returns a personalised session plan incorporating the user's profile, active skill gaps, and session history
   5. Each session type (Free Talk, Scenario, Story Builder, Debate) results in a distinctly different AI conversation framing when the session starts
 **UI hint**: yes
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 11-01-PLAN.md — Create placement.js + learning.js stores, extend profile store with v1.2 fields, wire auth boot, update Firestore rules
+- [ ] 11-02-PLAN.md — Create idempotent scenarioLibrary seed script with 40 scenario templates
 
 ### Phase 17: Progression & Mistake Tracking
 **Goal**: The app tracks each user's progress independently per skill — skill levels advance when rolling 10-session performance meets next-level criteria, mistakes are logged and recycled into future sessions, and a weekly review session can be generated on demand
@@ -303,7 +331,11 @@ Plans:
   3. Grammar and vocabulary mistakes from sessions are persisted to `users/{uid}.mistakePatterns` with occurrence count, last correction, and active/resolved status
   4. When `generateSessionPlan` runs for a user with active mistake patterns, the returned plan explicitly references at least one of those patterns to recycle it
   5. `getWeeklyReview` Cloud Function is deployed and returns a review session plan that incorporates the user's mistake patterns from the past 7 days
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 11-01-PLAN.md — Create placement.js + learning.js stores, extend profile store with v1.2 fields, wire auth boot, update Firestore rules
+- [ ] 11-02-PLAN.md — Create idempotent scenarioLibrary seed script with 40 scenario templates
 
 ### Phase 18: Free Tier Funnel
 **Goal**: The free→Pro conversion funnel is enforced — placement test is ungated, the first session is fully featured, subsequent sessions trigger a post-session paywall with an achievement summary, and free users have clearly defined read-only access to trial data
@@ -317,7 +349,11 @@ Plans:
   5. A free user can retake the placement test — the retake is blocked by a UI prompt if they have already retaken within the past 30 days
   6. Attempting to start a second session, switch session types, access personalised scenarios, request a weekly review, or view full progress tracking shows the Pro gate UI
 **UI hint**: yes
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 11-01-PLAN.md — Create placement.js + learning.js stores, extend profile store with v1.2 fields, wire auth boot, update Firestore rules
+- [ ] 11-02-PLAN.md — Create idempotent scenarioLibrary seed script with 40 scenario templates
 
 ### Phase 19: Dashboard & Progress Redesign
 **Goal**: The Dashboard and Progress pages display real v1.2 data — the dashboard surfaces a skill radar mini-chart and a recommended session card, and the Progress page shows per-skill trend charts and the user's active mistake patterns
@@ -329,7 +365,11 @@ Plans:
   3. ProgressPage per-skill trend charts render real session score history for each of the 6 skills — replacing the static SVG chart
   4. ProgressPage shows a list of MistakePatternCard components populated from `users/{uid}.mistakePatterns` — each card shows the mistake, occurrence count, and resolved/active status
 **UI hint**: yes
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 11-01-PLAN.md — Create placement.js + learning.js stores, extend profile store with v1.2 fields, wire auth boot, update Firestore rules
+- [ ] 11-02-PLAN.md — Create idempotent scenarioLibrary seed script with 40 scenario templates
 
 ## Progress
 
