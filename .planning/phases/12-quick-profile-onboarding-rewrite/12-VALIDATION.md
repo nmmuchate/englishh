@@ -41,7 +41,7 @@ created: 2026-04-07
 | 12-01-01 | 01 | 1 | PLACE-01 | smoke (file check) | `test -f src/pages/QuickProfileStage.vue` | ❌ W0 | ⬜ pending |
 | 12-01-02 | 01 | 1 | PLACE-01 | smoke (grep) | `grep "profileSubStep\|@complete" src/pages/QuickProfileStage.vue` | ❌ W0 | ⬜ pending |
 | 12-02-01 | 02 | 1 | PLACE-01, PLACE-11 | smoke (grep) | `grep "QuickProfileStage\|q-linear-progress\|stageIndex" src/pages/OnboardingPage.vue` | ✅ | ⬜ pending |
-| 12-02-02 | 02 | 1 | PLACE-11 | smoke (grep) | `grep "placementTests\|startedAt\|serverTimestamp" src/pages/QuickProfileStage.vue` | ❌ W0 | ⬜ pending |
+| 12-02-02 | 02 | 1 | PLACE-11 | smoke (grep) | `grep "placementTests\|startedAt\|serverTimestamp" src/pages/OnboardingPage.vue` | ✅ | ⬜ pending |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
