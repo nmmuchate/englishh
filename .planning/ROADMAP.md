@@ -264,11 +264,13 @@ Plans:
   2. User sees the Grammar test stage with error-spotting and sentence completion questions, rendered from GPT-4o-mini output
   3. Answering a question correctly increases the adaptive difficulty level for the next question; answering incorrectly decreases it — observable via question complexity change
   4. `generateTestQuestions` Cloud Function is deployed and returns correctly structured question payloads for both vocabulary and grammar stages
-**Plans**: 2 plans
+**Plans**: 4 plans
 
 Plans:
-- [ ] 11-01-PLAN.md — Create placement.js + learning.js stores, extend profile store with v1.2 fields, wire auth boot, update Firestore rules
-- [ ] 11-02-PLAN.md — Create idempotent scenarioLibrary seed script with 40 scenario templates
+- [ ] 13-01-PLAN.md — Add generateTestQuestions Cloud Function (gpt-4o-mini, vocabulary + grammar types, adaptive level support)
+- [ ] 13-02-PLAN.md — Create VocabularyStage.vue (6-8 MCQ + reading passage, adaptive difficulty engine)
+- [ ] 13-03-PLAN.md — Create GrammarStage.vue (error-spotting + sentence-completion, adaptive difficulty engine)
+- [ ] 13-04-PLAN.md — Wire VocabularyStage + GrammarStage into OnboardingPage.vue, replace stubs
 
 ### Phase 14: Listening Test
 **Goal**: Users can hear audio prompts for the Listening test stage using browser speechSynthesis TTS — a dedicated ListeningPlayer component handles playback, replay, and answer capture
