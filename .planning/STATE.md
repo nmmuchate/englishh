@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to execute
-stopped_at: Completed 12-01-PLAN.md
-last_updated: "2026-04-07T10:40:40.101Z"
+status: Ready to plan
+stopped_at: Completed 12-02-PLAN.md
+last_updated: "2026-04-07T10:50:01.226Z"
 progress:
   total_phases: 19
-  completed_phases: 11
+  completed_phases: 12
   total_plans: 31
-  completed_plans: 30
+  completed_plans: 31
 ---
 
 # Project State
@@ -23,8 +23,8 @@ See: .planning/PROJECT.md (updated 2026-04-06)
 
 ## Current Position
 
-Phase: 12 (quick-profile-onboarding-rewrite) — EXECUTING
-Plan: 2 of 2
+Phase: 13
+Plan: Not started
 
 ## Performance Metrics
 
@@ -87,6 +87,9 @@ Recent decisions affecting current work:
 - [Phase 10-payments-cron]: updateWeeklyLeaderboard computes nextWeekId inline with +7 days rather than calling getWeekId() — avoids date ambiguity at Monday midnight
 - [Phase 11-stores-firestore-schema]: setPlacement/setLearning naming follows setProfile convention; D-05 progressive save with setDoc merge:true
 - [Phase 12-quick-profile-onboarding-rewrite]: QuickProfileStage.vue uses local profileSubStep ref (1-4) — no prop drilling, cleaner encapsulation (D-05)
+- [Phase 12]: STAGE_INDEX constant map for stage-to-index lookup — prevents off-by-one Pitfall 4 from research
+- [Phase 12]: handleProfileBack routes to landing — D-02: back from sub-step 1 exits onboarding entirely
+- [Phase 12]: placementStore.setStageResult called after setDoc merge to avoid double-write on stages.profile
 
 ### v1.1 Decisions
 
@@ -168,5 +171,5 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-07T10:40:40.085Z
-Stopped at: Completed 12-01-PLAN.md
+Last session: 2026-04-07T10:44:56.680Z
+Stopped at: Completed 12-02-PLAN.md

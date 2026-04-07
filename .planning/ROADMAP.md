@@ -33,7 +33,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 *— v1.1 complete — v1.2 Onboarding Assessment & Immersion Learning below —*
 
 - [ ] **Phase 11: Stores & Firestore Schema** - New Pinia stores (placement.js, learning.js), Firestore schema extensions, scenarioLibrary collection
-- [ ] **Phase 12: Quick Profile & Onboarding Rewrite** - Quick Profile form, OnboardingPage rewritten as placement test wrapper, user doc extended
+- [x] **Phase 12: Quick Profile & Onboarding Rewrite** - Quick Profile form, OnboardingPage rewritten as placement test wrapper, user doc extended (completed 2026-04-07)
 - [ ] **Phase 13: Vocabulary & Grammar Test** - Adaptive Vocabulary/Reading + Grammar test stages, generateTestQuestions Cloud Function
 - [ ] **Phase 14: Listening Test** - Listening test stage with browser TTS audio, ListeningPlayer component
 - [ ] **Phase 15: Speaking, Writing & Placement Results** - Speaking + Writing stages, AI evaluation functions, calculatePlacement, PlacementResultPage with radar chart, skip logic
@@ -389,7 +389,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 9. Session Scoring & Real Feedback | 0/2 | Pending | — |
 | 10. Payments, Subscriptions & Cron Jobs | 3/3 | Complete   | 2026-03-06 |
 | 11. Stores & Firestore Schema | 1/2 | In Progress|  |
-| 12. Quick Profile & Onboarding Rewrite | 1/2 | In Progress|  |
+| 12. Quick Profile & Onboarding Rewrite | 1/2 | Complete    | 2026-04-07 |
 | 13. Vocabulary & Grammar Test | 0/0 | Not started | — |
 | 14. Listening Test | 0/0 | Not started | — |
 | 15. Speaking, Writing & Placement Results | 0/0 | Not started | — |

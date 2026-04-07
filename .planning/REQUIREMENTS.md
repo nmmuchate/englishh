@@ -251,7 +251,7 @@ Updated during roadmap creation.
 - [ ] **PLACE-08**: Test questions generated dynamically via GPT-4o-mini (`generateTestQuestions` Cloud Function)
 - [ ] **PLACE-09**: Speaking + writing evaluated by AI (`evaluateSpeakingTest` Cloud Function)
 - [ ] **PLACE-10**: All stage scores combined into final CEFR placement (`calculatePlacement` Cloud Function)
-- [ ] **PLACE-11**: Placement data stored in Firestore (`placementTests` collection + extended `users` doc)
+- [x] **PLACE-11**: Placement data stored in Firestore (`placementTests` collection + extended `users` doc)
 - [ ] **PLACE-12**: User can skip any stage (defaults to B1; partial progress saved)
 
 ### Session Types (SESSION)
@@ -319,7 +319,7 @@ Updated during roadmap creation.
 | PLACE-08 | Phase 13 | Pending |
 | PLACE-09 | Phase 15 | Pending |
 | PLACE-10 | Phase 15 | Pending |
-| PLACE-11 | Phase 12 | Pending |
+| PLACE-11 | Phase 12 | Complete |
 | PLACE-12 | Phase 15 | Pending |
 | SESSION-01 | Phase 16 | Pending |
 | SESSION-02 | Phase 16 | Pending |
