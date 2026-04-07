@@ -252,8 +252,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 11-01-PLAN.md — Create placement.js + learning.js stores, extend profile store with v1.2 fields, wire auth boot, update Firestore rules
-- [ ] 11-02-PLAN.md — Create idempotent scenarioLibrary seed script with 40 scenario templates
+- [x] 12-01-PLAN.md — Create QuickProfileStage.vue (4 sub-steps: occupation, interests, goal, prior experience) with chip + radio-card UI
+- [ ] 12-02-PLAN.md — Rewrite OnboardingPage.vue as 5-stage placement shell consuming QuickProfileStage; dual Firestore write to users.profile + placementTests/{uid}
 
 ### Phase 13: Vocabulary & Grammar Test
 **Goal**: Users can take the adaptive Vocabulary/Reading and Grammar test stages — questions are AI-generated on demand and the adaptive difficulty engine adjusts the next question based on the previous answer
@@ -389,7 +389,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 9. Session Scoring & Real Feedback | 0/2 | Pending | — |
 | 10. Payments, Subscriptions & Cron Jobs | 3/3 | Complete   | 2026-03-06 |
 | 11. Stores & Firestore Schema | 1/2 | In Progress|  |
-| 12. Quick Profile & Onboarding Rewrite | 0/0 | Not started | — |
+| 12. Quick Profile & Onboarding Rewrite | 1/2 | In Progress|  |
 | 13. Vocabulary & Grammar Test | 0/0 | Not started | — |
 | 14. Listening Test | 0/0 | Not started | — |
 | 15. Speaking, Writing & Placement Results | 0/0 | Not started | — |

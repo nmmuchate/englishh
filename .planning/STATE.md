@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Phase complete — ready for next phase
-stopped_at: Completed 11-02-PLAN.md (Phase 11 done)
-last_updated: "2026-04-07T00:00:00.000Z"
+status: Ready to execute
+stopped_at: Completed 12-01-PLAN.md
+last_updated: "2026-04-07T10:40:40.101Z"
 progress:
   total_phases: 19
   completed_phases: 11
-  total_plans: 29
-  completed_plans: 28
+  total_plans: 31
+  completed_plans: 30
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-06)
 
 **Core value:** Every screen matches the Stitch designs pixel-for-pixel so the UI feels production-ready on mobile before any backend is wired up.
-**Current focus:** Phase 11 — stores-firestore-schema
+**Current focus:** Phase 12 — quick-profile-onboarding-rewrite
 
 ## Current Position
 
-Phase: 11 (stores-firestore-schema) — COMPLETE
-Plan: 2 of 2 — DONE
+Phase: 12 (quick-profile-onboarding-rewrite) — EXECUTING
+Plan: 2 of 2
 
 ## Performance Metrics
 
@@ -86,6 +86,7 @@ Recent decisions affecting current work:
 - [Phase 10-payments-cron]: deleteOldTranscripts uses FieldValue.delete() in 500-doc batches — preserves all session fields except transcript
 - [Phase 10-payments-cron]: updateWeeklyLeaderboard computes nextWeekId inline with +7 days rather than calling getWeekId() — avoids date ambiguity at Monday midnight
 - [Phase 11-stores-firestore-schema]: setPlacement/setLearning naming follows setProfile convention; D-05 progressive save with setDoc merge:true
+- [Phase 12-quick-profile-onboarding-rewrite]: QuickProfileStage.vue uses local profileSubStep ref (1-4) — no prop drilling, cleaner encapsulation (D-05)
 
 ### v1.1 Decisions
 
@@ -167,5 +168,5 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-07T00:00:00.000Z
-Stopped at: Completed 11-02-PLAN.md — Phase 11 fully done
+Last session: 2026-04-07T10:40:40.085Z
+Stopped at: Completed 12-01-PLAN.md

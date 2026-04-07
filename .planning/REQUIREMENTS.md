@@ -241,7 +241,7 @@ Updated during roadmap creation.
 
 ### Placement Test (PLACE)
 
-- [ ] **PLACE-01**: User can complete Quick Profile (occupation, interests, goal, prior experience)
+- [x] **PLACE-01**: User can complete Quick Profile (occupation, interests, goal, prior experience)
 - [ ] **PLACE-02**: User can take adaptive Vocabulary & Reading test (6-8 questions + 1 passage, adaptive difficulty)
 - [ ] **PLACE-03**: User can take Listening test with browser TTS audio (3 tasks, adaptive difficulty)
 - [ ] **PLACE-04**: User can take Grammar test (error-spotting + sentence completion, adaptive difficulty)
@@ -290,10 +290,10 @@ Updated during roadmap creation.
 
 ### Infrastructure (INFRA)
 
-- [ ] **INFRA-v12-01**: `placement.js` Pinia store manages placement test state (currentStage, stageResults, adaptiveLevel, finalResult)
-- [ ] **INFRA-v12-02**: `learning.js` Pinia store manages learning path (recommendedSession, skillProgress, mistakePatterns, weeklyGoal)
+- [x] **INFRA-v12-01**: `placement.js` Pinia store manages placement test state (currentStage, stageResults, adaptiveLevel, finalResult)
+- [x] **INFRA-v12-02**: `learning.js` Pinia store manages learning path (recommendedSession, skillProgress, mistakePatterns, weeklyGoal)
 - [ ] **INFRA-v12-03**: `scenarioLibrary` Firestore collection stores scenario templates (pre-generated per field/interest)
-- [ ] **INFRA-v12-04**: `users/{uid}` extended with profile, placement, mistakePatterns, sessionTypesCompleted fields
+- [x] **INFRA-v12-04**: `users/{uid}` extended with profile, placement, mistakePatterns, sessionTypesCompleted fields
 
 ## Out of Scope (v1.2)
 
@@ -309,7 +309,7 @@ Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PLACE-01 | Phase 12 | Pending |
+| PLACE-01 | Phase 12 | Complete |
 | PLACE-02 | Phase 13 | Pending |
 | PLACE-03 | Phase 14 | Pending |
 | PLACE-04 | Phase 13 | Pending |
@@ -343,10 +343,10 @@ Updated during roadmap creation.
 | DASH-v12-01 | Phase 19 | Pending |
 | DASH-v12-02 | Phase 19 | Pending |
 | DASH-v12-03 | Phase 19 | Pending |
-| INFRA-v12-01 | Phase 11 | Pending |
-| INFRA-v12-02 | Phase 11 | Pending |
+| INFRA-v12-01 | Phase 11 | Complete |
+| INFRA-v12-02 | Phase 11 | Complete |
 | INFRA-v12-03 | Phase 11 | Pending |
-| INFRA-v12-04 | Phase 11 | Pending |
+| INFRA-v12-04 | Phase 11 | Complete |
 
 **v1.2 Coverage:**
 - v1.2 requirements: 38 total
