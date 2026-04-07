@@ -619,3 +619,145 @@ exports.updateWeeklyLeaderboard = onSchedule(
     }
   }
 )
+
+// ── Phase 13: Placement test question generation ──────────────────────────
+
+// ── generateTestQuestions (onCall) ────────────────────────────────────────
+// Generates AI-powered adaptive test questions for the placement test.
+// Accepts { type, level, userProfile } and returns structured question payloads
+// for VocabularyStage (type='vocabulary') and GrammarStage (type='grammar').
+exports.generateTestQuestions = onCall({ region: 'africa-south1', secrets: [OPENAI_API_KEY] }, async (request) => {
+  if (!request.auth) {
+    throw new HttpsError('unauthenticated', 'Authentication required')
+  }
+
+  const { type, level = 'B1', userProfile = {} } = request.data
+
+  if (!['vocabulary', 'grammar'].includes(type)) {
+    throw new HttpsError('invalid-argument', 'type must be vocabulary or grammar')
+  }
+
+  // Instantiate inside handler body — OPENAI_API_KEY.value() only resolves during invocation
+  const openai = new OpenAI({ apiKey: OPENAI_API_KEY.value() })
+
+  let result
+  if (type === 'vocabulary') {
+    const response = await openai.chat.completions.create({
+      model: 'gpt-4o-mini',
+      temperature: 0.7,
+      max_tokens: 1500,
+      response_format: { type: 'json_object' },
+      messages: [
+        {
+          role: 'system',
+          content: 'You are an English language test generator. Always respond with valid JSON only. Generate questions appropriate for the CEFR level specified.'
+        },
+        {
+          role: 'user',
+          content: `Generate a vocabulary and reading comprehension test for CEFR level ${level}.
+User context: ${JSON.stringify(userProfile)} — use topics relevant to the user's interests/occupation when possible.
+
+Return JSON with exactly this structure:
+{
+  "type": "vocabulary",
+  "level": "${level}",
+  "questions": [
+    {
+      "id": "v1",
+      "kind": "mcq",
+      "sentence": "sentence with _______ for the target word",
+      "options": ["option1", "option2", "option3", "option4"],
+      "correctIndex": 0,
+      "cefrLevel": "${level}"
+    }
+  ],
+  "passage": {
+    "text": "50-80 word paragraph",
+    "questions": [
+      {
+        "id": "p1",
+        "kind": "comprehension",
+        "question": "question text",
+        "options": ["A", "B", "C", "D"],
+        "correctIndex": 0,
+        "cefrLevel": "${level}"
+      }
+    ]
+  }
+}
+
+Rules:
+- Include exactly 6 vocabulary MCQ questions (id: v1..v6) — start at ${level} then vary by ±1 CEFR level
+- Include exactly 1 passage with exactly 2 comprehension questions (id: p1, p2)
+- Each MCQ must have exactly 4 options with exactly one correct answer
+- options array must contain strings only, no null values
+- correctIndex must be 0, 1, 2, or 3`
+        }
+      ]
+    })
+
+    try {
+      result = JSON.parse(response.choices[0].message.content)
+    } catch {
+      throw new HttpsError('internal', 'Question generation failed — please retry')
+    }
+  } else {
+    // type === 'grammar'
+    const response = await openai.chat.completions.create({
+      model: 'gpt-4o-mini',
+      temperature: 0.7,
+      max_tokens: 1200,
+      response_format: { type: 'json_object' },
+      messages: [
+        {
+          role: 'system',
+          content: 'You are an English language test generator. Always respond with valid JSON only. Generate questions appropriate for the CEFR level specified.'
+        },
+        {
+          role: 'user',
+          content: `Generate a grammar test for CEFR level ${level}.
+User context: ${JSON.stringify(userProfile)} — use topics relevant to the user's interests/occupation when possible.
+
+Return JSON with exactly this structure:
+{
+  "type": "grammar",
+  "level": "${level}",
+  "questions": [
+    {
+      "id": "g1",
+      "kind": "error-spot",
+      "sentence": "full sentence with ONE grammatical error",
+      "errorWord": "the incorrect word or phrase",
+      "correction": "the correct replacement",
+      "explanation": "brief explanation of the rule",
+      "cefrLevel": "${level}"
+    },
+    {
+      "id": "g5",
+      "kind": "sentence-completion",
+      "stem": "sentence with _______ blank",
+      "answer": "correct answer",
+      "cefrLevel": "${level}"
+    }
+  ]
+}
+
+Rules:
+- Include exactly 4 error-spot questions (id: g1..g4) — start at ${level}
+- Include exactly 2 sentence-completion questions (id: g5..g6)
+- error-spot: each sentence has exactly ONE error; errorWord must appear verbatim in sentence
+- sentence-completion: stem must contain exactly one _______`
+        }
+      ]
+    })
+
+    try {
+      result = JSON.parse(response.choices[0].message.content)
+    } catch {
+      throw new HttpsError('internal', 'Question generation failed — please retry')
+    }
+  }
+
+  logger.info('generateTestQuestions complete', { type, level, uid: request.auth.uid })
+  return result
+})
