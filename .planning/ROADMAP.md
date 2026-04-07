@@ -34,7 +34,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [ ] **Phase 11: Stores & Firestore Schema** - New Pinia stores (placement.js, learning.js), Firestore schema extensions, scenarioLibrary collection
 - [x] **Phase 12: Quick Profile & Onboarding Rewrite** - Quick Profile form, OnboardingPage rewritten as placement test wrapper, user doc extended (completed 2026-04-07)
-- [ ] **Phase 13: Vocabulary & Grammar Test** - Adaptive Vocabulary/Reading + Grammar test stages, generateTestQuestions Cloud Function
+- [x] **Phase 13: Vocabulary & Grammar Test** - Adaptive Vocabulary/Reading + Grammar test stages, generateTestQuestions Cloud Function (completed 2026-04-07)
 - [ ] **Phase 14: Listening Test** - Listening test stage with browser TTS audio, ListeningPlayer component
 - [ ] **Phase 15: Speaking, Writing & Placement Results** - Speaking + Writing stages, AI evaluation functions, calculatePlacement, PlacementResultPage with radar chart, skip logic
 - [ ] **Phase 16: Session Types & Personalisation** - 4 session types, SessionTypeSelectPage, ScenarioBriefPage, generateSessionPlan Cloud Function, CEFR gates
@@ -270,7 +270,7 @@ Plans:
 - [x] 13-01-PLAN.md — Add generateTestQuestions Cloud Function (gpt-4o-mini, vocabulary + grammar types, adaptive level support)
 - [x] 13-02-PLAN.md — Create VocabularyStage.vue (6-8 MCQ + reading passage, adaptive difficulty engine)
 - [x] 13-03-PLAN.md — Create GrammarStage.vue (error-spotting + sentence-completion, adaptive difficulty engine)
-- [ ] 13-04-PLAN.md — Wire VocabularyStage + GrammarStage into OnboardingPage.vue, replace stubs
+- [x] 13-04-PLAN.md — Wire VocabularyStage + GrammarStage into OnboardingPage.vue, replace stubs
 
 ### Phase 14: Listening Test
 **Goal**: Users can hear audio prompts for the Listening test stage using browser speechSynthesis TTS — a dedicated ListeningPlayer component handles playback, replay, and answer capture
@@ -392,7 +392,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 10. Payments, Subscriptions & Cron Jobs | 3/3 | Complete   | 2026-03-06 |
 | 11. Stores & Firestore Schema | 1/2 | In Progress|  |
 | 12. Quick Profile & Onboarding Rewrite | 1/2 | Complete    | 2026-04-07 |
-| 13. Vocabulary & Grammar Test | 3/4 | In Progress|  |
+| 13. Vocabulary & Grammar Test | 4/4 | Complete   | 2026-04-07 |
 | 14. Listening Test | 0/0 | Not started | — |
 | 15. Speaking, Writing & Placement Results | 0/0 | Not started | — |
 | 16. Session Types & Personalisation | 0/0 | Not started | — |
