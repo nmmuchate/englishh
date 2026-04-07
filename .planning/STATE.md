@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to plan
-stopped_at: Completed 12-02-PLAN.md
-last_updated: "2026-04-07T10:50:01.226Z"
+status: Ready to execute
+stopped_at: Completed 13-02-PLAN.md
+last_updated: "2026-04-07T12:22:15.461Z"
 progress:
   total_phases: 19
   completed_phases: 12
-  total_plans: 31
-  completed_plans: 31
+  total_plans: 35
+  completed_plans: 33
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-06)
 
 **Core value:** Every screen matches the Stitch designs pixel-for-pixel so the UI feels production-ready on mobile before any backend is wired up.
-**Current focus:** Phase 12 — quick-profile-onboarding-rewrite
+**Current focus:** Phase 13 — vocabulary-grammar-test
 
 ## Current Position
 
-Phase: 13
-Plan: Not started
+Phase: 13 (vocabulary-grammar-test) — EXECUTING
+Plan: 3 of 4
 
 ## Performance Metrics
 
@@ -90,6 +90,8 @@ Recent decisions affecting current work:
 - [Phase 12]: STAGE_INDEX constant map for stage-to-index lookup — prevents off-by-one Pitfall 4 from research
 - [Phase 12]: handleProfileBack routes to landing — D-02: back from sub-step 1 exits onboarding entirely
 - [Phase 12]: placementStore.setStageResult called after setDoc merge to avoid double-write on stages.profile
+- [Phase 13-vocabulary-grammar-test]: [13-01] generateTestQuestions uses separate OpenAI calls per type — allows independent max_tokens and prompt engineering per test type
+- [Phase 13-vocabulary-grammar-test]: [13-02] VocabularyStage.vue progressLabel shows currentIndex+1 / total for 1-based human-readable counter; isPassageSection computed gates passage header display; showFeedback guard prevents double-tap on answer options
 
 ### v1.1 Decisions
 
@@ -171,5 +173,5 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-07T10:44:56.680Z
-Stopped at: Completed 12-02-PLAN.md
+Last session: 2026-04-07T12:22:15.448Z
+Stopped at: Completed 13-02-PLAN.md

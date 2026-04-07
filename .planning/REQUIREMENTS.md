@@ -242,13 +242,13 @@ Updated during roadmap creation.
 ### Placement Test (PLACE)
 
 - [x] **PLACE-01**: User can complete Quick Profile (occupation, interests, goal, prior experience)
-- [ ] **PLACE-02**: User can take adaptive Vocabulary & Reading test (6-8 questions + 1 passage, adaptive difficulty)
+- [x] **PLACE-02**: User can take adaptive Vocabulary & Reading test (6-8 questions + 1 passage, adaptive difficulty)
 - [ ] **PLACE-03**: User can take Listening test with browser TTS audio (3 tasks, adaptive difficulty)
 - [ ] **PLACE-04**: User can take Grammar test (error-spotting + sentence completion, adaptive difficulty)
 - [ ] **PLACE-05**: User can take Speaking test (3-4 AI exchange mini-conversation via Web Speech API)
 - [ ] **PLACE-06**: User can complete Writing task (1 prompt, 2-3 sentence response)
 - [ ] **PLACE-07**: User sees Results screen with overall CEFR level + per-skill breakdown + radar chart
-- [ ] **PLACE-08**: Test questions generated dynamically via GPT-4o-mini (`generateTestQuestions` Cloud Function)
+- [x] **PLACE-08**: Test questions generated dynamically via GPT-4o-mini (`generateTestQuestions` Cloud Function)
 - [ ] **PLACE-09**: Speaking + writing evaluated by AI (`evaluateSpeakingTest` Cloud Function)
 - [ ] **PLACE-10**: All stage scores combined into final CEFR placement (`calculatePlacement` Cloud Function)
 - [x] **PLACE-11**: Placement data stored in Firestore (`placementTests` collection + extended `users` doc)
@@ -310,13 +310,13 @@ Updated during roadmap creation.
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | PLACE-01 | Phase 12 | Complete |
-| PLACE-02 | Phase 13 | Pending |
+| PLACE-02 | Phase 13 | Complete |
 | PLACE-03 | Phase 14 | Pending |
 | PLACE-04 | Phase 13 | Pending |
 | PLACE-05 | Phase 15 | Pending |
 | PLACE-06 | Phase 15 | Pending |
 | PLACE-07 | Phase 15 | Pending |
-| PLACE-08 | Phase 13 | Pending |
+| PLACE-08 | Phase 13 | Complete |
 | PLACE-09 | Phase 15 | Pending |
 | PLACE-10 | Phase 15 | Pending |
 | PLACE-11 | Phase 12 | Complete |

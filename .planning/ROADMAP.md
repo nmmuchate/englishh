@@ -267,8 +267,8 @@ Plans:
 **Plans**: 4 plans
 
 Plans:
-- [ ] 13-01-PLAN.md — Add generateTestQuestions Cloud Function (gpt-4o-mini, vocabulary + grammar types, adaptive level support)
-- [ ] 13-02-PLAN.md — Create VocabularyStage.vue (6-8 MCQ + reading passage, adaptive difficulty engine)
+- [x] 13-01-PLAN.md — Add generateTestQuestions Cloud Function (gpt-4o-mini, vocabulary + grammar types, adaptive level support)
+- [x] 13-02-PLAN.md — Create VocabularyStage.vue (6-8 MCQ + reading passage, adaptive difficulty engine)
 - [ ] 13-03-PLAN.md — Create GrammarStage.vue (error-spotting + sentence-completion, adaptive difficulty engine)
 - [ ] 13-04-PLAN.md — Wire VocabularyStage + GrammarStage into OnboardingPage.vue, replace stubs
 
@@ -392,7 +392,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 10. Payments, Subscriptions & Cron Jobs | 3/3 | Complete   | 2026-03-06 |
 | 11. Stores & Firestore Schema | 1/2 | In Progress|  |
 | 12. Quick Profile & Onboarding Rewrite | 1/2 | Complete    | 2026-04-07 |
-| 13. Vocabulary & Grammar Test | 0/0 | Not started | — |
+| 13. Vocabulary & Grammar Test | 2/4 | In Progress|  |
 | 14. Listening Test | 0/0 | Not started | — |
 | 15. Speaking, Writing & Placement Results | 0/0 | Not started | — |
 | 16. Session Types & Personalisation | 0/0 | Not started | — |
