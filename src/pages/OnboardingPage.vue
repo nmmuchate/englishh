@@ -42,13 +42,12 @@
         />
       </q-step>
 
-      <!-- Stage 2: Vocabulary stub -->
+      <!-- Stage 2: Vocabulary -->
       <q-step name="vocabulary" title="Vocabulary &amp; Reading">
-        <div class="column items-center justify-center q-pa-xl text-center" style="min-height: 60vh;">
-          <q-icon name="menu_book" size="64px" color="grey-4" class="q-mb-md" />
-          <p class="text-h6 text-grey-6">Vocabulary &amp; Reading</p>
-          <p class="text-body2 text-grey-5">Coming in Phase 13</p>
-        </div>
+        <VocabularyStage
+          @complete="handleVocabComplete"
+          @skip="handleVocabSkip"
+        />
       </q-step>
 
       <!-- Stage 3: Listening stub -->
@@ -60,13 +59,12 @@
         </div>
       </q-step>
 
-      <!-- Stage 4: Grammar stub -->
+      <!-- Stage 4: Grammar -->
       <q-step name="grammar" title="Grammar">
-        <div class="column items-center justify-center q-pa-xl text-center" style="min-height: 60vh;">
-          <q-icon name="spellcheck" size="64px" color="grey-4" class="q-mb-md" />
-          <p class="text-h6 text-grey-6">Grammar</p>
-          <p class="text-body2 text-grey-5">Coming in Phase 13</p>
-        </div>
+        <GrammarStage
+          @complete="handleGrammarComplete"
+          @skip="handleGrammarSkip"
+        />
       </q-step>
 
       <!-- Stage 5: Speaking stub -->
@@ -89,6 +87,8 @@ import { db } from 'boot/firebase'
 import { useAuthStore } from 'stores/auth'
 import { usePlacementStore } from 'stores/placement'
 import QuickProfileStage from './QuickProfileStage.vue'
+import VocabularyStage from './VocabularyStage.vue'
+import GrammarStage from './GrammarStage.vue'
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -157,6 +157,44 @@ async function handleProfileComplete(profileData) {
 function handleProfileBack() {
   // D-02: sub-step 1 back exits onboarding. Cleanest UX is route to landing.
   router.push({ name: 'landing' })
+}
+
+async function handleVocabComplete(result) {
+  isSaving.value = true
+  saveError.value = null
+  try {
+    placementStore.setStageResult('vocabulary', result)
+    step.value = 'listening'
+  } catch (err) {
+    console.error('handleVocabComplete failed:', err)
+    saveError.value = err.message || 'Failed to save vocabulary results. Please try again.'
+  } finally {
+    isSaving.value = false
+  }
+}
+
+function handleVocabSkip() {
+  placementStore.setStageResult('vocabulary', { score: 0, level: 'B1', skipped: true, answers: [] })
+  step.value = 'listening'
+}
+
+async function handleGrammarComplete(result) {
+  isSaving.value = true
+  saveError.value = null
+  try {
+    placementStore.setStageResult('grammar', result)
+    step.value = 'speaking'
+  } catch (err) {
+    console.error('handleGrammarComplete failed:', err)
+    saveError.value = err.message || 'Failed to save grammar results. Please try again.'
+  } finally {
+    isSaving.value = false
+  }
+}
+
+function handleGrammarSkip() {
+  placementStore.setStageResult('grammar', { score: 0, level: 'B1', skipped: true, answers: [] })
+  step.value = 'speaking'
 }
 </script>
 
