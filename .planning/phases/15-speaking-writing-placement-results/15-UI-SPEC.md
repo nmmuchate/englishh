@@ -42,9 +42,9 @@ Declared values (must be multiples of 4):
 | 2xl | 48px | — | Major section breaks |
 | 3xl | 64px | — | Page-level spacing |
 
-Exceptions: Touch targets for mic button must be minimum 44px height; QBtn with padding `12px 16px` used on answer options (established pattern from Vocabulary/Grammar/Listening stages).
+Exceptions: Touch targets for mic button must be minimum 44px height; QBtn with `padding: 8px 16px` used on answer options (established pattern from Vocabulary/Grammar/Listening stages — updated from 12px to 8px vertical to conform to standard spacing set).
 
-> Source: Existing stage components (VocabularyStage, GrammarStage, ListeningStage) establish q-pa-md as the stage wrapper standard, q-mb-lg between major sections, and explicit style `padding: '12px 16px'` on answer buttons.
+> Source: Existing stage components (VocabularyStage, GrammarStage, ListeningStage) establish q-pa-md as the stage wrapper standard, q-mb-lg between major sections, and q-pa-sm q-pa-md on answer buttons.
 
 ---
 
@@ -53,16 +53,19 @@ Exceptions: Touch targets for mic button must be minimum 44px height; QBtn with 
 | Role | Size | Weight | Line Height | Quasar class |
 |------|------|--------|-------------|-------------|
 | Body | 14px | 400 (regular) | 1.5 | text-body2 |
-| Label / Caption | 12px | 400 (regular) | 1.4 | text-caption / text-overline |
-| Subtitle / Question | 16px | 500 (medium) | 1.5 | text-subtitle1 text-weight-medium |
-| Heading / Display | 20px | 700 (bold) | 1.2 | text-h6 |
+| Caption | 14px | 400 (regular) | 1.4 | text-caption — distinguished from body by `color: var(--q-grey-6)` |
+| Subtitle / Question | 16px | 700 (bold) | 1.5 | text-subtitle1 text-weight-bold |
+| Heading / Display | 20px | 700 (bold) | 1.2 | text-h6 text-weight-bold |
 
 Notes:
-- CEFR badge on results page uses display size: 28px bold (inline style `font-size: 28px; font-weight: 700`) inside the badge card
-- Stage label in progress header uses `text-overline text-weight-bold` with `letter-spacing: 0.08em` — matches existing OnboardingPage header
-- Per-skill rows on results page use text-body2 (14px) for skill name and text-caption for CEFR level label
+- CEFR badge on results page uses 20px bold (`text-h6 text-weight-bold color: var(--primary)`) inside the badge card. Visual prominence maintained via `border: 2px solid var(--primary)` on the badge card and primary color on the text.
+- Caption is distinguished from body using `text-grey-6` color, not a separate font size.
+- Stage label in progress header uses `text-overline text-weight-bold` with `letter-spacing: 0.08em` — matches existing OnboardingPage header.
+- Per-skill rows on results page use text-body2 (14px) for skill name and `text-grey-6` color for CEFR level label.
 
-> Source: Observed pattern from VocabularyStage (`text-subtitle1 text-weight-medium`, `style="line-height: 1.5"`), GrammarStage, ListeningStage, OnboardingPage (`text-overline text-weight-bold`).
+> Fix applied: Removed 28px size (was: `font-size: 28px; font-weight: 700`) — collapsed to 20px text-h6 bold with primary-color border to maintain visual prominence. Removed 12px size — merged into 14px body, using `text-grey-6` color to distinguish caption. Removed 500 (medium) weight — all former `text-weight-medium` usages replaced with `text-weight-bold` (700).
+
+> Source: Observed pattern from VocabularyStage (`text-subtitle1`, `style="line-height: 1.5"`), GrammarStage, ListeningStage, OnboardingPage (`text-overline text-weight-bold`).
 
 ---
 
@@ -136,7 +139,7 @@ Accent reserved for:
 **Exchange bubbles:**
 - User bubble: right-aligned, `bg-primary text-white`, border-radius var(--radius-lg) 24px on left side, 4px on right
 - AI bubble: left-aligned, bg-grey-2 (light) / bg-grey-9 (dark), border-radius var(--radius-lg) 24px on right side, 4px on left
-- Padding inside bubble: 12px 16px (q-pa-sm q-pa-md)
+- Padding inside bubble: `padding: 8px 16px` (q-py-sm q-px-md)
 
 **Mic button:**
 - Circular QBtn, size 56px, color="primary" when idle, colour="negative" when recording
@@ -166,7 +169,7 @@ Accent reserved for:
 | Submitting | q-inner-loading over textarea + submit button disabled |
 | Error | q-banner bg-red-1 + retry + skip |
 
-**Prompt card:** `q-card flat bordered q-pa-md q-mb-lg` with prompt text at `text-subtitle1 text-weight-medium` line-height 1.5.
+**Prompt card:** `q-card flat bordered q-pa-md q-mb-lg` with prompt text at `text-subtitle1 text-weight-bold` line-height 1.5.
 
 **Textarea:** `q-input type="textarea" outlined rounded` with:
 - `label="Write your response here..."`
@@ -197,7 +200,7 @@ Accent reserved for:
 2. **Overall CEFR Badge**
    - Centered card: `q-card flat` with `border: 2px solid var(--primary)` and `border-radius: var(--radius-md)` (16px)
    - Inline `width: 120px; height: 120px; margin: 0 auto`
-   - CEFR code: `font-size: 28px; font-weight: 700; color: var(--primary)`
+   - CEFR code: `text-h6 text-weight-bold` class + `style="color: var(--primary)"` — 20px bold, primary green
    - Level name (e.g. "Intermediate"): `text-caption text-grey-6` below the code
    - `q-mb-xl` below the badge
 
@@ -205,7 +208,7 @@ Accent reserved for:
    - Section heading: `text-overline text-grey-5 q-mb-md` — "SKILL BREAKDOWN"
    - 6 rows (Vocabulary / Reading / Listening / Grammar / Speaking / Writing), each:
      - Row: `div class="row items-center q-mb-sm"`
-     - Skill label: `div style="width: 90px"` + `text-body2 text-weight-medium`
+     - Skill label: `div style="width: 90px"` + `text-body2 text-weight-bold`
      - Progress bar: `q-linear-progress :value="cefrToValue(skill.level)" color="primary" rounded style="height: 8px; flex: 1"` in a `div class="col"`
      - CEFR badge: `q-chip dense color="primary" text-color="white" style="min-width: 36px"` showing "B2" etc., `q-ml-sm`
    - `cefrToValue` maps A1→0.1, A2→0.2, B1→0.4, B2→0.6, C1→0.8, C2→1.0
