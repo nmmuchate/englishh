@@ -625,7 +625,7 @@ exports.updateWeeklyLeaderboard = onSchedule(
 // ── generateTestQuestions (onCall) ────────────────────────────────────────
 // Generates AI-powered adaptive test questions for the placement test.
 // Accepts { type, level, userProfile } and returns structured question payloads
-// for VocabularyStage (type='vocabulary') and GrammarStage (type='grammar').
+// for VocabularyStage (type='vocabulary'), GrammarStage (type='grammar'), and ListeningStage (type='listening').
 exports.generateTestQuestions = onCall({ region: 'africa-south1', secrets: [OPENAI_API_KEY] }, async (request) => {
   if (!request.auth) {
     throw new HttpsError('unauthenticated', 'Authentication required')
@@ -633,8 +633,8 @@ exports.generateTestQuestions = onCall({ region: 'africa-south1', secrets: [OPEN
 
   const { type, level = 'B1', userProfile = {} } = request.data
 
-  if (!['vocabulary', 'grammar'].includes(type)) {
-    throw new HttpsError('invalid-argument', 'type must be vocabulary or grammar')
+  if (!['vocabulary', 'grammar', 'listening'].includes(type)) {
+    throw new HttpsError('invalid-argument', 'type must be vocabulary, grammar, or listening')
   }
 
   // Instantiate inside handler body — OPENAI_API_KEY.value() only resolves during invocation
@@ -701,8 +701,7 @@ Rules:
     } catch {
       throw new HttpsError('internal', 'Question generation failed — please retry')
     }
-  } else {
-    // type === 'grammar'
+  } else if (type === 'grammar') {
     const response = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
       temperature: 0.7,
@@ -747,6 +746,76 @@ Rules:
 - Include exactly 2 sentence-completion questions (id: g5..g6)
 - error-spot: each sentence has exactly ONE error; errorWord must appear verbatim in sentence
 - sentence-completion: stem must contain exactly one _______`
+        }
+      ]
+    })
+
+    try {
+      result = JSON.parse(response.choices[0].message.content)
+    } catch {
+      throw new HttpsError('internal', 'Question generation failed — please retry')
+    }
+  } else {
+    // type === 'listening'
+    const response = await openai.chat.completions.create({
+      model: 'gpt-4o-mini',
+      temperature: 0.7,
+      max_tokens: 1200,
+      response_format: { type: 'json_object' },
+      messages: [
+        {
+          role: 'system',
+          content: 'You are an English language test generator. Always respond with valid JSON only. Generate listening comprehension tasks appropriate for the CEFR level specified.'
+        },
+        {
+          role: 'user',
+          content: `Generate a listening comprehension test for CEFR level ${level}.
+User context: ${JSON.stringify(userProfile)} — use topics relevant to the user's interests/occupation when possible.
+
+Return JSON with exactly this structure:
+{
+  "type": "listening",
+  "level": "${level}",
+  "tasks": [
+    {
+      "id": "l1",
+      "kind": "sentence",
+      "prompt": "A single statement to listen to.",
+      "question": "What did the speaker say?",
+      "options": ["option1", "option2", "option3"],
+      "correctIndex": 0,
+      "cefrLevel": "${level}"
+    },
+    {
+      "id": "l2",
+      "kind": "dialogue",
+      "prompt": "A manager tells her colleague she needs the budget report by Friday. Her colleague says he will have it ready by Thursday.",
+      "question": "When will the report be ready?",
+      "options": ["Friday", "Thursday", "Wednesday", "Next week"],
+      "correctIndex": 1,
+      "cefrLevel": "${level}"
+    },
+    {
+      "id": "l3",
+      "kind": "monologue",
+      "prompt": "A short informational passage spoken aloud.",
+      "question": "What is the main idea?",
+      "options": ["option1", "option2", "option3", "option4"],
+      "correctIndex": 0,
+      "cefrLevel": "${level}"
+    }
+  ]
+}
+
+Rules:
+- Include exactly 3 tasks: task 1 is kind "sentence" (simple statement), task 2 is kind "dialogue" (short exchange), task 3 is kind "monologue" (informational)
+- IDs must be l1, l2, l3
+- CRITICAL: Keep ALL prompt text under 140 characters. Browser TTS truncates long text on Android Chrome.
+- For dialogue prompts, write as narrative ("A manager tells her team...") — do NOT use speaker labels with colons ("Sarah: ...")
+- Each task has exactly 1 question with 3-4 options and exactly one correct answer
+- correctIndex must be valid for the options array length
+- Vary difficulty: task 1 at ${level}, task 2 at same or +1 CEFR, task 3 at same or +1 CEFR
+- ${level === 'A1' || level === 'A2' ? 'Use simple everyday vocabulary and short sentences.' : level === 'B1' || level === 'B2' ? 'Use workplace and social vocabulary with compound sentences.' : 'Use academic or professional vocabulary with complex structures.'}`
         }
       ]
     })
