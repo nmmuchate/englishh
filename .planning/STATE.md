@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Phase complete — ready for verification
-stopped_at: Completed 13-04-PLAN.md
-last_updated: "2026-04-07T12:29:45.682Z"
+status: Ready to execute
+stopped_at: Completed 14-01-PLAN.md
+last_updated: "2026-04-09T11:19:46.223Z"
 progress:
   total_phases: 19
   completed_phases: 13
-  total_plans: 35
-  completed_plans: 35
+  total_plans: 37
+  completed_plans: 36
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-06)
 
 **Core value:** Every screen matches the Stitch designs pixel-for-pixel so the UI feels production-ready on mobile before any backend is wired up.
-**Current focus:** Phase 13 — vocabulary-grammar-test
+**Current focus:** Phase 14 — listening-test
 
 ## Current Position
 
-Phase: 13 (vocabulary-grammar-test) — EXECUTING
-Plan: 4 of 4
+Phase: 14 (listening-test) — EXECUTING
+Plan: 2 of 2
 
 ## Performance Metrics
 
@@ -94,6 +94,9 @@ Recent decisions affecting current work:
 - [Phase 13-vocabulary-grammar-test]: [13-02] VocabularyStage.vue progressLabel shows currentIndex+1 / total for 1-based human-readable counter; isPassageSection computed gates passage header display; showFeedback guard prevents double-tap on answer options
 - [Phase 13]: [13-03] splitSentence splits sentence around errorWord into 3-part array for template v-for highlighting; handleCheck guard prevents double-submit; userInput reset to '' in handleNext per question
 - [Phase 13-vocabulary-grammar-test]: [13-04] handleVocabComplete/handleGrammarComplete wrapped in isSaving/saveError pattern; handleVocabSkip/handleGrammarSkip synchronous since setStageResult handles Firestore write internally
+- [Phase 14-listening-test]: Grammar branch changed from bare else to else if (type=grammar) to allow explicit listening else branch
+- [Phase 14-listening-test]: ListeningPlayer play() always calls cancel() before speak() to clear in-progress utterances
+- [Phase 14-listening-test]: Dialogue prompts written as narrative in Cloud Function system prompt — avoids TTS reading speaker name+colon artifacts
 
 ### v1.1 Decisions
 
@@ -175,5 +178,5 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-07T12:29:45.667Z
-Stopped at: Completed 13-04-PLAN.md
+Last session: 2026-04-09T11:19:46.209Z
+Stopped at: Completed 14-01-PLAN.md

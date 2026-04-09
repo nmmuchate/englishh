@@ -243,7 +243,7 @@ Updated during roadmap creation.
 
 - [x] **PLACE-01**: User can complete Quick Profile (occupation, interests, goal, prior experience)
 - [x] **PLACE-02**: User can take adaptive Vocabulary & Reading test (6-8 questions + 1 passage, adaptive difficulty)
-- [ ] **PLACE-03**: User can take Listening test with browser TTS audio (3 tasks, adaptive difficulty)
+- [x] **PLACE-03**: User can take Listening test with browser TTS audio (3 tasks, adaptive difficulty)
 - [x] **PLACE-04**: User can take Grammar test (error-spotting + sentence completion, adaptive difficulty)
 - [ ] **PLACE-05**: User can take Speaking test (3-4 AI exchange mini-conversation via Web Speech API)
 - [ ] **PLACE-06**: User can complete Writing task (1 prompt, 2-3 sentence response)
@@ -311,7 +311,7 @@ Updated during roadmap creation.
 |-------------|-------|--------|
 | PLACE-01 | Phase 12 | Complete |
 | PLACE-02 | Phase 13 | Complete |
-| PLACE-03 | Phase 14 | Pending |
+| PLACE-03 | Phase 14 | Complete |
 | PLACE-04 | Phase 13 | Complete |
 | PLACE-05 | Phase 15 | Pending |
 | PLACE-06 | Phase 15 | Pending |

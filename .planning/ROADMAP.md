@@ -285,7 +285,7 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 14-01-PLAN.md — Extend generateTestQuestions for listening type + create ListeningPlayer.vue TTS component
+- [x] 14-01-PLAN.md — Extend generateTestQuestions for listening type + create ListeningPlayer.vue TTS component
 - [ ] 14-02-PLAN.md — Create ListeningStage.vue (3-task flow) + wire into OnboardingPage.vue
 
 ### Phase 15: Speaking, Writing & Placement Results
@@ -393,7 +393,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 11. Stores & Firestore Schema | 1/2 | In Progress|  |
 | 12. Quick Profile & Onboarding Rewrite | 1/2 | Complete    | 2026-04-07 |
 | 13. Vocabulary & Grammar Test | 4/4 | Complete   | 2026-04-07 |
-| 14. Listening Test | 0/2 | Planned | — |
+| 14. Listening Test | 1/2 | In Progress|  |
 | 15. Speaking, Writing & Placement Results | 0/0 | Not started | — |
 | 16. Session Types & Personalisation | 0/0 | Not started | — |
 | 17. Progression & Mistake Tracking | 0/0 | Not started | — |
