@@ -285,8 +285,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 11-01-PLAN.md — Create placement.js + learning.js stores, extend profile store with v1.2 fields, wire auth boot, update Firestore rules
-- [ ] 11-02-PLAN.md — Create idempotent scenarioLibrary seed script with 40 scenario templates
+- [ ] 14-01-PLAN.md — Extend generateTestQuestions for listening type + create ListeningPlayer.vue TTS component
+- [ ] 14-02-PLAN.md — Create ListeningStage.vue (3-task flow) + wire into OnboardingPage.vue
 
 ### Phase 15: Speaking, Writing & Placement Results
 **Goal**: The placement test is complete — users take the Speaking mini-conversation and Writing prompt stages, AI evaluates their responses, the calculatePlacement function combines all stage scores into a CEFR result, and users see a detailed results screen with a per-skill radar chart
@@ -393,7 +393,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 11. Stores & Firestore Schema | 1/2 | In Progress|  |
 | 12. Quick Profile & Onboarding Rewrite | 1/2 | Complete    | 2026-04-07 |
 | 13. Vocabulary & Grammar Test | 4/4 | Complete   | 2026-04-07 |
-| 14. Listening Test | 0/0 | Not started | — |
+| 14. Listening Test | 0/2 | Planned | — |
 | 15. Speaking, Writing & Placement Results | 0/0 | Not started | — |
 | 16. Session Types & Personalisation | 0/0 | Not started | — |
 | 17. Progression & Mistake Tracking | 0/0 | Not started | — |
