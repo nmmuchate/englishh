@@ -1,0 +1,31 @@
+{
+  "version": "1.0",
+  "timestamp": "2026-04-09T09:49:33.294Z",
+  "phase": "13",
+  "phase_name": "vocabulary-grammar-test",
+  "phase_dir": ".planning/phases/13-vocabulary-grammar-test",
+  "plan": 4,
+  "task": 4,
+  "total_tasks": 4,
+  "status": "complete",
+  "completed_tasks": [
+    {"id": 1, "name": "generateTestQuestions Cloud Function", "status": "done", "commit": "9c5b294"},
+    {"id": 2, "name": "VocabularyStage.vue adaptive MCQ + reading passage", "status": "done", "commit": "8a9dd96"},
+    {"id": 3, "name": "GrammarStage.vue error-spot + sentence-completion", "status": "done", "commit": "787109f"},
+    {"id": 4, "name": "Wire VocabularyStage + GrammarStage into OnboardingPage.vue", "status": "done", "commit": "20a7d6c"}
+  ],
+  "remaining_tasks": [],
+  "blockers": [],
+  "human_actions_pending": [],
+  "decisions": [
+    {"decision": "handleVocabComplete/handleGrammarComplete wrapped in isSaving/saveError pattern", "rationale": "Matches handleProfileComplete for consistency", "phase": "13"},
+    {"decision": "handleVocabSkip/handleGrammarSkip are synchronous", "rationale": "setStageResult handles async Firestore write internally; skip path does not need isSaving overlay", "phase": "13"},
+    {"decision": "Skip result: { score: 0, level: 'B1', skipped: true, answers: [] }", "rationale": "B1 is a safe neutral default level", "phase": "13"}
+  ],
+  "uncommitted_files": [
+    ".planning/config.json",
+    "package-lock.json"
+  ],
+  "next_action": "Run /gsd:next or /gsd:progress — phase 13 complete, likely move to phase 14 (listening stage) or run /gsd:verify-work to UAT first",
+  "context_notes": "Full vocabulary + grammar placement test pipeline live end-to-end. Listening (phase 14) and speaking (phase 15) stubs remain intentionally. PRD files for SpeakAI Onboarding Immersion and Real-Time Feedback are untracked — may be input for upcoming milestone work."
+}
