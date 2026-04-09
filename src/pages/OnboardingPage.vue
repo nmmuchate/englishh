@@ -50,13 +50,12 @@
         />
       </q-step>
 
-      <!-- Stage 3: Listening stub -->
+      <!-- Stage 3: Listening -->
       <q-step name="listening" title="Listening">
-        <div class="column items-center justify-center q-pa-xl text-center" style="min-height: 60vh;">
-          <q-icon name="hearing" size="64px" color="grey-4" class="q-mb-md" />
-          <p class="text-h6 text-grey-6">Listening</p>
-          <p class="text-body2 text-grey-5">Coming in Phase 14</p>
-        </div>
+        <ListeningStage
+          @complete="handleListeningComplete"
+          @skip="handleListeningSkip"
+        />
       </q-step>
 
       <!-- Stage 4: Grammar -->
@@ -89,6 +88,7 @@ import { usePlacementStore } from 'stores/placement'
 import QuickProfileStage from './QuickProfileStage.vue'
 import VocabularyStage from './VocabularyStage.vue'
 import GrammarStage from './GrammarStage.vue'
+import ListeningStage from './ListeningStage.vue'
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -176,6 +176,25 @@ async function handleVocabComplete(result) {
 function handleVocabSkip() {
   placementStore.setStageResult('vocabulary', { score: 0, level: 'B1', skipped: true, answers: [] })
   step.value = 'listening'
+}
+
+async function handleListeningComplete(result) {
+  isSaving.value = true
+  saveError.value = null
+  try {
+    placementStore.setStageResult('listening', result)
+    step.value = 'grammar'
+  } catch (err) {
+    console.error('handleListeningComplete failed:', err)
+    saveError.value = err.message || 'Failed to save listening results. Please try again.'
+  } finally {
+    isSaving.value = false
+  }
+}
+
+function handleListeningSkip() {
+  placementStore.setStageResult('listening', { score: 0, level: 'B1', skipped: true, answers: [] })
+  step.value = 'grammar'
 }
 
 async function handleGrammarComplete(result) {
