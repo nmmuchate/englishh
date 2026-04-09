@@ -135,4 +135,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-07 — Phase 12 complete: QuickProfileStage.vue (4-sub-step profile form) and OnboardingPage.vue rewritten as 5-stage placement test shell*
+*Last updated: 2026-04-09 — Phase 14 complete: ListeningPlayer.vue (browser TTS component), ListeningStage.vue (3-task adaptive listening flow), generateTestQuestions extended for type='listening', wired into OnboardingPage*
