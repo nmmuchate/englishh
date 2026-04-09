@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to execute
-stopped_at: Completed 14-01-PLAN.md
-last_updated: "2026-04-09T11:19:46.223Z"
+status: Ready to plan
+stopped_at: Completed 14-02-PLAN.md (Phase 14 done)
+last_updated: "2026-04-09T11:25:20.490Z"
 progress:
   total_phases: 19
-  completed_phases: 13
+  completed_phases: 14
   total_plans: 37
-  completed_plans: 36
+  completed_plans: 37
 ---
 
 # Project State
@@ -23,8 +23,8 @@ See: .planning/PROJECT.md (updated 2026-04-06)
 
 ## Current Position
 
-Phase: 14 (listening-test) — EXECUTING
-Plan: 2 of 2
+Phase: 15
+Plan: Not started
 
 ## Performance Metrics
 
@@ -97,6 +97,7 @@ Recent decisions affecting current work:
 - [Phase 14-listening-test]: Grammar branch changed from bare else to else if (type=grammar) to allow explicit listening else branch
 - [Phase 14-listening-test]: ListeningPlayer play() always calls cancel() before speak() to clear in-progress utterances
 - [Phase 14-listening-test]: Dialogue prompts written as narrative in Cloud Function system prompt — avoids TTS reading speaker name+colon artifacts
+- [Phase 14-listening-test]: hasPlayedCurrent resets in handleNext so each task requires its own audio playback; Question card uses v-if on hasPlayedCurrent; ListeningStage emit contract matches VocabularyStage/GrammarStage exactly
 
 ### v1.1 Decisions
 
@@ -178,5 +179,5 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-09T11:19:46.209Z
-Stopped at: Completed 14-01-PLAN.md
+Last session: 2026-04-09T11:24:07.484Z
+Stopped at: Completed 14-02-PLAN.md (Phase 14 done)
