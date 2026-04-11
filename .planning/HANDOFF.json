@@ -1,31 +1,28 @@
 {
   "version": "1.0",
-  "timestamp": "2026-04-09T09:49:33.294Z",
-  "phase": "13",
-  "phase_name": "vocabulary-grammar-test",
-  "phase_dir": ".planning/phases/13-vocabulary-grammar-test",
-  "plan": 4,
-  "task": 4,
-  "total_tasks": 4,
-  "status": "complete",
+  "timestamp": "2026-04-11T09:16:17.115Z",
+  "phase": "15",
+  "phase_name": "speaking-writing-placement-results",
+  "phase_dir": ".planning/phases/15-speaking-writing-placement-results",
+  "plan": 0,
+  "task": 0,
+  "total_tasks": 0,
+  "status": "paused",
   "completed_tasks": [
-    {"id": 1, "name": "generateTestQuestions Cloud Function", "status": "done", "commit": "9c5b294"},
-    {"id": 2, "name": "VocabularyStage.vue adaptive MCQ + reading passage", "status": "done", "commit": "8a9dd96"},
-    {"id": 3, "name": "GrammarStage.vue error-spot + sentence-completion", "status": "done", "commit": "787109f"},
-    {"id": 4, "name": "Wire VocabularyStage + GrammarStage into OnboardingPage.vue", "status": "done", "commit": "20a7d6c"}
+    {"id": 1, "name": "UI-SPEC draft created", "status": "done", "commit": "df3028e"},
+    {"id": 2, "name": "UI-SPEC blocking issues resolved (typography/spacing)", "status": "done", "commit": "e91786a"}
   ],
-  "remaining_tasks": [],
+  "remaining_tasks": [
+    {"id": 3, "name": "Run /gsd:plan-phase for phase 15", "status": "not_started"},
+    {"id": 4, "name": "Execute phase 15 plans (SpeakingStage, WritingStage, PlacementResults)", "status": "not_started"}
+  ],
   "blockers": [],
   "human_actions_pending": [],
   "decisions": [
-    {"decision": "handleVocabComplete/handleGrammarComplete wrapped in isSaving/saveError pattern", "rationale": "Matches handleProfileComplete for consistency", "phase": "13"},
-    {"decision": "handleVocabSkip/handleGrammarSkip are synchronous", "rationale": "setStageResult handles async Firestore write internally; skip path does not need isSaving overlay", "phase": "13"},
-    {"decision": "Skip result: { score: 0, level: 'B1', skipped: true, answers: [] }", "rationale": "B1 is a safe neutral default level", "phase": "13"}
+    {"decision": "UI-SPEC approved with typography fix (removed 28px/12px/500-weight outliers, collapsed to 3-size scale)", "rationale": "gsd-ui-checker blocked on non-standard sizes", "phase": "15"},
+    {"decision": "Quasar QStepper + existing stage pattern (VocabularyStage/GrammarStage/ListeningStage) is the reference for SpeakingStage and WritingStage", "rationale": "Established pattern from phases 13-14", "phase": "15"}
   ],
-  "uncommitted_files": [
-    ".planning/config.json",
-    "package-lock.json"
-  ],
-  "next_action": "Run /gsd:next or /gsd:progress — phase 13 complete, likely move to phase 14 (listening stage) or run /gsd:verify-work to UAT first",
-  "context_notes": "Full vocabulary + grammar placement test pipeline live end-to-end. Listening (phase 14) and speaking (phase 15) stubs remain intentionally. PRD files for SpeakAI Onboarding Immersion and Real-Time Feedback are untracked — may be input for upcoming milestone work."
+  "uncommitted_files": [".planning/STATE.md", ".planning/config.json", "package-lock.json"],
+  "next_action": "Run /gsd:plan-phase to create PLAN.md for phase 15 (SpeakingStage, WritingStage, PlacementResults screen)",
+  "context_notes": "Phase 15 UI-SPEC is fully approved. No implementation has started. The phase covers: SpeakingStage (mic recording + TTS playback), WritingStage (text input + prompt), and PlacementResults page (CEFR badge + per-skill breakdown). All three feed into the existing OnboardingPage QStepper after the Listening stage."
 }
