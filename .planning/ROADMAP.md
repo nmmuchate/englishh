@@ -302,9 +302,8 @@ Plans:
 **UI hint**: yes
 **Plans**: 2 plans
 
-Plans:
-- [ ] 11-01-PLAN.md — Create placement.js + learning.js stores, extend profile store with v1.2 fields, wire auth boot, update Firestore rules
-- [ ] 11-02-PLAN.md — Create idempotent scenarioLibrary seed script with 40 scenario templates
+- [ ] 15-01-PLAN.md — Cloud Functions (evaluateSpeakingTest + generateTestQuestions speaking type) + SpeakingStage.vue + WritingStage.vue
+- [ ] 15-02-PLAN.md — calculatePlacement Cloud Function + PlacementResultPage.vue + OnboardingPage wiring + skip logic + route
 
 ### Phase 16: Session Types & Personalisation
 **Goal**: Users can choose from up to 4 session types based on their CEFR level, view a pre-session briefing, and have their session plan personalised by an AI function that considers their profile, skill gaps, and session history
@@ -394,7 +393,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 12. Quick Profile & Onboarding Rewrite | 1/2 | Complete    | 2026-04-07 |
 | 13. Vocabulary & Grammar Test | 4/4 | Complete   | 2026-04-07 |
 | 14. Listening Test | 1/2 | Complete    | 2026-04-09 |
-| 15. Speaking, Writing & Placement Results | 0/0 | Not started | — |
+| 15. Speaking, Writing & Placement Results | 0/2 | Planning complete | — |
 | 16. Session Types & Personalisation | 0/0 | Not started | — |
 | 17. Progression & Mistake Tracking | 0/0 | Not started | — |
 | 18. Free Tier Funnel | 0/0 | Not started | — |
