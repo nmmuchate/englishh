@@ -245,14 +245,14 @@ Updated during roadmap creation.
 - [x] **PLACE-02**: User can take adaptive Vocabulary & Reading test (6-8 questions + 1 passage, adaptive difficulty)
 - [x] **PLACE-03**: User can take Listening test with browser TTS audio (3 tasks, adaptive difficulty)
 - [x] **PLACE-04**: User can take Grammar test (error-spotting + sentence completion, adaptive difficulty)
-- [ ] **PLACE-05**: User can take Speaking test (3-4 AI exchange mini-conversation via Web Speech API)
+- [x] **PLACE-05**: User can take Speaking test (3-4 AI exchange mini-conversation via Web Speech API)
 - [ ] **PLACE-06**: User can complete Writing task (1 prompt, 2-3 sentence response)
-- [ ] **PLACE-07**: User sees Results screen with overall CEFR level + per-skill breakdown + radar chart
+- [x] **PLACE-07**: User sees Results screen with overall CEFR level + per-skill breakdown + radar chart
 - [x] **PLACE-08**: Test questions generated dynamically via GPT-4o-mini (`generateTestQuestions` Cloud Function)
 - [ ] **PLACE-09**: Speaking + writing evaluated by AI (`evaluateSpeakingTest` Cloud Function)
-- [ ] **PLACE-10**: All stage scores combined into final CEFR placement (`calculatePlacement` Cloud Function)
+- [x] **PLACE-10**: All stage scores combined into final CEFR placement (`calculatePlacement` Cloud Function)
 - [x] **PLACE-11**: Placement data stored in Firestore (`placementTests` collection + extended `users` doc)
-- [ ] **PLACE-12**: User can skip any stage (defaults to B1; partial progress saved)
+- [x] **PLACE-12**: User can skip any stage (defaults to B1; partial progress saved)
 
 ### Session Types (SESSION)
 
@@ -313,14 +313,14 @@ Updated during roadmap creation.
 | PLACE-02 | Phase 13 | Complete |
 | PLACE-03 | Phase 14 | Complete |
 | PLACE-04 | Phase 13 | Complete |
-| PLACE-05 | Phase 15 | Pending |
+| PLACE-05 | Phase 15 | Complete |
 | PLACE-06 | Phase 15 | Pending |
-| PLACE-07 | Phase 15 | Pending |
+| PLACE-07 | Phase 15 | Complete |
 | PLACE-08 | Phase 13 | Complete |
 | PLACE-09 | Phase 15 | Pending |
-| PLACE-10 | Phase 15 | Pending |
+| PLACE-10 | Phase 15 | Complete |
 | PLACE-11 | Phase 12 | Complete |
-| PLACE-12 | Phase 15 | Pending |
+| PLACE-12 | Phase 15 | Complete |
 | SESSION-01 | Phase 16 | Pending |
 | SESSION-02 | Phase 16 | Pending |
 | SESSION-03 | Phase 16 | Pending |

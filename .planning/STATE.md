@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Ready to plan
-stopped_at: Completed 15-01-PLAN.md
-last_updated: "2026-04-11T00:00:00.000Z"
+stopped_at: Completed 15-02-PLAN.md
+last_updated: "2026-04-11T09:59:58.324Z"
 progress:
   total_phases: 19
-  completed_phases: 14
+  completed_phases: 15
   total_plans: 39
-  completed_plans: 38
+  completed_plans: 39
 ---
 
 # Project State
@@ -102,6 +102,7 @@ Recent decisions affecting current work:
 - [Phase 15-01]: OnboardingPage navigates to /placement-result after writing complete; PlacementResultPage calls calculatePlacement on mount to keep onboarding lightweight
 - [Phase 15-01]: TOTAL_STAGES updated from 5 to 6 — speaking and writing are separate named steps in QStepper
 - [Phase 15-01]: calculatePlacement persists to both placementTests/{uid}.finalResult and users/{uid}.placement for quick read access; don't-throw on persist failure — still returns result to client
+- [Phase 15]: [15-02] Architecture validated: evaluateSpeakingTest in SpeakingStage and calculatePlacement in PlacementResultPage — distributed pattern is correct and equivalent to plan spec
 
 ### v1.1 Decisions
 
@@ -183,5 +184,5 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-09T17:35:26.718Z
-Stopped at: Phase 15 UI-SPEC approved
+Last session: 2026-04-11T09:59:58.309Z
+Stopped at: Completed 15-02-PLAN.md
