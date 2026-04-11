@@ -135,4 +135,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-09 — Phase 14 complete: ListeningPlayer.vue (browser TTS component), ListeningStage.vue (3-task adaptive listening flow), generateTestQuestions extended for type='listening', wired into OnboardingPage*
+*Last updated: 2026-04-11 — Phase 15 complete: SpeakingStage.vue (3-exchange mini-conversation, Web Speech API + text fallback), WritingStage.vue (prompt + textarea + submit), evaluateSpeakingTest Cloud Function (GPT-4o-mini scoring), calculatePlacement Cloud Function (weighted CEFR average across 5 stages), PlacementResultPage.vue (CEFR badge + per-skill breakdown + strengths/weaknesses), all wired into OnboardingPage with skip logic defaulting to B1.*
