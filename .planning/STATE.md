@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to plan
-stopped_at: Completed 15-02-PLAN.md
-last_updated: "2026-04-11T09:59:58.324Z"
+status: Ready to execute
+stopped_at: Completed 16-01-PLAN.md
+last_updated: "2026-04-11T14:51:21.747Z"
 progress:
   total_phases: 19
   completed_phases: 15
-  total_plans: 39
-  completed_plans: 39
+  total_plans: 41
+  completed_plans: 40
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-06)
 
 **Core value:** Every screen matches the Stitch designs pixel-for-pixel so the UI feels production-ready on mobile before any backend is wired up.
-**Current focus:** Phase 15 — speaking-writing-placement-results
+**Current focus:** Phase 16 — session-types-personalisation
 
 ## Current Position
 
-Phase: 15
-Plan: 2 (15-01 complete)
+Phase: 16 (session-types-personalisation) — EXECUTING
+Plan: 2 of 2
 
 ## Performance Metrics
 
@@ -103,6 +103,8 @@ Recent decisions affecting current work:
 - [Phase 15-01]: TOTAL_STAGES updated from 5 to 6 — speaking and writing are separate named steps in QStepper
 - [Phase 15-01]: calculatePlacement persists to both placementTests/{uid}.finalResult and users/{uid}.placement for quick read access; don't-throw on persist failure — still returns result to client
 - [Phase 15]: [15-02] Architecture validated: evaluateSpeakingTest in SpeakingStage and calculatePlacement in PlacementResultPage — distributed pattern is correct and equivalent to plan spec
+- [Phase 16-session-types-personalisation]: generateSessionPlanFn replaces startConversationFn in session store; startConversation export preserved in index.js for backward compatibility
+- [Phase 16-session-types-personalisation]: Dynamic import of useLearningStore and usePlacementStore inside startSession() to avoid circular dependency at module init time; sessionPlan ref stores full plan for ScenarioBriefPage
 
 ### v1.1 Decisions
 
@@ -184,5 +186,5 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-11T09:59:58.309Z
-Stopped at: Completed 15-02-PLAN.md
+Last session: 2026-04-11T14:51:21.733Z
+Stopped at: Completed 16-01-PLAN.md

@@ -258,12 +258,12 @@ Updated during roadmap creation.
 
 - [ ] **SESSION-01**: User can view available session types with lock states (`SessionTypeSelectPage`)
 - [ ] **SESSION-02**: User can view pre-session briefing (role, context, objectives) before starting (`ScenarioBriefPage`)
-- [ ] **SESSION-03**: Free Talk session type available (open conversation on a topic from user's life)
-- [ ] **SESSION-04**: Scenario session type available (role-play a real-world situation personalised to user's field)
-- [ ] **SESSION-05**: Story Builder session type available (narrate/continue a story with AI prompts)
-- [ ] **SESSION-06**: Debate session type available (user argues position; AI takes opposing view)
-- [ ] **SESSION-07**: Session types gated by CEFR level (A1-A2: Free Talk + Scenario only; B1+: all 4)
-- [ ] **SESSION-08**: AI session plan generated from profile + skill gaps + history (`generateSessionPlan` Cloud Function)
+- [x] **SESSION-03**: Free Talk session type available (open conversation on a topic from user's life)
+- [x] **SESSION-04**: Scenario session type available (role-play a real-world situation personalised to user's field)
+- [x] **SESSION-05**: Story Builder session type available (narrate/continue a story with AI prompts)
+- [x] **SESSION-06**: Debate session type available (user argues position; AI takes opposing view)
+- [x] **SESSION-07**: Session types gated by CEFR level (A1-A2: Free Talk + Scenario only; B1+: all 4)
+- [x] **SESSION-08**: AI session plan generated from profile + skill gaps + history (`generateSessionPlan` Cloud Function)
 
 ### Progression & Learning (PROG)
 
@@ -323,12 +323,12 @@ Updated during roadmap creation.
 | PLACE-12 | Phase 15 | Complete |
 | SESSION-01 | Phase 16 | Pending |
 | SESSION-02 | Phase 16 | Pending |
-| SESSION-03 | Phase 16 | Pending |
-| SESSION-04 | Phase 16 | Pending |
-| SESSION-05 | Phase 16 | Pending |
-| SESSION-06 | Phase 16 | Pending |
-| SESSION-07 | Phase 16 | Pending |
-| SESSION-08 | Phase 16 | Pending |
+| SESSION-03 | Phase 16 | Complete |
+| SESSION-04 | Phase 16 | Complete |
+| SESSION-05 | Phase 16 | Complete |
+| SESSION-06 | Phase 16 | Complete |
+| SESSION-07 | Phase 16 | Complete |
+| SESSION-08 | Phase 16 | Complete |
 | PROG-v12-01 | Phase 17 | Pending |
 | PROG-v12-02 | Phase 17 | Pending |
 | PROG-v12-03 | Phase 17 | Pending |

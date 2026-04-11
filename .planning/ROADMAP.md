@@ -319,7 +319,7 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 16-01-PLAN.md — generateSessionPlan Cloud Function + session store refactor + routes + DashboardPage FAB
+- [x] 16-01-PLAN.md — generateSessionPlan Cloud Function + session store refactor + routes + DashboardPage FAB
 - [ ] 16-02-PLAN.md — SessionTypeSelectPage + SessionTypeCard + ScenarioBriefPage UI
 
 ### Phase 17: Progression & Mistake Tracking
@@ -394,7 +394,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 13. Vocabulary & Grammar Test | 4/4 | Complete   | 2026-04-07 |
 | 14. Listening Test | 1/2 | Complete    | 2026-04-09 |
 | 15. Speaking, Writing & Placement Results | 2/2 | Complete   | 2026-04-11 |
-| 16. Session Types & Personalisation | 0/2 | In Progress | — |
+| 16. Session Types & Personalisation | 1/2 | In Progress|  |
 | 17. Progression & Mistake Tracking | 0/0 | Not started | — |
 | 18. Free Tier Funnel | 0/0 | Not started | — |
 | 19. Dashboard & Progress Redesign | 0/0 | Not started | — |
