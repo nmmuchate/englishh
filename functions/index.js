@@ -830,3 +830,125 @@ Rules:
   logger.info('generateTestQuestions complete', { type, level, uid: request.auth.uid })
   return result
 })
+
+exports.evaluateSpeakingTest = onCall({ region: 'africa-south1', secrets: [OPENAI_API_KEY] }, async (request) => {
+  if (!request.auth) {
+    throw new HttpsError('unauthenticated', 'Authentication required')
+  }
+
+  const { exchanges = [], level = 'B1' } = request.data
+  if (!Array.isArray(exchanges) || exchanges.length === 0) {
+    throw new HttpsError('invalid-argument', 'exchanges must be a non-empty array')
+  }
+
+  const openai = new OpenAI({ apiKey: OPENAI_API_KEY.value() })
+
+  const transcript = exchanges.map(e => `User: ${e.userText}\nAI: ${e.aiText}`).join('\n\n')
+
+  const response = await openai.chat.completions.create({
+    model: 'gpt-4o-mini',
+    temperature: 0.3,
+    max_tokens: 400,
+    response_format: { type: 'json_object' },
+    messages: [
+      {
+        role: 'system',
+        content: 'You are an English language examiner. Evaluate the user\'s speaking transcript and return a JSON score object.'
+      },
+      {
+        role: 'user',
+        content: `Evaluate this CEFR ${level} placement speaking test transcript:\n\n${transcript}\n\nReturn JSON:\n{\n  "score": 75,\n  "level": "B1",\n  "fluency": 70,\n  "vocabulary": 80,\n  "grammar": 75,\n  "feedback": "Brief 1-2 sentence examiner note"\n}\n\nRules:\n- score 0-100 overall\n- level must be one of: A1, A2, B1, B2, C1, C2\n- fluency/vocabulary/grammar each 0-100\n- feedback max 120 characters`
+      }
+    ]
+  })
+
+  let result
+  try {
+    result = JSON.parse(response.choices[0].message.content)
+  } catch {
+    throw new HttpsError('internal', 'Speaking evaluation failed — please retry')
+  }
+
+  logger.info('evaluateSpeakingTest complete', { uid: request.auth.uid, score: result.score })
+  return result
+})
+
+exports.calculatePlacement = onCall({ region: 'africa-south1', secrets: [OPENAI_API_KEY] }, async (request) => {
+  if (!request.auth) {
+    throw new HttpsError('unauthenticated', 'Authentication required')
+  }
+
+  const { stageResults = {}, userProfile = {} } = request.data
+
+  // CEFR to numeric mapping
+  const CEFR_VALUE = { A1: 1, A2: 2, B1: 3, B2: 4, C1: 5, C2: 6 }
+  const VALUE_CEFR = { 1: 'A1', 2: 'A2', 3: 'B1', 4: 'B2', 5: 'C1', 6: 'C2' }
+
+  // Skill stages and their weights (equal 20% each)
+  const SKILL_MAP = {
+    vocabulary: { weight: 0.20, skill: 'Vocabulary' },
+    listening:  { weight: 0.20, skill: 'Listening' },
+    grammar:    { weight: 0.20, skill: 'Grammar' },
+    speaking:   { weight: 0.20, skill: 'Speaking' },
+    writing:    { weight: 0.20, skill: 'Writing' }
+  }
+
+  const skillBreakdown = {}
+  let weightedSum = 0
+  let totalWeight = 0
+
+  for (const [key, cfg] of Object.entries(SKILL_MAP)) {
+    const r = stageResults[key]
+    const rawLevel = r?.level ?? 'B1'
+    const numeric = CEFR_VALUE[rawLevel] ?? 3
+    skillBreakdown[cfg.skill] = rawLevel
+    weightedSum += numeric * cfg.weight
+    totalWeight += cfg.weight
+  }
+
+  const avgNumeric = totalWeight > 0 ? weightedSum / totalWeight : 3
+  const overallNumeric = Math.min(6, Math.max(1, Math.round(avgNumeric)))
+  const overallLevel = VALUE_CEFR[overallNumeric] ?? 'B1'
+
+  // Derive strengths (top 2) and weaknesses (bottom 2) from skill breakdown
+  const sorted = Object.entries(skillBreakdown).sort(
+    (a, b) => (CEFR_VALUE[b[1]] ?? 3) - (CEFR_VALUE[a[1]] ?? 3)
+  )
+  const strengths = sorted.slice(0, 2).map(([s]) => s)
+  const weaknesses = sorted.slice(-2).map(([s]) => s)
+
+  const LEVEL_NAMES = {
+    A1: 'Beginner', A2: 'Elementary', B1: 'Intermediate',
+    B2: 'Upper Intermediate', C1: 'Advanced', C2: 'Proficient'
+  }
+
+  const result = {
+    overallLevel,
+    levelName: LEVEL_NAMES[overallLevel] ?? 'Intermediate',
+    skillBreakdown,
+    strengths,
+    weaknesses,
+    confidence: 0.85
+  }
+
+  // Persist finalResult to placementTests/{uid} and users/{uid}.placement
+  const uid = request.auth.uid
+  try {
+    const { getFirestore } = require('firebase-admin/firestore')
+    const adminDb = getFirestore()
+    await adminDb.collection('placementTests').doc(uid).set(
+      { finalResult: result, completedAt: new Date() },
+      { merge: true }
+    )
+    await adminDb.collection('users').doc(uid).set(
+      { placement: result },
+      { merge: true }
+    )
+  } catch (err) {
+    logger.error('calculatePlacement persist failed', { uid, err: err.message })
+    // Don't throw — still return result to client even if persist fails
+  }
+
+  logger.info('calculatePlacement complete', { uid, overallLevel })
+  return result
+})
