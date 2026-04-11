@@ -135,7 +135,7 @@ const initials = computed(() => {
 })
 
 function goToSession() {
-  router.push({ name: 'session' })
+  router.push({ name: 'sessions' })
 }
 
 // Mock weekly data — Sat is today (DASH-02)

@@ -13,7 +13,9 @@ const routes = [
       { path: 'onboarding', name: 'onboarding', component: () => import('pages/OnboardingPage.vue') },
       { path: 'placement-result', name: 'placement-result', component: () => import('pages/PlacementResultPage.vue') },
       { path: 'session', name: 'session', component: () => import('pages/SessionPage.vue') },
-      { path: 'feedback', name: 'feedback', component: () => import('pages/FeedbackPage.vue') }
+      { path: 'feedback', name: 'feedback', component: () => import('pages/FeedbackPage.vue') },
+      { path: 'sessions', name: 'sessions', component: () => import('pages/SessionTypeSelectPage.vue') },
+      { path: 'session/brief', name: 'session-brief', component: () => import('pages/ScenarioBriefPage.vue') }
     ]
   },
 

@@ -5,7 +5,7 @@ import { functions } from 'boot/firebase'
 import { useProfileStore } from 'stores/profile'
 
 // Callable references — created once at module level (no secret dependency)
-const startConversationFn = httpsCallable(functions, 'startConversation')
+const generateSessionPlanFn = httpsCallable(functions, 'generateSessionPlan')
 const sendMessageFn = httpsCallable(functions, 'sendMessage')
 const endSessionFn = httpsCallable(functions, 'endSession')
 
@@ -21,8 +21,10 @@ export const useSessionStore = defineStore('session', () => {
   const transcript = ref([])    // array of { speaker: 'user'|'ai', text: string }
   const isSending = ref(false)  // prevents double-sends during Gemini call
   const scores = ref(null)   // { fluency, grammar, vocabulary, overall } — set by endSession
+  const sessionPlan = ref(null)  // { topic, role, context, objectives, systemPrompt } from generateSessionPlan
+  const sessionType = ref(null)  // selected session type: 'free-talk' | 'scenario' | 'story-builder' | 'debate'
 
-  async function startSession() {
+  async function startSession(type) {
     isActive.value = true
     durationSeconds.value = 0
     mistakeCount.value = 0
@@ -31,6 +33,8 @@ export const useSessionStore = defineStore('session', () => {
     topic.value = ''
     transcript.value = []
     isSending.value = false
+    sessionPlan.value = null
+    sessionType.value = type || 'free-talk'
 
     const profileStore = useProfileStore()
 
@@ -40,20 +44,51 @@ export const useSessionStore = defineStore('session', () => {
       return { paywallRequired: true }
     }
 
+    // Import learning and placement stores for skill data
+    const { useLearningStore } = await import('stores/learning')
+    const { usePlacementStore } = await import('stores/placement')
+    const learningStore = useLearningStore()
+    const placementStore = usePlacementStore()
+
     try {
-      const result = await startConversationFn({
-        userLevel: profileStore.currentLevel ?? 'B1',
-        sessionNumber: profileStore.totalSessionsCompleted + 1
+      const result = await generateSessionPlanFn({
+        type: sessionType.value,
+        userProfile: {
+          occupation: profileStore.profile?.occupation || '',
+          field: profileStore.profile?.field || '',
+          interests: profileStore.profile?.interests || [],
+          goal: profileStore.profile?.goal || ''
+        },
+        skillGaps: {
+          weaknesses: placementStore.finalResult?.weaknesses || [],
+          skillBreakdown: placementStore.finalResult?.skillBreakdown || {}
+        },
+        sessionHistory: {
+          totalSessions: profileStore.totalSessionsCompleted,
+          recentMistakes: learningStore.mistakePatterns
+            .filter(m => m.status === 'active')
+            .slice(0, 5)
+            .map(m => m.pattern)
+        }
       })
-      // result.data = { sessionId, topic, initialMessage }
+
+      // result.data = { sessionId, topic, initialMessage, systemPrompt, role, context, objectives }
       sessionId.value = result.data.sessionId
       topic.value = result.data.topic
+      sessionPlan.value = {
+        topic: result.data.topic,
+        role: result.data.role,
+        context: result.data.context,
+        objectives: result.data.objectives,
+        systemPrompt: result.data.systemPrompt
+      }
 
       // Add initial AI message to transcript
       transcript.value.push({ speaker: 'ai', text: result.data.initialMessage })
     } catch (err) {
       console.error('startSession error:', err)
       isActive.value = false
+      sessionPlan.value = null
       return { paywallRequired: false, error: err.message }
     }
 
@@ -114,7 +149,7 @@ export const useSessionStore = defineStore('session', () => {
 
   return {
     isActive, durationSeconds, mistakeCount, overallScore, sessionId,
-    topic, transcript, isSending, scores,
+    topic, transcript, isSending, scores, sessionPlan, sessionType,
     startSession, sendMessage, endSession
   }
 })
