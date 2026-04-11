@@ -66,13 +66,20 @@
         />
       </q-step>
 
-      <!-- Stage 5: Speaking stub -->
-      <q-step name="speaking" title="Speaking &amp; Writing">
-        <div class="column items-center justify-center q-pa-xl text-center" style="min-height: 60vh;">
-          <q-icon name="mic" size="64px" color="grey-4" class="q-mb-md" />
-          <p class="text-h6 text-grey-6">Speaking &amp; Writing</p>
-          <p class="text-body2 text-grey-5">Coming in Phase 15</p>
-        </div>
+      <!-- Stage 5a: Speaking -->
+      <q-step name="speaking" title="Speaking">
+        <SpeakingStage
+          @complete="handleSpeakingComplete"
+          @skip="handleSpeakingSkip"
+        />
+      </q-step>
+
+      <!-- Stage 5b: Writing -->
+      <q-step name="writing" title="Writing">
+        <WritingStage
+          @complete="handleWritingComplete"
+          @skip="handleWritingSkip"
+        />
       </q-step>
     </q-stepper>
   </q-page>
@@ -89,6 +96,8 @@ import QuickProfileStage from './QuickProfileStage.vue'
 import VocabularyStage from './VocabularyStage.vue'
 import GrammarStage from './GrammarStage.vue'
 import ListeningStage from './ListeningStage.vue'
+import SpeakingStage from './SpeakingStage.vue'
+import WritingStage from './WritingStage.vue'
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -103,9 +112,10 @@ const STAGE_INDEX = {
   vocabulary: 2,
   listening:  3,
   grammar:    4,
-  speaking:   5
+  speaking:   5,
+  writing:    6
 }
-const TOTAL_STAGES = 5
+const TOTAL_STAGES = 6
 
 const stageIndex = computed(() => STAGE_INDEX[step.value] ?? 1)
 const stageProgress = computed(() => stageIndex.value / TOTAL_STAGES)
@@ -214,6 +224,46 @@ async function handleGrammarComplete(result) {
 function handleGrammarSkip() {
   placementStore.setStageResult('grammar', { score: 0, level: 'B1', skipped: true, answers: [] })
   step.value = 'speaking'
+}
+
+async function handleSpeakingComplete(result) {
+  isSaving.value = true
+  saveError.value = null
+  try {
+    placementStore.setStageResult('speaking', result)
+    step.value = 'writing'
+  } catch (err) {
+    console.error('handleSpeakingComplete failed:', err)
+    saveError.value = err.message || 'Failed to save speaking results. Please try again.'
+  } finally {
+    isSaving.value = false
+  }
+}
+
+function handleSpeakingSkip() {
+  placementStore.setStageResult('speaking', { score: 0, level: 'B1', skipped: true, answers: [] })
+  step.value = 'writing'
+}
+
+async function handleWritingComplete(result) {
+  isSaving.value = true
+  saveError.value = null
+  try {
+    placementStore.setStageResult('writing', result)
+    // All stages done — navigate to placement result page
+    // calculatePlacement Cloud Function is called by PlacementResultPage on mount
+    router.push({ name: 'placement-result' })
+  } catch (err) {
+    console.error('handleWritingComplete failed:', err)
+    saveError.value = err.message || 'Failed to save writing results. Please try again.'
+  } finally {
+    isSaving.value = false
+  }
+}
+
+function handleWritingSkip() {
+  placementStore.setStageResult('writing', { score: 0, level: 'B1', skipped: true, answers: [] })
+  router.push({ name: 'placement-result' })
 }
 </script>
 

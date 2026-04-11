@@ -11,6 +11,7 @@ const routes = [
     children: [
       { path: '', name: 'landing', component: () => import('pages/LandingPage.vue') },
       { path: 'onboarding', name: 'onboarding', component: () => import('pages/OnboardingPage.vue') },
+      { path: 'placement-result', name: 'placement-result', component: () => import('pages/PlacementResultPage.vue') },
       { path: 'session', name: 'session', component: () => import('pages/SessionPage.vue') },
       { path: 'feedback', name: 'feedback', component: () => import('pages/FeedbackPage.vue') }
     ]
