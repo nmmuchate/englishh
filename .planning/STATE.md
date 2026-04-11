@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Ready to plan
-stopped_at: Phase 15 UI-SPEC approved
-last_updated: "2026-04-09T17:35:26.734Z"
+stopped_at: Completed 15-01-PLAN.md
+last_updated: "2026-04-11T00:00:00.000Z"
 progress:
   total_phases: 19
   completed_phases: 14
-  total_plans: 37
-  completed_plans: 37
+  total_plans: 39
+  completed_plans: 38
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-06)
 
 **Core value:** Every screen matches the Stitch designs pixel-for-pixel so the UI feels production-ready on mobile before any backend is wired up.
-**Current focus:** Phase 14 — listening-test
+**Current focus:** Phase 15 — speaking-writing-placement-results
 
 ## Current Position
 
 Phase: 15
-Plan: Not started
+Plan: 2 (15-01 complete)
 
 ## Performance Metrics
 
@@ -98,6 +98,10 @@ Recent decisions affecting current work:
 - [Phase 14-listening-test]: ListeningPlayer play() always calls cancel() before speak() to clear in-progress utterances
 - [Phase 14-listening-test]: Dialogue prompts written as narrative in Cloud Function system prompt — avoids TTS reading speaker name+colon artifacts
 - [Phase 14-listening-test]: hasPlayedCurrent resets in handleNext so each task requires its own audio playback; Question card uses v-if on hasPlayedCurrent; ListeningStage emit contract matches VocabularyStage/GrammarStage exactly
+- [Phase 15-01]: SpeakingStage uses hardcoded prompt pool + follow-up questions + evaluateSpeakingTest Cloud Function; WritingStage uses client-side word-count heuristic; calculatePlacement does final CEFR aggregation server-side
+- [Phase 15-01]: OnboardingPage navigates to /placement-result after writing complete; PlacementResultPage calls calculatePlacement on mount to keep onboarding lightweight
+- [Phase 15-01]: TOTAL_STAGES updated from 5 to 6 — speaking and writing are separate named steps in QStepper
+- [Phase 15-01]: calculatePlacement persists to both placementTests/{uid}.finalResult and users/{uid}.placement for quick read access; don't-throw on persist failure — still returns result to client
 
 ### v1.1 Decisions
 
