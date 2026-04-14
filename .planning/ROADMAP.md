@@ -37,7 +37,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 13: Vocabulary & Grammar Test** - Adaptive Vocabulary/Reading + Grammar test stages, generateTestQuestions Cloud Function (completed 2026-04-07)
 - [x] **Phase 14: Listening Test** - Listening test stage with browser TTS audio, ListeningPlayer component (completed 2026-04-09)
 - [x] **Phase 15: Speaking, Writing & Placement Results** - Speaking + Writing stages, AI evaluation functions, calculatePlacement, PlacementResultPage with radar chart, skip logic (completed 2026-04-11)
-- [ ] **Phase 16: Session Types & Personalisation** - 4 session types, SessionTypeSelectPage, ScenarioBriefPage, generateSessionPlan Cloud Function, CEFR gates
+- [x] **Phase 16: Session Types & Personalisation** - 4 session types, SessionTypeSelectPage, ScenarioBriefPage, generateSessionPlan Cloud Function, CEFR gates (completed 2026-04-11)
 - [ ] **Phase 17: Progression & Mistake Tracking** - Per-skill progression, level-up logic, mistake pattern bank, getWeeklyReview Cloud Function
 - [ ] **Phase 18: Free Tier Funnel** - Placement test always free, 1 free session gate, post-session paywall with achievement summary, free user restrictions
 - [ ] **Phase 19: Dashboard & Progress Redesign** - Skill radar mini-chart, per-skill trend charts, mistake pattern cards, recommended session card
@@ -320,7 +320,7 @@ Plans:
 
 Plans:
 - [x] 16-01-PLAN.md — generateSessionPlan Cloud Function + session store refactor + routes + DashboardPage FAB
-- [ ] 16-02-PLAN.md — SessionTypeSelectPage + SessionTypeCard + ScenarioBriefPage UI
+- [x] 16-02-PLAN.md — SessionTypeSelectPage + SessionTypeCard + ScenarioBriefPage UI
 
 ### Phase 17: Progression & Mistake Tracking
 **Goal**: The app tracks each user's progress independently per skill — skill levels advance when rolling 10-session performance meets next-level criteria, mistakes are logged and recycled into future sessions, and a weekly review session can be generated on demand
