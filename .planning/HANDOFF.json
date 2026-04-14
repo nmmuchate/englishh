@@ -1,28 +1,50 @@
 {
   "version": "1.0",
-  "timestamp": "2026-04-11T09:16:17.115Z",
-  "phase": "15",
-  "phase_name": "speaking-writing-placement-results",
-  "phase_dir": ".planning/phases/15-speaking-writing-placement-results",
-  "plan": 0,
-  "task": 0,
-  "total_tasks": 0,
+  "timestamp": "2026-04-14T21:55:03.431Z",
+  "phase": "16",
+  "phase_name": "session-types-personalisation",
+  "phase_dir": ".planning/phases/16-session-types-personalisation",
+  "plan": 2,
+  "task": 2,
+  "total_tasks": 2,
   "status": "paused",
   "completed_tasks": [
-    {"id": 1, "name": "UI-SPEC draft created", "status": "done", "commit": "df3028e"},
-    {"id": 2, "name": "UI-SPEC blocking issues resolved (typography/spacing)", "status": "done", "commit": "e91786a"}
+    {
+      "id": 1,
+      "name": "Create SessionTypeCard.vue component",
+      "status": "done",
+      "commit": "e0575dc"
+    },
+    {
+      "id": 2,
+      "name": "Create SessionTypeSelectPage.vue and ScenarioBriefPage.vue",
+      "status": "done",
+      "commit": "dc07b47"
+    }
   ],
-  "remaining_tasks": [
-    {"id": 3, "name": "Run /gsd:plan-phase for phase 15", "status": "not_started"},
-    {"id": 4, "name": "Execute phase 15 plans (SpeakingStage, WritingStage, PlacementResults)", "status": "not_started"}
-  ],
+  "remaining_tasks": [],
   "blockers": [],
   "human_actions_pending": [],
   "decisions": [
-    {"decision": "UI-SPEC approved with typography fix (removed 28px/12px/500-weight outliers, collapsed to 3-size scale)", "rationale": "gsd-ui-checker blocked on non-standard sizes", "phase": "15"},
-    {"decision": "Quasar QStepper + existing stage pattern (VocabularyStage/GrammarStage/ListeningStage) is the reference for SpeakingStage and WritingStage", "rationale": "Established pattern from phases 13-14", "phase": "15"}
+    {
+      "decision": "CEFR lock logic uses CEFR_VALUE map with placementStore.finalResult?.overallLevel fallback to profileStore.currentLevel then B1",
+      "rationale": "Graceful fallback for users who skipped placement",
+      "phase": "16"
+    },
+    {
+      "decision": "PaywallDialog integration deferred to Phase 18",
+      "rationale": "startSession returns paywallRequired signal, page returns early without crashing",
+      "phase": "16"
+    },
+    {
+      "decision": "CEFR gate enforced server-side in generateSessionPlan; client-side lock in SessionTypeSelectPage is UX only",
+      "rationale": "Security — client cannot be trusted to enforce gate",
+      "phase": "16"
+    }
   ],
-  "uncommitted_files": [".planning/STATE.md", ".planning/config.json", "package-lock.json"],
-  "next_action": "Run /gsd:plan-phase to create PLAN.md for phase 15 (SpeakingStage, WritingStage, PlacementResults screen)",
-  "context_notes": "Phase 15 UI-SPEC is fully approved. No implementation has started. The phase covers: SpeakingStage (mic recording + TTS playback), WritingStage (text input + prompt), and PlacementResults page (CEFR badge + per-skill breakdown). All three feed into the existing OnboardingPage QStepper after the Listening stage."
+  "uncommitted_files": [
+    ".planning/phases/16-session-types-personalisation/16-02-SUMMARY.md"
+  ],
+  "next_action": "Commit 16-02-SUMMARY.md, mark Phase 16 complete in ROADMAP.md (change [ ] to [x]), then run /gsd:plan-phase for Phase 17 (Progression & Mistake Tracking)",
+  "context_notes": "Phase 16 is fully implemented — both plans done. Only the 16-02-SUMMARY.md file remains untracked. Phase 17 is the next unblocked phase: per-skill progression, level-up logic, mistake pattern bank, getWeeklyReview Cloud Function."
 }
