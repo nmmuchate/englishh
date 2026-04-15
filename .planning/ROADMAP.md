@@ -335,8 +335,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 11-01-PLAN.md — Create placement.js + learning.js stores, extend profile store with v1.2 fields, wire auth boot, update Firestore rules
-- [ ] 11-02-PLAN.md — Create idempotent scenarioLibrary seed script with 40 scenario templates
+- [ ] 17-01-PLAN.md — Extend endSession (per-skill scoring, progression, mistake persistence) + update generateSessionPlan mistake-recycling prompt + add getWeeklyReview Cloud Function
+- [ ] 17-02-PLAN.md — Add levelUps ref to session store + refresh learning store after endSession + level-up banner on FeedbackPage
 
 ### Phase 18: Free Tier Funnel
 **Goal**: The free→Pro conversion funnel is enforced — placement test is ungated, the first session is fully featured, subsequent sessions trigger a post-session paywall with an achievement summary, and free users have clearly defined read-only access to trial data
