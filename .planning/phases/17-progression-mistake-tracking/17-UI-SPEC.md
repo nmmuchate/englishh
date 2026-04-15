@@ -58,7 +58,7 @@ Exceptions: Touch target minimum 44px height for any tappable dismiss control on
 | Heading | 16px (text-subtitle1) | 700 bold | 1.2 |
 | Display | 20px (text-h5) | 700 bold | 1.2 |
 
-**Level-up banner text:** Use `text-subtitle2` (14px, weight 600) for the banner message. Single-line. Example: "Your Grammar just leveled up to B1!"
+**Level-up banner text:** Use `text-subtitle2` (14px, weight 700 bold) for the banner message. Single-line. Example: "Your Grammar just leveled up to B1!"
 
 **Source:** FeedbackPage.vue existing Quasar typography classes; Inter font from app.css.
 
@@ -100,7 +100,7 @@ div.level-up-banner (v-if="levelUps.length > 0")
 - Border-radius: `--radius-sm` (0.5rem / 8px)
 - Padding: `q-px-md q-py-sm` (16px / 8px)
 - Icon: `sym_o_trending_up`, 20px, color `primary`
-- Text: `text-subtitle2` weight 600, color white (dark) / `--text-deep-slate` (light)
+- Text: `text-subtitle2` weight 700 (bold), color white (dark) / `--text-deep-slate` (light)
 - Skill name: capitalised — "Vocabulary", "Grammar", "Speaking", etc.
 - Level name: rendered in `color: primary` (`#4cae4f`) within the sentence
 
