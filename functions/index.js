@@ -1146,8 +1146,9 @@ exports.generateSessionPlan = onCall({ region: 'africa-south1', secrets: [OPENAI
 
   // Part 5: Mistake recycling — only if recentMistakes is non-empty
   const recentMistakes = sessionHistory.recentMistakes || []
-  const mistakeRecycling = recentMistakes.length > 0
-    ? `RECYCLE THESE PAST MISTAKES:\n${recentMistakes.slice(0, 3).map(m => '- ' + m).join('\n')}`
+  const topMistakes = recentMistakes.slice(0, 3)
+  const mistakeRecycling = topMistakes.length > 0
+    ? `RECYCLE THESE PAST MISTAKES — you MUST name these patterns verbatim in at least one objective and prompt the user to demonstrate correct usage during the session:\n${topMistakes.map(m => '- ' + m).join('\n')}`
     : null
 
   // Concatenate all parts
@@ -1161,6 +1162,7 @@ exports.generateSessionPlan = onCall({ region: 'africa-south1', secrets: [OPENAI
   const userPrompt = `Generate a personalised ${type} session plan for a ${level} English learner.
 User profile: ${JSON.stringify(userProfile)}
 Skill gaps: ${JSON.stringify(skillGaps)}
+Recent mistake patterns: ${JSON.stringify(topMistakes)}
 
 Return JSON:
 {
@@ -1178,7 +1180,8 @@ Rules:
 - For story-builder: role is "narrator", context sets the opening scene
 - For debate: pick a topic the user would have opinions on based on their interests
 - openingMessage should be warm, 2-3 sentences, and naturally start the session
-- objectives must be 2-3 specific language goals for this session`
+- objectives must be 2-3 specific language goals for this session
+- If recentMistakes are listed above, at least one of the 2-3 objectives MUST explicitly reference a mistake pattern by name (e.g., "Practice present perfect vs simple past correctly").`
 
   const response = await openai.chat.completions.create({
     model: 'gpt-4o-mini',
