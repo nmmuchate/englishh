@@ -1234,3 +1234,113 @@ Rules:
     objectives: parsed.objectives
   }
 })
+
+// ── Phase 17: getWeeklyReview (onCall) ─────────────────────────────────────────
+// Returns a review session plan built from the user's last-7-day active mistake patterns.
+// Does NOT create a Firestore session doc — caller must still call generateSessionPlan
+// to get a sessionId when they want to start a real session.
+// Input: (reads request.auth.uid)
+// Output: { topic, systemPrompt, initialMessage, role, context, objectives, sourcePatterns }
+exports.getWeeklyReview = onCall({ region: 'africa-south1', secrets: [OPENAI_API_KEY] }, async (request) => {
+  if (!request.auth) {
+    throw new HttpsError('unauthenticated', 'Authentication required')
+  }
+
+  const uid = request.auth.uid
+
+  // 1. Read user doc + mistakePatterns
+  const userSnap = await admin.firestore().doc(`users/${uid}`).get()
+  if (!userSnap.exists) {
+    throw new HttpsError('not-found', 'User document not found')
+  }
+  const userData = userSnap.data()
+  const level = userData.placement?.overallLevel || userData.currentLevel || 'B1'
+  const allPatterns = Array.isArray(userData.mistakePatterns) ? userData.mistakePatterns : []
+
+  // 2. Filter to last 7 days + active
+  const sevenDaysAgoMs = Date.now() - 7 * 24 * 60 * 60 * 1000
+  const recentActive = allPatterns.filter(p => {
+    const lastSeenMs = p.lastSeen?.toMillis?.() ?? 0
+    return p.status === 'active' && lastSeenMs >= sevenDaysAgoMs
+  })
+
+  // 3. Pick top 5 by occurrences desc
+  const topPatterns = [...recentActive]
+    .sort((a, b) => (b.occurrences || 0) - (a.occurrences || 0))
+    .slice(0, 5)
+
+  // Edge case: no active patterns in last 7 days
+  if (topPatterns.length === 0) {
+    return {
+      topic: 'Weekly Review — Free Practice',
+      systemPrompt: `You are Alex, a friendly English conversation partner. The user has no recent mistake patterns to review. Lead a free-form conversation at ${level} level focused on fluency and natural speech.`,
+      initialMessage: "Hi! You've had a clean week — no major mistakes to review. Let's just chat and practice. What's been on your mind?",
+      role: 'Yourself',
+      context: 'No active mistake patterns from the past 7 days — review session is free-form conversation.',
+      objectives: ['Maintain fluency at your level', 'Practice natural conversation', 'Build confidence'],
+      sourcePatterns: []
+    }
+  }
+
+  // 4. Build GPT prompt
+  const patternList = topPatterns.map(p => `- ${p.pattern} (seen ${p.occurrences}x)`).join('\n')
+
+  const systemPrompt = `You are Alex, an English tutor running a weekly review session for a ${level} learner. The session recycles specific mistake patterns the user struggled with this week. Each objective must target one mistake pattern by name.`
+
+  const userPrompt = `Generate a WEEKLY REVIEW session plan for a ${level} English learner.
+
+Top 5 mistake patterns from the past 7 days (by frequency):
+${patternList}
+
+Return JSON:
+{
+  "topic": "Weekly Review — {short descriptive title}",
+  "role": "review partner or role-play if useful",
+  "context": "1-2 sentence framing: this is a review session targeting specific recurring issues",
+  "objectives": ["objective 1 naming a pattern", "objective 2 naming a pattern", "objective 3 naming a pattern"],
+  "openingMessage": "Alex's warm opening message that names 1-2 of the patterns the user will focus on today"
+}
+
+Rules:
+- EVERY objective must explicitly name a pattern from the list above (e.g., "Practice 'present_perfect_vs_simple_past' correctly in context")
+- openingMessage must be 2-3 sentences, warm, and reference the review nature of today's session
+- 3 objectives minimum (one per top pattern when possible)
+- topic starts with "Weekly Review —"`
+
+  const openai = new OpenAI({ apiKey: OPENAI_API_KEY.value() })
+  const response = await openai.chat.completions.create({
+    model: 'gpt-4o-mini',
+    temperature: 0.7,
+    max_tokens: 600,
+    response_format: { type: 'json_object' },
+    messages: [
+      { role: 'system', content: 'You generate weekly review session plans. Always respond with valid JSON.' },
+      { role: 'user', content: userPrompt }
+    ]
+  })
+
+  let parsed
+  try {
+    parsed = JSON.parse(response.choices[0].message.content)
+  } catch {
+    parsed = {
+      topic: 'Weekly Review — Recurring Patterns',
+      role: 'Review partner',
+      context: 'This session recycles mistake patterns from the past 7 days.',
+      objectives: topPatterns.slice(0, 3).map(p => `Practice ${p.pattern} correctly`),
+      openingMessage: `Hi! Let's review a few things from this week — especially ${topPatterns[0]?.pattern || 'your recent patterns'}. Ready?`
+    }
+  }
+
+  logger.info('getWeeklyReview complete', { uid, patternCount: topPatterns.length })
+
+  return {
+    topic: parsed.topic,
+    systemPrompt,
+    initialMessage: parsed.openingMessage,
+    role: parsed.role,
+    context: parsed.context,
+    objectives: parsed.objectives,
+    sourcePatterns: topPatterns.map(p => p.pattern)
+  }
+})
