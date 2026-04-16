@@ -38,7 +38,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 14: Listening Test** - Listening test stage with browser TTS audio, ListeningPlayer component (completed 2026-04-09)
 - [x] **Phase 15: Speaking, Writing & Placement Results** - Speaking + Writing stages, AI evaluation functions, calculatePlacement, PlacementResultPage with radar chart, skip logic (completed 2026-04-11)
 - [x] **Phase 16: Session Types & Personalisation** - 4 session types, SessionTypeSelectPage, ScenarioBriefPage, generateSessionPlan Cloud Function, CEFR gates (completed 2026-04-11)
-- [ ] **Phase 17: Progression & Mistake Tracking** - Per-skill progression, level-up logic, mistake pattern bank, getWeeklyReview Cloud Function
+- [x] **Phase 17: Progression & Mistake Tracking** - Per-skill progression, level-up logic, mistake pattern bank, getWeeklyReview Cloud Function (completed 2026-04-16)
 - [ ] **Phase 18: Free Tier Funnel** - Placement test always free, 1 free session gate, post-session paywall with achievement summary, free user restrictions
 - [ ] **Phase 19: Dashboard & Progress Redesign** - Skill radar mini-chart, per-skill trend charts, mistake pattern cards, recommended session card
 
@@ -336,7 +336,7 @@ Plans:
 
 Plans:
 - [x] 17-01-PLAN.md — Extend endSession (per-skill scoring, progression, mistake persistence) + update generateSessionPlan mistake-recycling prompt + add getWeeklyReview Cloud Function
-- [ ] 17-02-PLAN.md — Add levelUps ref to session store + refresh learning store after endSession + level-up banner on FeedbackPage
+- [x] 17-02-PLAN.md — Add levelUps ref to session store + refresh learning store after endSession + level-up banner on FeedbackPage
 
 ### Phase 18: Free Tier Funnel
 **Goal**: The free→Pro conversion funnel is enforced — placement test is ungated, the first session is fully featured, subsequent sessions trigger a post-session paywall with an achievement summary, and free users have clearly defined read-only access to trial data
@@ -395,6 +395,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 14. Listening Test | 1/2 | Complete    | 2026-04-09 |
 | 15. Speaking, Writing & Placement Results | 2/2 | Complete   | 2026-04-11 |
 | 16. Session Types & Personalisation | 1/2 | In Progress|  |
-| 17. Progression & Mistake Tracking | 1/2 | In Progress|  |
+| 17. Progression & Mistake Tracking | 2/2 | Complete   | 2026-04-16 |
 | 18. Free Tier Funnel | 0/0 | Not started | — |
 | 19. Dashboard & Progress Redesign | 0/0 | Not started | — |

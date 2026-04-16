@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to execute
-stopped_at: Completed 17-01-PLAN.md
-last_updated: "2026-04-16T07:55:49.046Z"
+status: Phase complete — ready for verification
+stopped_at: Completed 17-02-PLAN.md
+last_updated: "2026-04-16T08:01:30.380Z"
 progress:
   total_phases: 19
-  completed_phases: 16
+  completed_phases: 17
   total_plans: 43
-  completed_plans: 42
+  completed_plans: 43
 ---
 
 # Project State
@@ -107,6 +107,8 @@ Recent decisions affecting current work:
 - [Phase 16-session-types-personalisation]: Dynamic import of useLearningStore and usePlacementStore inside startSession() to avoid circular dependency at module init time; sessionPlan ref stores full plan for ScenarioBriefPage
 - [Phase 17-progression-mistake-tracking]: CEFR_LEVELS constant and nextCefrLevel() placed after OPENAI_API_KEY definition for global reuse; toPatternKey() normalizes GPT mistake strings to snake_case keys capped at 80 chars; per-session deduplication via Set prevents inflated occurrence counts; skill/mistake block is best-effort wrapped in try/catch
 - [Phase 17-progression-mistake-tracking]: getWeeklyReview does NOT create a Firestore session doc — returns plan only; caller uses generateSessionPlan for actual sessionId; max_tokens raised from 512 to 768 in endSession to accommodate 8-field JSON scoring response
+- [Phase 17-02]: auth.currentUser?.uid used in endSession() — profile store has no uid field; auth imported from boot/firebase
+- [Phase 17-02]: v-if (not v-show) on level-up banner — zero DOM cost when levelUps is empty
 
 ### v1.1 Decisions
 
@@ -188,5 +190,5 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-16T07:55:49.032Z
-Stopped at: Completed 17-01-PLAN.md
+Last session: 2026-04-16T08:01:30.361Z
+Stopped at: Completed 17-02-PLAN.md
