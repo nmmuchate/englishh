@@ -3,6 +3,8 @@ import { ref } from 'vue'
 import { httpsCallable } from 'firebase/functions'
 import { functions } from 'boot/firebase'
 import { useProfileStore } from 'stores/profile'
+import { doc, getDoc } from 'firebase/firestore'
+import { db, auth } from 'boot/firebase'
 
 // Callable references — created once at module level (no secret dependency)
 const generateSessionPlanFn = httpsCallable(functions, 'generateSessionPlan')
@@ -23,6 +25,7 @@ export const useSessionStore = defineStore('session', () => {
   const scores = ref(null)   // { fluency, grammar, vocabulary, overall } — set by endSession
   const sessionPlan = ref(null)  // { topic, role, context, objectives, systemPrompt } from generateSessionPlan
   const sessionType = ref(null)  // selected session type: 'free-talk' | 'scenario' | 'story-builder' | 'debate'
+  const levelUps = ref([])  // [{ skill, from, to }] — populated by endSession, displayed on FeedbackPage
 
   async function startSession(type) {
     isActive.value = true
@@ -35,6 +38,7 @@ export const useSessionStore = defineStore('session', () => {
     isSending.value = false
     sessionPlan.value = null
     sessionType.value = type || 'free-talk'
+    levelUps.value = []
 
     const profileStore = useProfileStore()
 
@@ -137,19 +141,36 @@ export const useSessionStore = defineStore('session', () => {
         finalTranscript: transcript.value,
         durationSeconds: durationSeconds.value
       })
-      // result.data = { scores: { fluency, grammar, vocabulary, overall }, feedback }
+      // result.data = { scores: { fluency, grammar, vocabulary, overall, reading, listening, speaking, writing }, feedback, levelUps }
       scores.value = result.data.scores
       overallScore.value = result.data.scores?.overall ?? 0
+      levelUps.value = Array.isArray(result.data.levelUps) ? result.data.levelUps : []
+
+      // Refresh learning store so next generateSessionPlan call sees updated mistakePatterns + skills
+      try {
+        const uid = auth.currentUser?.uid
+        if (uid) {
+          const userSnap = await getDoc(doc(db, 'users', uid))
+          if (userSnap.exists()) {
+            const { useLearningStore } = await import('stores/learning')
+            const learningStore = useLearningStore()
+            learningStore.setLearning(userSnap.data())
+          }
+        }
+      } catch (refreshErr) {
+        console.error('endSession: learning store refresh failed (non-fatal):', refreshErr)
+      }
     } catch (err) {
       console.error('endSession error:', err)
       overallScore.value = 0
       scores.value = null
+      levelUps.value = []
     }
   }
 
   return {
     isActive, durationSeconds, mistakeCount, overallScore, sessionId,
-    topic, transcript, isSending, scores, sessionPlan, sessionType,
+    topic, transcript, isSending, scores, sessionPlan, sessionType, levelUps,
     startSession, sendMessage, endSession
   }
 })
