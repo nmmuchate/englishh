@@ -30,6 +30,15 @@ setGlobalOptions({ maxInstances: 10, region: 'africa-south1' })
 const OPENAI_API_KEY = defineSecret('OPENAI_API_KEY')
 const MOZPAYMENTS_API_KEY = defineSecret('MOZPAYMENTS_API_KEY')
 
+// ── Phase 17: CEFR level progression ─────────────────────────────────────────
+const CEFR_LEVELS = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
+function nextCefrLevel(current) {
+  const idx = CEFR_LEVELS.indexOf(current)
+  if (idx === -1) return 'B1'           // unknown → treat as B1
+  if (idx === CEFR_LEVELS.length - 1) return 'C2'  // already max → stay at C2
+  return CEFR_LEVELS[idx + 1]
+}
+
 // ── Firebase Admin SDK ───────────────────────────────────────────────────────
 // Admin SDK is initialized once here. Import admin elsewhere with:
 //   const admin = require('firebase-admin')
@@ -215,7 +224,7 @@ exports.endSession = onCall({ region: 'africa-south1', secrets: [OPENAI_API_KEY]
     const scoringResponse = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
       temperature: 0.3,
-      max_tokens: 512,
+      max_tokens: 768,
       response_format: { type: 'json_object' },
       messages: [
         {
@@ -224,11 +233,13 @@ exports.endSession = onCall({ region: 'africa-south1', secrets: [OPENAI_API_KEY]
         },
         {
           role: 'user',
-          content: `Score this conversation (0-100 each):
+          content: `Score this conversation (0-100 each) across ALL 6 CEFR skills. Infer reading/listening/speaking/writing from the transcript even if not explicitly tested: reading=comprehension of complex cues, listening=responsiveness to questions, speaking=fluency+clarity, writing=sentence structure+coherence when the user wrote longer messages.
 
 ${JSON.stringify(finalTranscript)}
 
-JSON format: {"scores":{"fluency":N,"grammar":N,"vocabulary":N,"overall":N},"feedback":{"pronunciationIssues":[],"grammarMistakes":[],"vocabularySuggestions":[]}}`
+JSON format: {"scores":{"fluency":N,"grammar":N,"vocabulary":N,"overall":N,"reading":N,"listening":N,"speaking":N,"writing":N},"feedback":{"pronunciationIssues":[],"grammarMistakes":[],"vocabularySuggestions":[]}}
+
+All 8 score fields are REQUIRED. Scores are integers 0-100.`
         }
       ]
     })
@@ -236,7 +247,10 @@ JSON format: {"scores":{"fluency":N,"grammar":N,"vocabulary":N,"overall":N},"fee
   } catch (err) {
     logger.warn('endSession: OpenAI scoring failed, using fallback scores', err)
     parsed = {
-      scores: { fluency: 70, grammar: 70, vocabulary: 70, overall: 70 },
+      scores: {
+        fluency: 70, grammar: 70, vocabulary: 70, overall: 70,
+        reading: 70, listening: 70, speaking: 70, writing: 70
+      },
       feedback: { pronunciationIssues: [], grammarMistakes: [], vocabularySuggestions: [] }
     }
   }
@@ -278,6 +292,108 @@ JSON format: {"scores":{"fluency":N,"grammar":N,"vocabulary":N,"overall":N},"fee
     newStreak = userData.dailyStreak ?? 1      // already played today — keep streak
   }
 
+  // ── Per-skill progression + mistake persistence (Phase 17) ─────────────────
+  let skillUpdates = {}
+  let trimmedPatterns = userData.mistakePatterns ?? []
+  const levelUps = []
+
+  try {
+    // ── Per-skill progression update (D-02) ──────────────────────────────────
+    const SKILL_KEYS = ['vocabulary', 'reading', 'listening', 'grammar', 'speaking', 'writing']
+    const existingSkills = userData.placement?.skills ?? {}
+
+    for (const skill of SKILL_KEYS) {
+      const skillScore = scores[skill] ?? scores.overall ?? 70
+      const prev = existingSkills[skill] ?? { level: userData.currentLevel || 'B1', progress: 0 }
+      const prevProgress = typeof prev.progress === 'number' ? prev.progress : 0
+      const prevLevel = prev.level || userData.currentLevel || 'B1'
+
+      // Weighted moving average: newProgress = oldProgress * 0.9 + skillScore * 0.1
+      let newProgress = Math.round(prevProgress * 0.9 + skillScore * 0.1)
+      let newLevel = prevLevel
+
+      // Level-up check
+      if (newProgress >= 100) {
+        const promoted = nextCefrLevel(prevLevel)
+        if (promoted !== prevLevel) {
+          newLevel = promoted
+          newProgress = 0
+          levelUps.push({ skill, from: prevLevel, to: promoted })
+        } else {
+          // At max level (C2) — cap progress at 100 instead of resetting
+          newProgress = 100
+        }
+      }
+
+      newProgress = Math.max(0, Math.min(100, newProgress))
+      skillUpdates[`placement.skills.${skill}.progress`] = newProgress
+      skillUpdates[`placement.skills.${skill}.level`] = newLevel
+    }
+
+    // ── Mistake persistence (D-04) ───────────────────────────────────────────
+    function toPatternKey(description) {
+      if (!description || typeof description !== 'string') return null
+      return description
+        .toLowerCase()
+        .replace(/[^a-z0-9\s]/g, '')
+        .trim()
+        .split(/\s+/)
+        .slice(0, 6)
+        .join('_')
+        .slice(0, 80) || null
+    }
+
+    const grammarMistakes = parsed.feedback?.grammarMistakes ?? []
+    const vocabSuggestions = parsed.feedback?.vocabularySuggestions ?? []
+    const incomingDescriptions = [
+      ...grammarMistakes.map(m => typeof m === 'string' ? m : (m?.description || m?.explanation || m?.original)),
+      ...vocabSuggestions.map(v => typeof v === 'string' ? v : (v?.description || v?.word))
+    ].filter(Boolean)
+
+    // Deduplicate keys within this single session (count each pattern once per session)
+    const seenThisSession = new Set()
+    const incomingKeys = []
+    for (const desc of incomingDescriptions) {
+      const key = toPatternKey(desc)
+      if (key && !seenThisSession.has(key)) {
+        seenThisSession.add(key)
+        incomingKeys.push(key)
+      }
+    }
+
+    // Read-merge-write (arrayUnion does not work for object arrays)
+    const existingPatterns = Array.isArray(userData.mistakePatterns) ? [...userData.mistakePatterns] : []
+    for (const key of incomingKeys) {
+      const found = existingPatterns.find(p => p.pattern === key)
+      if (found) {
+        found.occurrences = (found.occurrences || 0) + 1
+        found.lastSeen = now
+        found.status = 'active'
+      } else {
+        existingPatterns.push({
+          pattern: key,
+          occurrences: 1,
+          lastSeen: now,
+          corrections: 0,
+          status: 'active'
+        })
+      }
+    }
+
+    // Trim to 20 most recent active patterns (D-04)
+    trimmedPatterns = existingPatterns
+      .sort((a, b) => {
+        const aTime = a.lastSeen?.toMillis?.() ?? 0
+        const bTime = b.lastSeen?.toMillis?.() ?? 0
+        return bTime - aTime
+      })
+      .slice(0, 20)
+  } catch (skillErr) {
+    logger.warn('endSession: skill/mistake update failed (best-effort), continuing', skillErr)
+    skillUpdates = {}
+    trimmedPatterns = userData.mistakePatterns ?? []
+  }
+
   // OPTIMIZATION: run all 3 Firestore writes in parallel
   const weekId = getWeekId()
   await Promise.all([
@@ -293,7 +409,9 @@ JSON format: {"scores":{"fluency":N,"grammar":N,"vocabulary":N,"overall":N},"fee
       dailyStreak: newStreak,
       lastSessionDate: now,
       freeSessionUsed: true,
-      updatedAt: now
+      updatedAt: now,
+      mistakePatterns: trimmedPatterns,
+      ...skillUpdates
     }),
     admin.firestore()
       .doc(`leaderboard/${weekId}/users/${uid}`)
@@ -307,8 +425,8 @@ JSON format: {"scores":{"fluency":N,"grammar":N,"vocabulary":N,"overall":N},"fee
       }, { merge: true })
   ])
 
-  logger.info('endSession complete', { uid, sessionId, scores })
-  return { scores, feedback: parsed.feedback }
+  logger.info('endSession complete', { uid, sessionId, scores, levelUps })
+  return { scores, feedback: parsed.feedback, levelUps }
 })
 
 function getWeekId() {
