@@ -135,4 +135,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-11 — Phase 15 complete: SpeakingStage.vue (3-exchange mini-conversation, Web Speech API + text fallback), WritingStage.vue (prompt + textarea + submit), evaluateSpeakingTest Cloud Function (GPT-4o-mini scoring), calculatePlacement Cloud Function (weighted CEFR average across 5 stages), PlacementResultPage.vue (CEFR badge + per-skill breakdown + strengths/weaknesses), all wired into OnboardingPage with skip logic defaulting to B1.*
+*Last updated: 2026-04-16 — Phase 17 complete: endSession Cloud Function extended with per-skill scoring (8 fields), CEFR level-up detection, and mistake-pattern persistence (capped at 20); generateSessionPlan hardened to name active mistake patterns verbatim in objectives; getWeeklyReview Cloud Function added; useSessionStore extended with levelUps ref and learning-store refresh after each session; FeedbackPage level-up banner UI wired.*
