@@ -267,11 +267,11 @@ Updated during roadmap creation.
 
 ### Progression & Learning (PROG)
 
-- [ ] **PROG-v12-01**: Per-skill progress tracked independently (6 skills: vocabulary, reading, listening, grammar, speaking, writing)
-- [ ] **PROG-v12-02**: User levels up per skill when rolling 10-session performance meets next-level criteria
-- [ ] **PROG-v12-03**: Mistake patterns tracked (occurrences, corrections, active/resolved status)
-- [ ] **PROG-v12-04**: AI recycles active mistake patterns in future session plans until resolved
-- [ ] **PROG-v12-05**: Weekly review session generated incorporating week's mistake patterns (`getWeeklyReview` Cloud Function)
+- [x] **PROG-v12-01**: Per-skill progress tracked independently (6 skills: vocabulary, reading, listening, grammar, speaking, writing)
+- [x] **PROG-v12-02**: User levels up per skill when rolling 10-session performance meets next-level criteria
+- [x] **PROG-v12-03**: Mistake patterns tracked (occurrences, corrections, active/resolved status)
+- [x] **PROG-v12-04**: AI recycles active mistake patterns in future session plans until resolved
+- [x] **PROG-v12-05**: Weekly review session generated incorporating week's mistake patterns (`getWeeklyReview` Cloud Function)
 
 ### Free Tier & Funnel (FREE)
 
@@ -329,11 +329,11 @@ Updated during roadmap creation.
 | SESSION-06 | Phase 16 | Complete |
 | SESSION-07 | Phase 16 | Complete |
 | SESSION-08 | Phase 16 | Complete |
-| PROG-v12-01 | Phase 17 | Pending |
-| PROG-v12-02 | Phase 17 | Pending |
-| PROG-v12-03 | Phase 17 | Pending |
-| PROG-v12-04 | Phase 17 | Pending |
-| PROG-v12-05 | Phase 17 | Pending |
+| PROG-v12-01 | Phase 17 | Complete |
+| PROG-v12-02 | Phase 17 | Complete |
+| PROG-v12-03 | Phase 17 | Complete |
+| PROG-v12-04 | Phase 17 | Complete |
+| PROG-v12-05 | Phase 17 | Complete |
 | FREE-01 | Phase 18 | Pending |
 | FREE-02 | Phase 18 | Pending |
 | FREE-03 | Phase 18 | Pending |

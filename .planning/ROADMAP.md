@@ -335,7 +335,7 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 17-01-PLAN.md — Extend endSession (per-skill scoring, progression, mistake persistence) + update generateSessionPlan mistake-recycling prompt + add getWeeklyReview Cloud Function
+- [x] 17-01-PLAN.md — Extend endSession (per-skill scoring, progression, mistake persistence) + update generateSessionPlan mistake-recycling prompt + add getWeeklyReview Cloud Function
 - [ ] 17-02-PLAN.md — Add levelUps ref to session store + refresh learning store after endSession + level-up banner on FeedbackPage
 
 ### Phase 18: Free Tier Funnel
@@ -395,6 +395,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 14. Listening Test | 1/2 | Complete    | 2026-04-09 |
 | 15. Speaking, Writing & Placement Results | 2/2 | Complete   | 2026-04-11 |
 | 16. Session Types & Personalisation | 1/2 | In Progress|  |
-| 17. Progression & Mistake Tracking | 0/0 | Not started | — |
+| 17. Progression & Mistake Tracking | 1/2 | In Progress|  |
 | 18. Free Tier Funnel | 0/0 | Not started | — |
 | 19. Dashboard & Progress Redesign | 0/0 | Not started | — |
