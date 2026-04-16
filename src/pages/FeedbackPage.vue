@@ -24,6 +24,24 @@
     <!-- Scrollable content -->
     <div class="feedback-scroll q-px-md q-pb-xl">
 
+      <!-- Level-up banner(s) — Phase 17 (D-03, 17-UI-SPEC §Component Inventory) -->
+      <div
+        v-if="session.levelUps && session.levelUps.length > 0"
+        class="level-up-stack q-mb-md q-gutter-sm"
+      >
+        <div
+          v-for="(lu, idx) in session.levelUps"
+          :key="`${lu.skill}-${idx}`"
+          class="level-up-banner row items-center no-wrap q-px-md q-py-sm"
+        >
+          <q-icon name="sym_o_trending_up" size="20px" color="primary" class="q-mr-sm" />
+          <span class="text-subtitle2 text-weight-bold">
+            Your {{ capitalize(lu.skill) }} just leveled up to
+            <span class="text-primary">{{ lu.to }}</span>!
+          </span>
+        </div>
+      </div>
+
       <!-- Hero section (FEED-01) -->
       <div class="hero-card q-pa-lg q-mt-md q-mb-lg text-center">
         <!-- Abstract celebration bg (CSS radial gradients) -->
@@ -250,6 +268,12 @@ const vocabStore = useVocabularyStore()
 // Active tab (FEED-02)
 const tab = ref('overview')
 
+// Capitalize skill name for banner copy (vocabulary → Vocabulary)
+function capitalize(str) {
+  if (!str || typeof str !== 'string') return ''
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
 async function saveWordToBank(word) {
   await vocabStore.saveWord({
     word:       word.term,
@@ -385,6 +409,24 @@ const trendBars = [
   flex: 1;
   overflow-y: auto;
   padding-bottom: 90px; /* clear fixed footer */
+}
+
+/* ---- Level-up banner (Phase 17 — 17-UI-SPEC §Component Inventory) ---- */
+.level-up-stack {
+  animation: level-up-fade-in 0.3s ease-in;
+}
+
+.level-up-banner {
+  background: rgba(76, 174, 79, 0.12);
+  border: 1px solid rgba(76, 174, 79, 0.25);
+  border-left: 3px solid #4cae4f;
+  border-radius: 8px;
+  color: #ffffff;
+}
+
+@keyframes level-up-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 /* ---- Hero card (FEED-01) ---- */
@@ -599,5 +641,12 @@ const trendBars = [
 .body--light .feedback-footer {
   background: rgba(246, 247, 246, 0.95);
   border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.body--light .level-up-banner {
+  background: rgba(76, 174, 79, 0.08);
+  border-color: rgba(76, 174, 79, 0.2);
+  border-left-color: #4cae4f;
+  color: var(--text-deep-slate, #131613);
 }
 </style>
